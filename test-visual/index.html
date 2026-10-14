@@ -6,6 +6,10 @@
 <meta name="color-scheme" content="light">
 <title>Test visual · Gafas y Gafas</title>
 <meta name="description" content="Revisa tu visión en 3 minutos desde tu celular. Si el resultado lo recomienda, agenda tu examen visual en Gafas y Gafas.">
+<meta property="og:title" content="¿Cómo está tu visión? · Test gratis Gafas y Gafas">
+<meta property="og:description" content="Hazlo en 3 minutos desde tu celular y descubre si es momento de un examen visual.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b2545">
 <style>
   /* ====== Marca: cambia estos colores para ajustarlos a Gafas y Gafas ====== */
   :root {
@@ -141,7 +145,7 @@
   // ====== Configuración ======
   const CONFIG = {
     bookingUrl: 'https://gafasygafas.com.co/agendar-cita-examen-visual/',
-    utm: { utm_source: 'test-visual', utm_medium: 'web', utm_campaign: 'test-visual' },
+    utm: { utm_source: 'instagram', utm_medium: 'historias', utm_campaign: 'test-visual' },  // se pueden cambiar con ?utm_source=... en el link del test
     whatsapp: '',           // ej. '573001234567' para mostrar botón de WhatsApp; vacío = oculto
     armMm: 600,             // brazo estirado ≈ 60 cm (prueba de lejos en celular)
     nearMm: 400,            // distancia de lectura ≈ 40 cm
@@ -476,7 +480,7 @@
         <button type="button" class="btn accent" id="go" style="margin-top:16px">Empezar test</button>
         <p class="small muted center" style="margin-top:12px">Este test es orientativo y <b>no reemplaza</b> un examen visual con un optómetra.</p>
       `);
-      on('#go', () => { track('start'); keepAwake(); next(); });
+      on('#go', () => { track('start', { source: new URLSearchParams(location.search).get('utm_source') || 'directo' }); keepAwake(); next(); });
     },
 
     glasses() {
@@ -632,7 +636,8 @@
       const R = evaluate();
       track('complete', { verdict: R.level, reasons: R.reasons.join(',') });
       const url = new URL(CONFIG.bookingUrl);
-      Object.entries(CONFIG.utm).forEach(([k, v]) => url.searchParams.set(k, v));
+      const here = new URLSearchParams(location.search);
+      Object.entries(CONFIG.utm).forEach(([k, v]) => url.searchParams.set(k, here.get(k) || v));
       url.searchParams.set('utm_content', R.level);
       const head = {
         ok: ['¡Buen resultado! 🎉', 'Tu visión parece estar bien en este test. Aun así, revisa tus ojos una vez al año: muchos cambios no se notan.'],
