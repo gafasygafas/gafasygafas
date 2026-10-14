@@ -4,7 +4,7 @@ Tamizaje visual online (≈ 5 minutos, mobile-first) para Gafas & Gafas. Pensado
 Instagram y campañas: la persona hace el test y, según el resultado, se le invita a agendar su examen visual en
 https://gafasygafas.com.co/agendar-cita-examen-visual/ o a escribir por WhatsApp a la tienda más cercana.
 
-Es **un solo archivo** (`index.html`) más la carpeta `brand/` (logo blanco, favicon y vista previa tomados del sitio
+Es **un solo archivo** (`index.html`) más la carpeta `brand/` (logo blanco, favicon e imagen de vista previa `og.png` tomados del sitio
 de G&G), sin build. Las fuentes (Anton, Archivo, Bodoni Moda) se cargan de Google Fonts.
 
 ## Sistema de diseño
