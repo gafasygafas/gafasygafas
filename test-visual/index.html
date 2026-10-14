@@ -4,135 +4,150 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>Test visual · Gafas y Gafas</title>
-<meta name="description" content="Cinco pruebas cortas para conocer el estado de tu visión. Si el resultado lo recomienda, agenda tu examen visual en Gafas y Gafas.">
-<meta property="og:title" content="¿Ves todo lo que deberías ver? · Test visual Gafas y Gafas">
-<meta property="og:description" content="Cinco pruebas cortas, tres minutos y un resultado claro sobre el estado de tu visión.">
+<title>Vision Check · Gafas & Gafas</title>
+<meta name="description" content="Cinco pruebas cortas para conocer el estado de tu vista. Si el resultado lo recomienda, agenda tu examen visual en Gafas & Gafas.">
+<meta property="og:title" content="¿Cómo está tu vista? · Vision Check G&G">
+<meta property="og:description" content="Descúbrelo en 5 minutos. Cinco pruebas cortas y un resultado claro.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0b2545">
+<meta property="og:image" content="https://gafasygafas.com.co/wp-content/uploads/2026/09/gyg-preview.jpg">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="https://gafasygafas.com.co/wp-content/uploads/2025/03/cropped-logoweb3-270x270.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-  /* ====== Marca ======
-     Estos valores son provisionales. Los reales se aplican desde CONFIG.brand (más abajo)
-     sin tocar el resto del código. */
-  :root {
-    --brand: #0b2545;        /* color principal: encabezado, botones */
-    --brand-ink: #ffffff;    /* texto sobre el color principal */
-    --accent: #e63946;       /* llamado a la acción (agendar) */
-    --accent-ink: #ffffff;
-    --ok: #1a7f37;
-    --warn: #b7791f;
-    --bad: #c53030;
-    --bg: #ffffff;
-    --surface: #f4f6f9;
-    --tint: #eef3fa;         /* fondo suave de selección */
-    --ink: #111827;
-    --muted: #5b6474;
-    --line: #dde2ea;
-    --radius: 14px;
-    --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  :root{
+    --gg-black:#111111; --gg-ink:#0A0A0A; --gg-yellow:#FFD756; --gg-yellow-editorial:#F2D23B;
+    --gg-bone:#F4F4F2; --gg-white:#FFFFFF; --gg-gray-100:#F3F3F3; --gg-gray-200:#D9D9D9;
+    --gg-gray-500:#8A8A8A; --gg-gray-600:#777777; --gg-gray-800:#3F3F3F; --gg-mint:#D9EBC6;
+    --gg-success:#2E9E5B; --gg-alert:#D64545; --gg-whatsapp:#2DB742;
+    --font-display:'Anton',Impact,'Arial Narrow',sans-serif;
+    --font-body:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    --font-editorial:'Bodoni Moda','Libre Bodoni',Didot,Georgia,serif;
+    --radius:10px; --radius-sm:4px;
   }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
-  body { font-family: var(--font); font-size: 17px; line-height: 1.45; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  svg.i { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; vertical-align: -0.125em; }
-  .app { max-width: 560px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; }
-  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--brand); color: var(--brand-ink); }
-  header .brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
-  header .logo { font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; font-size: 15px; white-space: nowrap; }
-  header img.logo { height: 26px; width: auto; display: block; }
-  header .sub { font-size: 13px; opacity: .75; white-space: nowrap; }
-  header button { background: none; border: 0; color: inherit; font: inherit; font-size: 14px; opacity: .85; cursor: pointer; padding: 6px; }
-  .progress { height: 4px; background: var(--line); }
-  .progress > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .35s; }
-  .phase { display: flex; justify-content: space-between; padding: 10px 16px 0; font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: .2px; }
-  .phase[hidden] { display: none; }
-  main { flex: 1; display: flex; flex-direction: column; padding: 14px 16px 24px; }
-  h1 { font-size: 30px; line-height: 1.12; margin: 6px 0 12px; letter-spacing: -.3px; }
-  h2 { font-size: 22px; line-height: 1.25; margin: 4px 0 10px; }
-  p { margin: 0 0 12px; }
-  .muted { color: var(--muted); } .small { font-size: 14px; } .center { text-align: center; } .grow { flex: 1; }
-  .stack > * + * { margin-top: 10px; }
-  .btn { display: block; width: 100%; min-height: 56px; padding: 14px 18px; border: 0; border-radius: var(--radius); cursor: pointer; font: inherit; font-weight: 700; font-size: 18px; text-align: center; text-decoration: none; background: var(--brand); color: var(--brand-ink); }
-  .btn:disabled { opacity: .4; cursor: default; }
-  .btn.accent { background: var(--accent); color: var(--accent-ink); }
-  .btn.ghost { background: transparent; color: var(--brand); border: 2px solid var(--line); }
-  .btn.link { background: none; color: var(--muted); font-weight: 500; font-size: 15px; min-height: 44px; text-decoration: underline; }
-  .opt { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 60px; padding: 12px 16px; border: 2px solid var(--line); border-radius: var(--radius); background: #fff; font: inherit; font-size: 17px; text-align: left; color: var(--ink); cursor: pointer; }
-  .opt .mark { flex: none; width: 24px; height: 24px; border: 2px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: transparent; }
-  .opt.multi .mark { border-radius: 6px; }
-  .opt .mark svg { width: 15px; height: 15px; stroke-width: 3; }
-  .opt.sel { border-color: var(--brand); background: var(--tint); }
-  .opt.sel .mark { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
-  .card { background: var(--surface); border-radius: var(--radius); padding: 16px; }
-  .list { padding: 0; list-style: none; margin: 0; }
-  .list li { display: flex; gap: 12px; padding: 7px 0; align-items: flex-start; }
-  .list li svg { margin-top: 3px; color: var(--ok); width: 1.1em; height: 1.1em; stroke-width: 2.4; }
-  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 8px 0 0; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 16px; }
-  .stats div { background: var(--surface); border-radius: var(--radius); padding: 12px 6px; text-align: center; line-height: 1.2; }
-  .stats b { display: block; font-size: 22px; color: var(--brand); }
-  .stats span { font-size: 12.5px; color: var(--muted); }
-  .glyph { display: grid; place-items: center; width: 76px; height: 76px; margin: 10px auto 14px; border-radius: 50%; background: var(--tint); color: var(--brand); font-size: 38px; }
-  .note { display: flex; gap: 8px; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--ok); margin-bottom: 8px; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:var(--gg-bone);color:var(--gg-ink)}
+  body{font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.125em}
+  .app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--gg-bone)}
+  .app.dark{background:var(--gg-black)}
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--gg-black);color:#fff}
+  header .logo{height:26px;width:auto;display:block}
+  header .wordmark{font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;font-size:20px}
+  header button{background:none;border:0;color:#fff;font:inherit;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;opacity:.8;cursor:pointer;padding:6px}
+  .progress{height:4px;background:var(--gg-gray-200)}
+  .app.dark .progress{background:#2a2a2a}
+  .progress>i{display:block;height:100%;width:0;background:var(--gg-yellow);transition:width .35s}
+  .phase{display:flex;justify-content:space-between;gap:12px;padding:12px 16px 0;font-size:11px;color:var(--gg-gray-800);font-weight:700;letter-spacing:1.1px;text-transform:uppercase}
+  .phase[hidden]{display:none}
+  main{flex:1;display:flex;flex-direction:column;padding:16px 16px 28px}
+  .app.dark main{color:#fff}
+  h1,h2{font-family:var(--font-display);font-weight:400;text-transform:uppercase;letter-spacing:.2px;margin:6px 0 10px}
+  h1{font-size:34px;line-height:1.05}
+  h2{font-size:26px;line-height:1.1}
+  p{margin:0 0 12px}
+  .muted{color:var(--gg-gray-800)} .app.dark .muted{color:#c9c9c9}
+  .small{font-size:14px} .center{text-align:center} .grow{flex:1}
+  .stack>*+*{margin-top:10px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;margin:6px 0 0;color:var(--gg-gray-800)}
+  .app.dark .kicker{color:var(--gg-yellow-editorial)}
+  em.ed{font-family:var(--font-editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
+  mark{background:var(--gg-yellow);color:var(--gg-black);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .btn{display:block;width:100%;min-height:56px;padding:18px;border:2px solid var(--gg-black);border-radius:var(--radius);cursor:pointer;font-family:var(--font-display);font-size:16px;letter-spacing:.6px;text-transform:uppercase;text-align:center;text-decoration:none;background:var(--gg-black);color:var(--gg-yellow);line-height:1.15}
+  .btn:disabled{opacity:.35;cursor:default}
+  .btn.yellow{background:var(--gg-yellow);color:var(--gg-black)}
+  .btn.outline{background:transparent;color:var(--gg-black)}
+  .app.dark .btn.outline{color:#fff;border-color:#fff}
+  .btn.wa{background:var(--gg-whatsapp);border-color:var(--gg-whatsapp);color:#fff}
+  .btn.link{background:none;border:0;color:var(--gg-gray-800);font-family:var(--font-body);font-weight:500;font-size:15px;min-height:44px;text-transform:none;letter-spacing:0;text-decoration:underline;padding:10px}
+  a.arrow{color:var(--gg-black);font-weight:700;text-decoration:none;border-bottom:2px solid var(--gg-yellow)}
+  .opt{display:flex;align-items:center;gap:14px;width:100%;min-height:60px;padding:12px 16px;border:2px solid var(--gg-gray-200);border-radius:var(--radius);background:#fff;font:inherit;font-size:16px;text-align:left;color:var(--gg-ink);cursor:pointer}
+  .opt .mark{flex:none;width:24px;height:24px;border:2px solid var(--gg-gray-200);border-radius:50%;display:grid;place-items:center;color:transparent}
+  .opt.multi .mark{border-radius:var(--radius-sm)}
+  .opt .mark svg{width:15px;height:15px;stroke-width:3}
+  .opt.sel{border-color:var(--gg-black);background:#fff}
+  .opt.sel .mark{background:var(--gg-black);border-color:var(--gg-black);color:var(--gg-yellow)}
+  .card{background:#fff;border-radius:var(--radius);padding:16px;border:1px solid var(--gg-gray-200)}
+  .app.dark .card{background:#1b1b1b;border-color:#2a2a2a}
+  .list{padding:0;list-style:none;margin:0}
+  .list li{display:flex;gap:12px;padding:6px 0;align-items:flex-start}
+  .list li svg{margin-top:4px;color:var(--gg-success);stroke-width:2.6}
+  .app.dark .list li svg{color:var(--gg-yellow)}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .pill{display:inline-block;padding:5px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;background:var(--gg-black);color:var(--gg-yellow)}
+  .app.dark .pill{background:var(--gg-yellow);color:var(--gg-black)}
+  .hero-img{width:100%;height:210px;object-fit:cover;object-position:50% 22%;border-radius:var(--radius);display:block;margin:6px 0 4px}
+  .proof{display:flex;align-items:center;gap:8px;font-size:14px;color:#c9c9c9;margin:10px 0 0}
+  .proof svg{color:var(--gg-yellow-editorial);fill:var(--gg-yellow-editorial);stroke:none;width:16px;height:16px}
+  .tagline{font-family:var(--font-editorial);font-style:italic;text-align:center;font-size:18px;color:var(--gg-yellow-editorial);margin:18px 0 0}
+  .glyph{display:grid;place-items:center;width:76px;height:76px;margin:10px auto 14px;border-radius:50%;background:var(--gg-black);color:var(--gg-yellow);font-size:36px}
+  .note{display:flex;gap:8px;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--gg-success);margin-bottom:8px}
+  .pick{display:flex;flex-direction:column;gap:8px}
+  .pick .card h2{font-size:22px;margin:0 0 4px}
+  .pick .card p{margin:0 0 12px}
 
-  /* Pruebas */
-  .test { flex: 1; display: flex; flex-direction: column; }
-  .test .prompt { text-align: center; font-weight: 700; font-size: 18px; margin-bottom: 4px; }
-  .test .hint { text-align: center; color: var(--muted); font-size: 14px; }
-  .stage { flex: 1; min-height: 120px; padding: 8px 0; display: flex; align-items: center; justify-content: center; }
-  .stage canvas { display: block; image-rendering: pixelated; }
-  .fb { min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: 16px; }
-  .fbi { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 18px; }
-  .fbi.ok { background: var(--ok); } .fbi.bad { background: var(--bad); } .fbi.skip { background: #8a93a3; }
-  .fb.ok { color: var(--ok); } .fb.bad { color: var(--bad); } .fb.skip { color: var(--muted); }
-  .fbi svg { stroke-width: 3; width: 16px; height: 16px; }
-  .trail { display: flex; justify-content: center; gap: 6px; min-height: 14px; margin: 2px 0 10px; }
-  .trail i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
-  .trail i.ok { background: var(--ok); } .trail i.bad { background: var(--bad); } .trail i.skip { background: #8a93a3; }
-  .pad { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 60px); gap: 8px; max-width: 320px; width: 100%; margin: 0 auto; }
-  .pad button { border: 0; border-radius: 14px; background: var(--brand); color: var(--brand-ink); font-size: 30px; font-weight: 800; cursor: pointer; touch-action: manipulation; display: grid; place-items: center; }
-  .pad button svg { width: 28px; height: 28px; stroke-width: 2.6; }
-  .pad button:active { transform: scale(.96); }
-  .pad .up { grid-column: 2; grid-row: 1; } .pad .left { grid-column: 1; grid-row: 2; } .pad .right { grid-column: 3; grid-row: 2; } .pad .down { grid-column: 2; grid-row: 3; }
-  .pad .nosee { grid-column: 2; grid-row: 2; font-size: 14px; background: var(--surface); color: var(--ink); line-height: 1.15; }
-  .numopts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .numopts button { min-height: 62px; font-size: 28px; font-weight: 800; letter-spacing: 3px; border-radius: 14px; border: 0; background: var(--brand); color: var(--brand-ink); cursor: pointer; font-family: var(--font); }
-  .numopts .nosee { grid-column: 1 / -1; min-height: 50px; font-size: 16px; letter-spacing: 0; font-weight: 600; background: var(--surface); color: var(--ink); }
-  .eyebadge { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border-radius: 999px; background: var(--surface); font-weight: 700; font-size: 14px; margin: 0 auto 8px; }
-  .pending { pointer-events: none; }
+  .test{flex:1;display:flex;flex-direction:column}
+  .test .prompt{text-align:center;font-weight:700;font-size:18px;margin-bottom:4px}
+  .test .hint{text-align:center;color:var(--gg-gray-800);font-size:14px}
+  .stage{flex:1;min-height:120px;padding:8px 0;display:flex;align-items:center;justify-content:center}
+  .fb{min-height:36px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:16px;text-align:center}
+  .fbi{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;color:#fff;flex:none}
+  .fbi.ok{background:var(--gg-success)} .fbi.bad{background:var(--gg-alert)} .fbi.skip{background:var(--gg-gray-500)}
+  .fb.ok{color:var(--gg-success)} .fb.bad{color:var(--gg-alert)} .fb.skip{color:var(--gg-gray-800)}
+  .fbi svg{stroke-width:3;width:16px;height:16px}
+  .trail{display:flex;justify-content:center;gap:6px;min-height:14px;margin:2px 0 10px}
+  .trail i{width:10px;height:10px;border-radius:50%;background:var(--gg-gray-200)}
+  .trail i.ok{background:var(--gg-success)} .trail i.bad{background:var(--gg-alert)} .trail i.skip{background:var(--gg-gray-500)}
+  .pad{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,60px);gap:8px;max-width:320px;width:100%;margin:0 auto}
+  .pad button{border:0;border-radius:var(--radius);background:var(--gg-black);color:var(--gg-yellow);cursor:pointer;touch-action:manipulation;display:grid;place-items:center}
+  .pad button svg{width:28px;height:28px;stroke-width:2.6}
+  .pad button:active{transform:scale(.96)}
+  .pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .right{grid-column:3;grid-row:2}.pad .down{grid-column:2;grid-row:3}
+  .pad .nosee{grid-column:2;grid-row:2;font-family:var(--font-body);font-size:13px;font-weight:700;background:#fff;color:var(--gg-ink);border:2px solid var(--gg-gray-200);line-height:1.15}
+  .numopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .numopts button{min-height:60px;font-size:28px;font-weight:700;letter-spacing:3px;border-radius:var(--radius);border:0;background:var(--gg-black);color:var(--gg-yellow);cursor:pointer;font-family:var(--font-body)}
+  .numopts .nosee{grid-column:1/-1;min-height:50px;font-size:15px;letter-spacing:0;background:#fff;color:var(--gg-ink);border:2px solid var(--gg-gray-200)}
+  .eyebadge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--radius-sm);background:var(--gg-black);color:var(--gg-yellow);font-weight:700;font-size:12px;letter-spacing:1.1px;text-transform:uppercase;margin:0 auto 8px}
 
-  /* Calibración */
-  .calib-wrap { display: flex; justify-content: center; margin: 8px 0 16px; }
-  .cardshape { position: relative; border: 3px solid var(--brand); border-bottom: 0; background: linear-gradient(var(--tint), rgba(238,243,250,0)); }
-  .cardshape::after { content: "Pon aquí tu tarjeta"; position: absolute; left: 0; right: 0; top: 40%; text-align: center; color: var(--brand); font-weight: 700; font-size: 14px; }
-  .stepper { display: grid; grid-template-columns: 64px 1fr 64px; gap: 10px; align-items: center; }
-  .stepper button { height: 56px; border: 0; border-radius: 14px; background: var(--brand); color: var(--brand-ink); font-size: 30px; font-weight: 800; cursor: pointer; touch-action: manipulation; }
-  input[type=range] { width: 100%; accent-color: var(--brand); height: 32px; }
+  .calib-wrap{display:flex;justify-content:center;margin:8px 0 16px}
+  .cardshape{position:relative;border:3px solid var(--gg-black);border-bottom:0;background:var(--gg-yellow)}
+  .cardshape::after{content:"Pon aquí tu tarjeta";position:absolute;left:0;right:0;top:40%;text-align:center;color:var(--gg-black);font-weight:700;font-size:14px}
+  .stepper{display:grid;grid-template-columns:64px 1fr 64px;gap:10px;align-items:center}
+  .stepper button{height:56px;border:0;border-radius:var(--radius);background:var(--gg-black);color:var(--gg-yellow);font-size:30px;font-weight:700;cursor:pointer;touch-action:manipulation}
+  input[type=range]{width:100%;accent-color:var(--gg-black);height:32px}
 
-  /* Análisis y resultados */
-  .spin { width: 54px; height: 54px; border-radius: 50%; border: 5px solid var(--line); border-top-color: var(--accent); margin: 26px auto 18px; animation: spin 0.9s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .steps { max-width: 300px; margin: 8px auto; }
-  .steps div { display: flex; gap: 10px; align-items: center; padding: 6px 0; opacity: 0; animation: rise .35s forwards; font-weight: 600; }
-  .steps svg { color: var(--ok); stroke-width: 2.6; }
-  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .spin { animation-duration: 3s; } .steps div { animation-duration: .01s; } }
-  .verdict { border-radius: var(--radius); padding: 18px; color: #fff; margin-bottom: 16px; }
-  .verdict.ok { background: var(--ok); } .verdict.warn { background: var(--warn); } .verdict.bad { background: var(--bad); }
-  .verdict h1 { margin: 0 0 6px; font-size: 26px; } .verdict p { margin: 0; }
-  .res { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
-  .res:last-child { border-bottom: 0; }
-  .dot { flex: none; width: 14px; height: 14px; border-radius: 50%; margin-top: 5px; }
-  .dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); } .dot.na { background: var(--line); }
-  .res b { display: block; }
-  .zoomwarn { position: fixed; left: 8px; right: 8px; top: 8px; z-index: 9; background: var(--bad); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-align: center; display: none; }
+  .spin{width:54px;height:54px;border-radius:50%;border:5px solid var(--gg-gray-200);border-top-color:var(--gg-black);margin:26px auto 18px;animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .steps{max-width:300px;margin:8px auto}
+  .steps div{display:flex;gap:10px;align-items:center;padding:6px 0;opacity:0;animation:rise .35s forwards;font-weight:700}
+  .steps svg{color:var(--gg-success);stroke-width:2.6}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}.steps div{animation-duration:.01s}}
+  .verdict{border-radius:var(--radius);padding:18px;margin-bottom:16px}
+  .verdict h1{font-size:30px;margin:0 0 6px}.verdict p{margin:0}
+  .verdict.excelente{background:var(--gg-success);color:#fff}
+  .verdict.bien{background:var(--gg-mint);color:var(--gg-black)}
+  .verdict.revisar{background:var(--gg-yellow);color:var(--gg-black)}
+  .verdict.urgente{background:var(--gg-alert);color:#fff}
+  .res{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--gg-gray-200)}
+  .res:last-child{border-bottom:0}
+  .res b{display:block}
+  .badge{flex:none;padding:4px 9px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase}
+  .badge.excelente{background:var(--gg-success);color:#fff}.badge.bien{background:var(--gg-yellow);color:var(--gg-black)}.badge.revisar{background:var(--gg-alert);color:#fff}.badge.na{background:var(--gg-gray-200);color:var(--gg-black)}
+  .store{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-bottom:1px solid var(--gg-gray-200)}
+  .store:last-child{border-bottom:0}
+  .store b{font-family:var(--font-display);font-weight:400;text-transform:uppercase;font-size:18px;letter-spacing:.3px}
+  .store .row{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+  .store .dist{font-size:12px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--gg-gray-800)}
+  .zoomwarn{position:fixed;left:8px;right:8px;top:8px;z-index:9;background:var(--gg-alert);color:#fff;padding:10px 14px;border-radius:var(--radius);font-weight:700;text-align:center;display:none}
 </style>
 </head>
 <body>
 <div class="zoomwarn" id="zoomwarn">Quita el zoom de la pantalla (pellizca hacia adentro) para que el test sea exacto.</div>
-<div class="app">
+<div class="app" id="app">
   <header>
-    <span class="brand" id="brand"><span class="logo">Gafas y Gafas</span><span class="sub">Test visual</span></span>
+    <span id="brand"><img class="logo" id="logo" src="https://gafasygafas.com.co/wp-content/uploads/2024/09/lgo-gygblanco.png" alt="Gafas & Gafas"></span>
     <button type="button" id="restart" hidden>Reiniciar</button>
   </header>
   <div class="progress"><i id="bar"></i></div>
@@ -146,101 +161,110 @@
 
   // ====== Configuración ======
   const CONFIG = {
+    site: 'https://gafasygafas.com.co',
     bookingUrl: 'https://gafasygafas.com.co/agendar-cita-examen-visual/',
-    utm: { utm_source: 'instagram', utm_medium: 'historias', utm_campaign: 'test-visual' },  // se pueden cambiar con ?utm_source=... en el link del test
-    whatsapp: '',           // ej. '573001234567' para mostrar botón de WhatsApp; vacío = oculto
-    armMm: 600,             // brazo estirado ≈ 60 cm (prueba de lejos en celular)
-    nearMm: 400,            // distancia de lectura ≈ 40 cm
-    farPassDecimal: 0.75,   // por debajo de esto (≈20/25) se recomienda examen
-    nearPassDecimal: 0.5,
-    feedbackMs: 900,        // cuánto se muestra el check / la cruz después de cada respuesta
-    // Identidad de marca: aquí se ajusta todo lo visual sin tocar el resto del código.
-    brand: {
-      name: 'Gafas y Gafas',
-      logoUrl: '',          // URL del logo (PNG/SVG). Vacío = se muestra el nombre en texto.
-      fontUrl: '',          // ej. 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap'
-      fontFamily: '',       // ej. '"Montserrat", sans-serif'
-      colors: {},           // ej. { '--brand': '#...', '--accent': '#...', '--bg': '#...', '--ink': '#...' }
-    },
+    utm: { utm_source: 'vision-check', utm_medium: 'app' },   // se pueden cambiar con ?utm_source=...&utm_medium=... en el link del test
+    whatsappCentral: '573107157081',
+    armMm: 600,            // brazo estirado ≈ 60 cm
+    closeMm: 300,          // 30 cm
+    feedbackMs: 900,       // tiempo que se muestra el check / la cruz tras cada respuesta
+    acuityLevels: [0.1, 0.2, 0.3, 0.4, 0.5, 0.63, 0.8, 1.0, 1.25],
+    contrastLevels: [1, 0.5, 0.25, 0.125, 0.0625, 0.03],
+    contrastTestAcuity: 0.4,
   };
 
-  // ====== Marca ======
-  (function applyBrand() {
-    const b = CONFIG.brand, root = document.documentElement;
-    try {
-      if (b.fontUrl) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = b.fontUrl; document.head.appendChild(l); }
-      if (b.fontFamily) root.style.setProperty('--font', b.fontFamily);
-      Object.entries(b.colors || {}).forEach(([k, v]) => root.style.setProperty(k, v));
-      if (b.logoUrl) document.querySelector('#brand .logo').outerHTML = `<img class="logo" src="${b.logoUrl}" alt="${b.name}">`;
-    } catch (e) {}
-  })();
+  const STORES = [
+    { n: 'Colina', c: 'Bogotá', a: 'Calle 134 # 57 – 53', w: '573224688686', h: 'L-S 10–6 · D 10–5', ll: [4.72353, -74.06521] },
+    { n: 'Calle 122', c: 'Bogotá', a: 'Calle 122 #17a – 63', w: '573118394028', h: 'L-S 10–7 · D/F 10–5', ll: [4.70129, -74.04680] },
+    { n: 'Calle 63', c: 'Bogotá', a: 'Calle 63 # 24 – 83', w: '573195867098', h: 'L-S 10–6 · D/F 10–5', ll: [4.65103, -74.07339] },
+    { n: 'Corferias', c: 'Bogotá', a: 'Calle 24 # 43a – 20', w: '573160281173', h: 'L-S 10–7 · D/F 10–5', ll: [4.63249, -74.09383] },
+    { n: 'Plaza de las Américas', c: 'Bogotá', a: 'C.C. Plaza de las Américas, local 1805', w: '573193608772', h: 'L-S 10–7 · D/F 11–7', ll: [4.61866, -74.13519] },
+    { n: 'Santafé', c: 'Bogotá', a: 'C.C. Santafé, local L3 – 107', w: '573160267790', h: 'L-J 11–8 · V-S 11–9 · D 11–7', ll: [4.76208, -74.04519] },
+    { n: 'Chía', c: 'Chía', a: 'C.C. Plaza Mayor, local 1 – 46', w: '573126847335', h: 'L-S 10–6 · D/F cerrado', ll: [4.86524, -74.03970] },
+    { n: 'El Poblado', c: 'Medellín', a: 'Cross Business Center · Cra 43a # 1 sur – 18', w: '573007030947', h: 'L-S 10–6:30', ll: [6.20328, -75.57163] },
+    { n: 'Ciudad Jardín', c: 'Cali', a: 'Bio Mall Plaza · Calle 18 #106 – 37, local 18', w: '573108854709', h: 'L-S 10–6', ll: [3.36273, -76.53105] },
+  ];
+
+  const TESTS = {
+    acuity: { name: 'Agudeza visual', blurb: 'Qué tan nítido ves de lejos, con cada ojo.' },
+    contrast: { name: 'Sensibilidad al contraste', blurb: 'Qué tan bien distingues formas poco marcadas.' },
+    astig: { name: 'Astigmatismo', blurb: 'Si todas las líneas se ven igual de nítidas.' },
+    amsler: { name: 'Visión central', blurb: 'Rejilla de Amsler: líneas torcidas o zonas que faltan.' },
+    color: { name: 'Visión de color', blurb: 'Si distingues bien los colores en láminas con números.' },
+  };
+  const TEST_ORDER = ['acuity', 'contrast', 'astig', 'amsler', 'color'];
 
   // ====== Iconos (trazo, sin emojis) ======
   const PATHS = {
-    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
-    x: '<path d="M6 6l12 12M18 6L6 18"/>',
-    dash: '<path d="M6 12h12"/>',
-    up: '<path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/>',
-    down: '<path d="M12 5v14M5.5 12.5L12 19l6.5-6.5"/>',
-    left: '<path d="M19 12H5M11.5 5.5L5 12l6.5 6.5"/>',
-    right: '<path d="M5 12h14M12.5 5.5L19 12l-6.5 6.5"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>', x: '<path d="M6 6l12 12M18 6L6 18"/>', dash: '<path d="M6 12h12"/>',
+    up: '<path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/>', down: '<path d="M12 5v14M5.5 12.5L12 19l6.5-6.5"/>',
+    left: '<path d="M19 12H5M11.5 5.5L5 12l6.5 6.5"/>', right: '<path d="M5 12h14M12.5 5.5L19 12l-6.5 6.5"/>',
     eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     eyeoff: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M4 20L20 4"/>',
     phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/>',
     monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
-    book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20"/>',
     card: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19"/>',
     glasses: '<circle cx="6.5" cy="14" r="3.8"/><circle cx="17.5" cy="14" r="3.8"/><path d="M10.3 14h3.4M2.7 14L4.6 7M21.3 14L19.4 7"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
     ruler: '<path d="M3 16.5L16.5 3 21 7.5 7.5 21z"/><path d="M7.5 12l2 2M10.5 9l2 2M13.5 6l2 2"/>',
+    star: '<path d="M12 2.8l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 16.6 6.4 19.8l1.3-6.2L3 9.3l6.3-.7z"/>',
+    pin: '<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
   };
-  const ico = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${PATHS[n]}</svg>`;
+  const ico = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${PATHS[n]}</svg>`;
 
   // ====== Utilidades ======
+  const $app = document.getElementById('app');
   const $main = document.getElementById('main');
   const $bar = document.getElementById('bar');
   const $restart = document.getElementById('restart');
   const $phase = document.getElementById('phase');
   const $phaseName = document.getElementById('phaseName');
   const $phaseCount = document.getElementById('phaseCount');
-  const ARCMIN = Math.tan(Math.PI / 180 / 60);   // 1 minuto de arco
-  const CARD_SHORT_MM = 53.98;                    // tarjeta ID-1: débito, crédito, cédula
+  const ARCMIN = Math.tan(Math.PI / 180 / 60);
+  const CARD_SHORT_MM = 53.98;                    // ISO/IEC 7810 ID-1 (85,60 × 53,98 mm): se mide el lado corto con la tarjeta de pie
   const dpr = () => window.devicePixelRatio || 1;
   const isTouch = matchMedia('(pointer: coarse)').matches;
   const rnd = (n) => Math.floor(Math.random() * n);
+  const pick = (a) => a[rnd(a.length)];
+  const shuffle = (a) => a.map((v) => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map((p) => p[1]);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const DIR_WORD = { up: 'hacia arriba', down: 'hacia abajo', left: 'hacia la izquierda', right: 'hacia la derecha' };
+  const EYE_NAME = { R: 'derecho', L: 'izquierdo' };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+  const query = new URLSearchParams(location.search);
 
   function track(event, data) {
-    try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'test_visual_' + event }, data)); } catch (e) {}
-    try { if (window.parent !== window) window.parent.postMessage({ type: 'test_visual', event, data }, '*'); } catch (e) {}
+    const payload = Object.assign({ event }, data);
+    try { (window.dataLayer = window.dataLayer || []).push(payload); } catch (e) {}
+    try { if (typeof window.gtag === 'function') window.gtag('event', event, data || {}); } catch (e) {}
+    try { if (window.parent !== window) window.parent.postMessage({ type: 'vision_check', event, data }, '*'); } catch (e) {}
   }
 
-  // Px de pantalla física por mm. Se guarda en px de dispositivo para que el zoom del navegador no la altere.
+  document.getElementById('logo').addEventListener('error', () => {
+    document.getElementById('brand').innerHTML = '<span class="wordmark">Gafas &amp; Gafas</span>';
+  });
+
   function guessDevPxPerMm() {
     const cssPerMm = isTouch && Math.min(screen.width, screen.height) < 600 ? 6.3 : (dpr() >= 1.5 ? 4.4 : 3.78);
     return cssPerMm * dpr();
   }
   const cssPxPerMm = () => S.devPxPerMm / dpr();
 
-  // Distancia de la prueba de lejos: brazo estirado en celular; en pantallas de baja densidad hay que alejarse más.
+  // Distancia de las pruebas de lejos: brazo estirado en celular; en pantallas de baja densidad hay que alejarse más.
   function farDistanceMm() {
-    const needed = 1.6 / (ARCMIN * S.devPxPerMm);
+    const needed = 1.6 / (ARCMIN / CONFIG.acuityLevels[CONFIG.acuityLevels.length - 1] * S.devPxPerMm);
     return Math.round(Math.min(1500, Math.max(CONFIG.armMm, needed)) / 50) * 50;
   }
 
   function snellen(dec) {
     if (!dec) return 'menos de 20/200';
-    const std = [20, 25, 30, 40, 50, 60, 70, 80, 100, 200, 400];
+    const std = [20, 25, 30, 32, 40, 50, 60, 70, 80, 100, 200, 400];
     const d = 20 / dec;
     return '20/' + std.reduce((a, b) => (Math.abs(b - d) < Math.abs(a - d) ? b : a));
   }
 
   let wakeLock = null;
-  async function keepAwake() {
-    try { if ('wakeLock' in navigator && !wakeLock) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
-  }
-
+  async function keepAwake() { try { if ('wakeLock' in navigator && !wakeLock) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {} }
   if (window.visualViewport) {
     const zw = document.getElementById('zoomwarn');
     const check = () => { zw.style.display = visualViewport.scale > 1.02 ? 'block' : 'none'; };
@@ -248,19 +272,18 @@
   }
 
   // ====== Estado ======
-  let S;
+  let S, steps = [], step = 0, tests = [];
   function resetState() {
     S = {
-      glasses: null, age: null, symptoms: [], lastExam: null,
-      devPxPerMm: guessDevPxPerMm(), calibrated: false,
-      far: { R: null, L: null }, astig: { R: null, L: null },
-      near: null, amsler: { R: null, L: null },
-      log: { R: [], L: [], near: [] },   // aciertos y fallos de cada prueba, para mostrarlos con transparencia
+      glasses: null, symptoms: [], devPxPerMm: guessDevPxPerMm(), calibrated: false,
+      acuity: { R: null, L: null }, contrast: { R: null, L: null }, astig: { R: null, L: null }, amsler: { R: null, L: null },
+      color: null, geo: null,
+      log: { acuity: { R: [], L: [] }, contrast: { R: [], L: [] }, color: [] },
     };
   }
 
-  // Escalera: sube de nivel con 2 aciertos, baja con 2 fallos.
-  function makeStair(levels, start) { return { levels, idx: start, n: 0, ok: 0, best: -1, failAt: levels.length, done: false, actual: {} }; }
+  // Escalera: 2 aciertos suben de nivel, 2 fallos bajan.
+  function makeStair(len, start) { return { len, idx: start, n: 0, ok: 0, best: -1, failAt: len, done: false }; }
   function stairAnswer(st, correct) {
     st.n++; if (correct) st.ok++;
     const wrong = st.n - st.ok;
@@ -272,46 +295,71 @@
       else { if (st.best >= 0 || st.idx === 0) st.done = true; else st.idx--; }
     }
   }
-  const stairScore = (st) => (st.best >= 0 ? st.actual[st.best] : 0);
 
   // ====== Flujo ======
-  const FLOW = ['welcome', 'glasses', 'age', 'symptoms', 'lastExam', 'calibrate', 'farSetup', 'practice',
-    'coverR', 'acuityR', 'astigR', 'coverL', 'acuityL', 'astigL',
-    'nearSetup', 'near', 'amslerR', 'amslerL', 'results'];
-  const PHASES = ['Tus datos', 'Preparación', 'Ojo derecho', 'Ojo izquierdo', 'Visión de cerca', 'Visión central', 'Tu resultado'];
-  const PHASE_OF = { glasses: 0, age: 0, symptoms: 0, lastExam: 0, calibrate: 1, farSetup: 1, practice: 1,
-    coverR: 2, acuityR: 2, astigR: 2, coverL: 3, acuityL: 3, astigL: 3, nearSetup: 4, near: 4, amslerR: 5, amslerL: 5, results: 6 };
-  let step = 0;
+  function buildSteps(sel) {
+    const t = new Set(sel), s = [{ id: 'disclaimer' }, { id: 'brightness' }];
+    if (['acuity', 'contrast', 'astig', 'amsler'].some((k) => t.has(k))) s.push({ id: 'card' });
+    s.push({ id: 'glasses' });
+    if (sel.length > 1) s.push({ id: 'symptoms' });
+    const arm = ['acuity', 'contrast'].filter((k) => t.has(k)), close = ['astig', 'amsler'].filter((k) => t.has(k));
+    if (arm.length) {
+      s.push({ id: 'armSetup', test: arm[0] }, { id: 'practice', test: arm[0] });
+      ['R', 'L'].forEach((eye) => {
+        s.push({ id: 'cover', eye, dist: 'arm', test: arm[0] });
+        arm.forEach((k) => s.push({ id: k, eye, test: k }));
+      });
+    }
+    if (close.length) {
+      s.push({ id: 'closeSetup', test: close[0] });
+      ['R', 'L'].forEach((eye) => {
+        s.push({ id: 'cover', eye, dist: 'close', test: close[0] });
+        close.forEach((k) => s.push({ id: k, eye, test: k }));
+      });
+    }
+    if (t.has('color')) s.push({ id: 'colorSetup', test: 'color' }, { id: 'color', test: 'color' });
+    s.push({ id: 'results' });
+    return s;
+  }
 
-  function go(id) {
-    step = typeof id === 'number' ? id : FLOW.indexOf(id);
-    const name = FLOW[step];
-    $bar.style.width = Math.round((step / (FLOW.length - 1)) * 100) + '%';
-    $restart.hidden = step === 0;
-    const p = PHASE_OF[name];
-    $phase.hidden = p === undefined;
-    if (p !== undefined) { $phaseName.textContent = PHASES[p]; $phaseCount.textContent = `Paso ${p + 1} de ${PHASES.length}`; }
+  function startFlow(sel) {
+    tests = TEST_ORDER.filter((k) => sel.includes(k));
+    resetState();
+    steps = buildSteps(tests);
+    go(0);
+  }
+
+  function setDark(on) { $app.classList.toggle('dark', on); }
+
+  function go(i) {
+    step = i;
+    const st = steps[step];
+    setDark(false);
+    $bar.style.width = Math.round((step / (steps.length - 1)) * 100) + '%';
+    $restart.hidden = false;
+    if (st.test) {
+      const n = tests.indexOf(st.test) + 1;
+      $phase.hidden = false;
+      $phaseName.textContent = TESTS[st.test].name + (st.eye ? ' · ojo ' + EYE_NAME[st.eye] : '');
+      $phaseCount.textContent = tests.length > 1 ? `Prueba ${n} de ${tests.length}` : '';
+    } else $phase.hidden = true;
     document.onkeydown = null;
     $main.innerHTML = '';
     window.scrollTo(0, 0);
-    SCREENS[name]();
+    SCREENS[st.id](st);
   }
   const next = () => go(step + 1);
 
   function html(str) { $main.innerHTML = str; return $main; }
   function on(sel, fn) { $main.querySelectorAll(sel).forEach((el) => el.addEventListener('click', fn)); }
 
-  // Check / cruz después de cada respuesta
   function showFeedback(kind, text) {
     const fb = $main.querySelector('.fb'); if (!fb) return;
     fb.className = 'fb ' + kind;
     fb.innerHTML = `<span class="fbi ${kind}">${ico(kind === 'ok' ? 'check' : kind === 'bad' ? 'x' : 'dash')}</span><span>${text}</span>`;
     if (kind === 'ok') { try { navigator.vibrate && navigator.vibrate(15); } catch (e) {} }
   }
-  function addTrail(kind) {
-    const t = $main.querySelector('.trail'); if (!t) return;
-    const d = document.createElement('i'); d.className = kind; t.appendChild(d);
-  }
+  function addTrail(kind) { const t = $main.querySelector('.trail'); if (!t) return; const d = document.createElement('i'); d.className = kind; t.appendChild(d); }
 
   function choice({ title, text = '', options, key, multi = false, exclusive }) {
     html(`
@@ -320,8 +368,7 @@
       <div class="grow"></div>
       ${multi ? '<button type="button" class="btn" id="cont" disabled style="margin-top:16px">Continuar</button>' : ''}
     `);
-    const btns = [...$main.querySelectorAll('.opt')];
-    const sel = new Set();
+    const btns = [...$main.querySelectorAll('.opt')], sel = new Set();
     btns.forEach((b) => b.addEventListener('click', () => {
       const i = +b.dataset.i, o = options[i];
       if (!multi) { S[key] = o.value; b.classList.add('sel'); setTimeout(() => (o.then ? o.then() : next()), 220); return; }
@@ -333,89 +380,65 @@
     if (multi) on('#cont', () => { S[key] = [...sel].map((i) => options[i].value).filter((v) => v !== exclusive); next(); });
   }
 
-  // Pantalla "tapa tu ojo"
-  function coverScreen(eye) {
-    const tap = eye === 'R' ? 'izquierdo' : 'derecho';
-    const test = eye === 'R' ? 'derecho' : 'izquierdo';
-    html(`
-      ${eye === 'L' ? `<div class="note">${ico('check')} Ojo derecho completado. Vas por la mitad.</div>` : ''}
-      <span class="eyebadge" style="align-self:center">${ico('eye')} Probaremos tu ojo ${test}</span>
-      <div class="glyph">${ico('eyeoff')}</div>
-      <h2 class="center">Tápate el ojo ${tap}</h2>
-      <p class="center">Usa la palma de la mano, <b>sin presionar</b>. Mantén el otro ojo abierto${S.glasses === 'wearing' ? ' (tápalo por encima de las gafas)' : ''}.</p>
-      <p class="center muted small">Con el brazo estirado (≈ ${Math.round(farDistanceMm() / 10)} cm).</p>
-      <div class="grow"></div>
-      <button type="button" class="btn" id="ok">Listo, ojo ${tap} tapado</button>
-    `);
-    on('#ok', next);
-  }
-
-  // ====== Prueba de agudeza (E de Snellen) ======
+  // ====== Landolt C ======
   const DIRS = { right: 0, down: 90, left: 180, up: 270 };
   const DIR_KEYS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
 
-  function drawE(canvas, strokeDev, dir) {
-    const s = Math.max(1, Math.round(strokeDev)), size = 5 * s;
+  // g = abertura en px reales. El anillo mide 5g de diámetro y su trazo g. fg = nivel de gris del anillo (0 = negro).
+  function drawC(canvas, g, dir, fg = 0) {
+    const size = Math.ceil(5 * g) + 2;
     canvas.width = size; canvas.height = size;
     canvas.style.width = canvas.style.height = size / dpr() + 'px';
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, size, size);
-    ctx.save();
-    ctx.translate(size / 2, size / 2); ctx.rotate((DIRS[dir] * Math.PI) / 180); ctx.translate(-size / 2, -size / 2);
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, s, size);
-    for (let k = 0; k < 3; k++) ctx.fillRect(0, 2 * k * s, size, s);
-    ctx.restore();
-    return s;
+    ctx.translate(size / 2, size / 2); ctx.rotate((DIRS[dir] * Math.PI) / 180);
+    ctx.strokeStyle = `rgb(${fg},${fg},${fg})`; ctx.lineWidth = g; ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.arc(0, 0, 2 * g, 0.25, 2 * Math.PI - 0.25); ctx.stroke();   // abertura de g de ancho (≈ 0,5 rad a radio 2g)
   }
 
-  function eTest({ eye, onDone, practice = false, intro = '' }) {
+  // mode: 'acuity' | 'contrast' | 'practice'
+  function cTest({ eye, mode, onDone, intro = '' }) {
     const dist = farDistanceMm();
-    const levels = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0];
-    const st = makeStair(levels, 2);
+    const acu = CONFIG.acuityLevels, con = CONFIG.contrastLevels;
+    const st = makeStair(mode === 'contrast' ? con.length : acu.length, mode === 'contrast' ? 1 : 2);
     let dir = null, busy = false;
-
     html(`
       <div class="test">
-        ${eye ? `<span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${eye === 'R' ? 'derecho' : 'izquierdo'}</span>` : ''}
-        ${intro || `<div class="prompt">¿Hacia dónde apuntan las patas de la E?</div>
-        <div class="hint">${isTouch ? 'Si no la ves, toca «No la veo». No adivines.' : 'Usa las flechas del teclado. Si no la ves, toca «No la veo».'}</div>`}
+        ${eye ? `<span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>` : ''}
+        ${intro || `<div class="prompt">¿Hacia dónde está la abertura del anillo?</div>
+        <div class="hint">${mode === 'contrast' ? 'Algunos se ven muy tenues. Si no lo ves, toca «No lo veo». No adivines.' : isTouch ? 'Si no lo ves, toca «No lo veo». No adivines.' : 'Usa las flechas del teclado. Si no lo ves, toca «No lo veo».'}</div>`}
         <div class="stage"><canvas id="cv"></canvas></div>
         <div class="fb" aria-live="polite"></div>
         <div class="trail"></div>
         <div class="pad">
           <button type="button" class="up" data-d="up" aria-label="Arriba">${ico('up')}</button>
           <button type="button" class="left" data-d="left" aria-label="Izquierda">${ico('left')}</button>
-          <button type="button" class="nosee" data-d="none">No la veo</button>
+          <button type="button" class="nosee" data-d="none">No lo veo</button>
           <button type="button" class="right" data-d="right" aria-label="Derecha">${ico('right')}</button>
           <button type="button" class="down" data-d="down" aria-label="Abajo">${ico('down')}</button>
         </div>
       </div>
     `);
     const cv = $main.querySelector('#cv'), fb = $main.querySelector('.fb');
-
     function show() {
       const opts = Object.keys(DIRS).filter((d) => d !== dir);
-      dir = opts[rnd(opts.length)];
+      dir = pick(opts);
       fb.className = 'fb'; fb.innerHTML = '';
-      if (practice) { drawE(cv, 2.4 * S.devPxPerMm, dir); return; }   // E de 12 mm
-      const dec = levels[st.idx];
-      const target = (dist * ARCMIN / dec) * S.devPxPerMm;   // trazo en px reales
-      const s = drawE(cv, target, dir);
-      st.actual[st.idx] = (dist * ARCMIN * S.devPxPerMm) / s; // agudeza que realmente se mostró
+      if (mode === 'practice') { drawC(cv, 2.4 * S.devPxPerMm, dir); return; }
+      if (mode === 'acuity') { drawC(cv, (dist * ARCMIN / acu[st.idx]) * S.devPxPerMm, dir, 0); return; }
+      drawC(cv, (dist * ARCMIN / CONFIG.contrastTestAcuity) * S.devPxPerMm, dir, Math.round(255 * (1 - con[st.idx])));
     }
     function answer(d) {
       if (busy) return;
       busy = true;
-      const correct = d === dir;
-      const kind = d === 'none' ? 'skip' : correct ? 'ok' : 'bad';
-      showFeedback(kind, kind === 'ok' ? 'Correcto' : kind === 'bad' ? `Incorrecto: apuntaba ${DIR_WORD[dir]}` : `Anotado: no la viste. Apuntaba ${DIR_WORD[dir]}`);
+      const correct = d === dir, kind = d === 'none' ? 'skip' : correct ? 'ok' : 'bad';
+      showFeedback(kind, kind === 'ok' ? 'Correcto' : kind === 'bad' ? `Incorrecto: la abertura estaba ${DIR_WORD[dir]}` : `Anotado: no lo viste. La abertura estaba ${DIR_WORD[dir]}`);
       addTrail(kind);
-      if (!practice) S.log[eye].push(correct);
-      if (practice) { setTimeout(() => onDone(correct), CONFIG.feedbackMs); return; }
+      if (mode === 'practice') { setTimeout(() => onDone(correct), CONFIG.feedbackMs); return; }
+      S.log[mode][eye].push(correct);
       stairAnswer(st, correct);
       setTimeout(() => {
-        if (st.done) { onDone(stairScore(st)); return; }
+        if (st.done) { onDone(st.best >= 0 ? (mode === 'acuity' ? acu[st.best] : con[st.best]) : (mode === 'acuity' ? 0 : null)); return; }
         show(); busy = false;
       }, CONFIG.feedbackMs);
     }
@@ -432,20 +455,18 @@
     let lines = '';
     for (let a = 0; a < 180; a += 15) {
       const t = (a * Math.PI) / 180, c = Math.cos(t), s = Math.sin(t);
-      for (const sign of [1, -1]) {
-        lines += `<line x1="${r + sign * c * r * 0.18}" y1="${r - sign * s * r * 0.18}" x2="${r + sign * c * (r - sw)}" y2="${r - sign * s * (r - sw)}" stroke="#000" stroke-width="${sw}" stroke-linecap="butt"/>`;
-      }
+      for (const sign of [1, -1]) lines += `<line x1="${r + sign * c * r * 0.18}" y1="${r - sign * s * r * 0.18}" x2="${r + sign * c * (r - sw)}" y2="${r - sign * s * (r - sw)}" stroke="#000" stroke-width="${sw}"/>`;
     }
     html(`
       <div class="test">
-        <span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${eye === 'R' ? 'derecho' : 'izquierdo'} · sigue tapando el otro</span>
+        <span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>
         <div class="prompt">¿Todas las líneas se ven igual de negras y nítidas?</div>
-        <div class="hint">Mira el punto del centro, con el brazo estirado.</div>
-        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${lines}<circle cx="${r}" cy="${r}" r="${Math.max(3, mm)}" fill="#000"/></svg></div>
+        <div class="hint">Mira el punto del centro. Pantalla a 30 cm.</div>
+        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#fff">${lines}<circle cx="${r}" cy="${r}" r="${Math.max(3, mm)}" fill="#000"/></svg></div>
         <div class="fb" aria-live="polite"></div>
         <div class="stack">
           <button type="button" class="btn" data-v="ok">Sí, todas se ven iguales</button>
-          <button type="button" class="btn" data-v="flag">No, algunas se ven más oscuras o borrosas</button>
+          <button type="button" class="btn outline" data-v="flag">No, algunas se ven más oscuras o borrosas</button>
           <button type="button" class="btn link" data-v="unsure">No estoy seguro</button>
         </div>
       </div>
@@ -453,33 +474,87 @@
     let done = false;
     on('[data-v]', (e) => {
       if (done) return; done = true;
-      S.astig[eye] = e.currentTarget.dataset.v; track('astig', { eye, value: S.astig[eye] });
+      S.astig[eye] = e.currentTarget.dataset.v;
+      track('vc_test_complete', { test: 'astig', eye, result: S.astig[eye] });
       showFeedback('ok', 'Respuesta registrada');
       setTimeout(next, 600);
     });
   }
 
-  // ====== Visión de cerca (números) ======
-  function makeNumber() {
-    const digits = []; while (digits.length < 3) { const d = 1 + rnd(9); if (!digits.includes(d)) digits.push(d); }
-    return digits.join('');
-  }
-  function distractors(n) {
-    const set = new Set([n]);
-    const perms = [n[1] + n[0] + n[2], n[0] + n[2] + n[1], n[2] + n[1] + n[0]];
-    perms.forEach((p) => set.size < 3 && set.add(p));
-    while (set.size < 4) { const a = n.split(''); a[rnd(3)] = String(1 + rnd(9)); set.add(a.join('')); }
-    return [...set].sort(() => Math.random() - 0.5);
-  }
-
-  function nearTest() {
-    const levels = [0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0];
-    const st = makeStair(levels, 1);
-    let num = null, busy = false;
+  // ====== Rejilla de Amsler ======
+  function amslerScreen(eye) {
+    const size = Math.min(Math.floor(window.innerWidth - 32), 340), n = 20, c = size / n;
+    let grid = '';
+    for (let i = 0; i <= n; i++) { const p = Math.min(size - 0.5, Math.max(0.5, i * c)); grid += `<line x1="${p}" y1="0" x2="${p}" y2="${size}"/><line x1="0" y1="${p}" x2="${size}" y2="${p}"/>`; }
     html(`
       <div class="test">
-        <div class="prompt">¿Qué número ves?</div>
-        <div class="hint">Celular a distancia de lectura (≈ 40 cm), con ambos ojos abiertos.</div>
+        <span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>
+        <div class="prompt">Mira fijo el punto del centro.<br>¿Alguna línea se ve ondulada, torcida, más oscura, o falta una zona?</div>
+        <div class="hint">Pantalla a 30 cm.</div>
+        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#fff"><g stroke="#000" stroke-width="1">${grid}</g><circle cx="${size / 2}" cy="${size / 2}" r="5" fill="#000"/></svg></div>
+        <div class="fb" aria-live="polite"></div>
+        <div class="stack">
+          <button type="button" class="btn" data-v="ok">No, todo se ve derecho y completo</button>
+          <button type="button" class="btn outline" data-v="flag">Sí, veo algo raro</button>
+        </div>
+      </div>
+    `);
+    let done = false;
+    on('[data-v]', (e) => {
+      if (done) return; done = true;
+      S.amsler[eye] = e.currentTarget.dataset.v;
+      track('vc_test_complete', { test: 'amsler', eye, result: S.amsler[eye] });
+      showFeedback('ok', 'Respuesta registrada');
+      setTimeout(next, 600);
+    });
+  }
+
+  // ====== Visión de color: láminas propias (puntos) ======
+  const PLATE_NUMBERS = [12, 15, 16, 26, 29, 35, 42, 45, 57, 73, 74, 96];
+  const PLATES = [
+    { key: 'control', inside: ['#E8892B', '#F0A04B', '#D9731E', '#F4B266'], outside: ['#7C8A99', '#9AA6B2', '#6B7886', '#8794A1'] },
+    { key: 'rg1', inside: ['#8DB255', '#A5C46A', '#7AA043', '#9BBB60'], outside: ['#E98B50', '#D96C3D', '#F0A56E', '#E27C47'] },
+    { key: 'rg2', inside: ['#D9573F', '#E26E57', '#C94730', '#E4806B'], outside: ['#8DB255', '#A3BE6A', '#7FA14A', '#98B65E'] },
+  ];
+
+  function drawPlate(canvas, number, pal, cssSize) {
+    const sc = Math.min(dpr(), 2), size = Math.round(cssSize * sc);
+    canvas.width = size; canvas.height = size; canvas.style.width = canvas.style.height = cssSize + 'px';
+    const m = document.createElement('canvas'); m.width = m.height = size;
+    const mx = m.getContext('2d'); mx.fillStyle = '#000'; mx.textAlign = 'center'; mx.textBaseline = 'middle';
+    mx.font = `900 ${size * 0.62}px "Arial Black", Arial, Helvetica, sans-serif`;
+    mx.fillText(String(number), size / 2, size / 2 + size * 0.03);
+    const mask = mx.getImageData(0, 0, size, size).data;
+    const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, size, size);
+    const R = size / 2, rMin = size * 0.011, rMax = size * 0.03, cell = rMax * 2 + 2, cols = Math.ceil(size / cell) + 1;
+    const grid = new Map(), dots = [];
+    for (let t = 0; t < 9000; t++) {
+      const r = rMin + Math.random() * (rMax - rMin), a = Math.random() * 2 * Math.PI, d = Math.sqrt(Math.random()) * (R - r - 2);
+      const x = R + Math.cos(a) * d, y = R + Math.sin(a) * d, cx = Math.floor(x / cell), cy = Math.floor(y / cell);
+      let ok = true;
+      for (let i = cx - 1; i <= cx + 1 && ok; i++) for (let j = cy - 1; j <= cy + 1 && ok; j++) {
+        const arr = grid.get(i + j * cols); if (!arr) continue;
+        for (const q of arr) { const dx = q.x - x, dy = q.y - y, rr = q.r + r + 1.2; if (dx * dx + dy * dy < rr * rr) { ok = false; break; } }
+      }
+      if (!ok) continue;
+      const dot = { x, y, r }; dots.push(dot);
+      const k = cx + cy * cols; (grid.get(k) || grid.set(k, []).get(k)).push(dot);
+    }
+    dots.forEach((d) => {
+      const inside = mask[((Math.round(d.y) * size) + Math.round(d.x)) * 4 + 3] > 128;
+      ctx.fillStyle = pick(inside ? pal.inside : pal.outside);
+      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI); ctx.fill();
+    });
+  }
+
+  function colorTest() {
+    const cssSize = Math.min(window.innerWidth - 32, 300);
+    let idx = 0, busy = false, answer = null;
+    const results = [];
+    html(`
+      <div class="test">
+        <div class="prompt">¿Qué número ves en la lámina?</div>
+        <div class="hint">Con ambos ojos abiertos, a 30 cm. Si no ves ninguno, toca «No veo ningún número».</div>
         <div class="stage"><canvas id="cv"></canvas></div>
         <div class="fb" aria-live="polite"></div>
         <div class="trail"></div>
@@ -487,137 +562,137 @@
       </div>
     `);
     const cv = $main.querySelector('#cv'), opts = $main.querySelector('#opts'), fb = $main.querySelector('.fb');
-
     function show() {
-      num = makeNumber();
       fb.className = 'fb'; fb.innerHTML = '';
-      const dec = levels[st.idx];
-      const capDev = ((CONFIG.nearMm * 5 * ARCMIN) / dec) * S.devPxPerMm;  // altura de los números en px reales
-      const fs = capDev / 0.716;                                         // altura de mayúsculas Arial ≈ 0,716 em
-      const ctx = cv.getContext('2d');
-      ctx.font = `${fs}px Arial, Helvetica, sans-serif`;
-      const w = Math.ceil(ctx.measureText(num).width + fs * 0.4), h = Math.ceil(fs * 1.2);
-      cv.width = w; cv.height = h;
-      cv.style.width = w / dpr() + 'px'; cv.style.height = h / dpr() + 'px';
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
-      ctx.font = `${fs}px Arial, Helvetica, sans-serif`;
-      ctx.fillStyle = '#000'; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
-      ctx.letterSpacing = '0px';
-      ctx.fillText(num, w / 2, h / 2 + capDev / 2);
-      st.actual[st.idx] = dec;
-      opts.innerHTML = distractors(num).map((n) => `<button type="button" data-n="${n}">${n}</button>`).join('') +
-        '<button type="button" class="nosee" data-n="none">No lo puedo leer</button>';
-      opts.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => answer(b.dataset.n)));
+      answer = pick(PLATE_NUMBERS);
+      drawPlate(cv, answer, PLATES[idx], cssSize);
+      const others = shuffle(PLATE_NUMBERS.filter((n) => n !== answer)).slice(0, 3);
+      opts.innerHTML = shuffle([answer, ...others]).map((n) => `<button type="button" data-n="${n}">${n}</button>`).join('') + '<button type="button" class="nosee" data-n="none">No veo ningún número</button>';
+      opts.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => respond(b.dataset.n)));
     }
-    function answer(n) {
-      if (busy) return;
-      busy = true;
-      const correct = n === num;
-      const kind = n === 'none' ? 'skip' : correct ? 'ok' : 'bad';
-      showFeedback(kind, kind === 'ok' ? 'Correcto' : kind === 'bad' ? `Incorrecto: era ${num}` : `Anotado: no lo leíste. Era ${num}`);
+    function respond(n) {
+      if (busy) return; busy = true;
+      const correct = n === String(answer), kind = n === 'none' ? 'skip' : correct ? 'ok' : 'bad';
+      showFeedback(kind, kind === 'ok' ? 'Correcto' : kind === 'bad' ? `Incorrecto: era el ${answer}` : `Anotado: no lo viste. Era el ${answer}`);
       addTrail(kind);
-      S.log.near.push(correct);
-      stairAnswer(st, correct);
+      S.log.color.push(correct);
+      results.push({ key: PLATES[idx].key, correct });
       setTimeout(() => {
-        if (st.done) { S.near = stairScore(st); track('near', { decimal: S.near }); next(); return; }
+        idx++;
+        if (idx >= PLATES.length) { S.color = results; track('vc_test_complete', { test: 'color', eye: 'both', result: results.map((r) => r.key + ':' + (r.correct ? 1 : 0)).join(',') }); next(); return; }
         show(); busy = false;
       }, CONFIG.feedbackMs);
     }
+    if (query.has('debug')) window.__vc = { answer: () => answer };
     show();
-  }
-
-  // ====== Rejilla de Amsler ======
-  function amslerScreen(eye) {
-    const tap = eye === 'R' ? 'izquierdo' : 'derecho';
-    const size = Math.min(Math.floor(window.innerWidth - 32), 360), n = 20, c = size / n;
-    let grid = '';
-    for (let i = 0; i <= n; i++) {
-      const p = Math.min(size - 0.5, Math.max(0.5, i * c));
-      grid += `<line x1="${p}" y1="0" x2="${p}" y2="${size}"/><line x1="0" y1="${p}" x2="${size}" y2="${p}"/>`;
-    }
-    html(`
-      <div class="test">
-        ${eye === 'L' ? `<div class="note">${ico('check')} Último paso. Tu resultado está listo al terminar.</div>` : ''}
-        <span class="eyebadge" style="align-self:center">${ico('eyeoff')} Tápate el ojo ${tap}</span>
-        <div class="prompt">Mira fijo el punto del centro.<br>¿Alguna línea se ve ondulada, torcida o falta una zona?</div>
-        <div class="hint">A distancia de lectura (≈ 40 cm).</div>
-        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><g stroke="#000" stroke-width="1">${grid}</g><circle cx="${size / 2}" cy="${size / 2}" r="5" fill="#000"/></svg></div>
-        <div class="fb" aria-live="polite"></div>
-        <div class="stack">
-          <button type="button" class="btn" data-v="ok">No, todo se ve derecho y completo</button>
-          <button type="button" class="btn" data-v="flag">Sí, veo líneas onduladas o zonas borrosas</button>
-        </div>
-      </div>
-    `);
-    let done = false;
-    on('[data-v]', (e) => {
-      if (done) return; done = true;
-      S.amsler[eye] = e.currentTarget.dataset.v; track('amsler', { eye, value: S.amsler[eye] });
-      showFeedback('ok', 'Respuesta registrada');
-      setTimeout(next, 600);
-    });
   }
 
   // ====== Pantallas ======
   const SCREENS = {
-    welcome() {
-      resetState();
+    disclaimer() {
       html(`
-        <p class="kicker">Test visual</p>
-        <h1>¿Ves todo lo que deberías ver?</h1>
-        <p class="muted" style="font-size:18px">Responde cinco pruebas cortas y conoce el estado real de tu visión. Tu resultado aparece al terminar.</p>
-        <div class="stats">
-          <div><b>3 min</b><span>de duración</span></div>
-          <div><b>5</b><span>pruebas cortas</span></div>
-          <div><b>1</b><span>resultado claro</span></div>
-        </div>
-        <div class="card">
-          <b>Lo que vas a descubrir</b>
-          <ul class="list" style="margin-top:6px">
-            <li>${ico('check')}<span>Qué tan nítido ves de lejos, con cada ojo</span></li>
-            <li>${ico('check')}<span>Si hay señales de astigmatismo</span></li>
-            <li>${ico('check')}<span>Cómo está tu visión de cerca</span></li>
-            <li>${ico('check')}<span>Si tu visión central necesita atención</span></li>
-          </ul>
+        <p class="kicker">Antes de empezar</p>
+        <h2>Esto es un tamizaje, no un diagnóstico</h2>
+        <div class="card stack">
+          <p style="margin:0">Estas pruebas te dan una <b>orientación</b> sobre tu vista. No reemplazan un examen visual con un optómetra.</p>
+          <p style="margin:0">Si tienes dolor en los ojos, pérdida repentina de visión, destellos o manchas nuevas, no esperes: acude a urgencias.</p>
+          <p style="margin:0">No te pedimos datos personales para hacer el test.</p>
         </div>
         <div class="grow"></div>
-        <button type="button" class="btn accent" id="go" style="margin-top:18px">Comenzar mi test</button>
-        <p class="small muted center" style="margin:12px 0 0">${ico('card')} Ten a la mano una tarjeta (cédula, débito o crédito) para ajustar la pantalla.</p>
-        <p class="small muted center" style="margin:8px 0 0">Es una prueba de orientación y no reemplaza un examen con un optómetra.</p>
+        <button type="button" class="btn" id="ok" style="margin-top:18px">Estoy de acuerdo</button>
       `);
-      on('#go', () => { track('start', { source: new URLSearchParams(location.search).get('utm_source') || 'directo' }); keepAwake(); next(); });
+      on('#ok', () => { track('vc_start', { source: query.get('utm_source') || 'directo', tests: tests.join(',') }); keepAwake(); next(); });
+    },
+
+    brightness() {
+      const saved = !!store.get('gg_vc_cal');
+      html(`
+        <div class="glyph">${ico('sun')}</div>
+        <h2 class="center">Sube el brillo al máximo</h2>
+        <p class="center">Así los tamaños y los contrastes se ven como deben. Busca un lugar con buena luz y sin reflejos en la pantalla.</p>
+        <div class="grow"></div>
+        <div class="stack" style="margin-top:16px">
+          <button type="button" class="btn" id="ok">Listo, brillo al máximo</button>
+          ${saved && steps.some((s) => s.id === 'card') ? '<button type="button" class="btn link" id="recal">Recalibrar el tamaño de mi pantalla</button>' : ''}
+        </div>
+      `);
+      on('#ok', next);
+      on('#recal', () => { store.del('gg_vc_cal'); next(); });
+    },
+
+    card() {
+      try {
+        const saved = JSON.parse(store.get('gg_vc_cal') || 'null');
+        if (saved && saved.dpr === dpr() && saved.w === screen.width && saved.pxmm > 0) {
+          S.devPxPerMm = saved.pxmm; S.calibrated = true; track('vc_calibration_done', { saved: true }); next(); return;
+        }
+      } catch (e) {}
+      let wCss = Math.round(CARD_SHORT_MM * cssPxPerMm());
+      const maxW = Math.min(window.innerWidth - 24, 520), minW = 120;
+      wCss = Math.min(maxW, Math.max(minW, wCss));
+      html(`
+        <h2>Ajusta el tamaño de tu pantalla</h2>
+        <p>Pon una tarjeta (cédula, débito o crédito) <b>de pie</b> contra la pantalla, dentro del recuadro. Usa <b>−</b> y <b>+</b> hasta que el recuadro mida <b>lo mismo de ancho</b> que la tarjeta.</p>
+        <div class="calib-wrap"><div class="cardshape" id="shape"></div></div>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="Más pequeño">−</button>
+          <input type="range" id="range" min="${minW}" max="${maxW}" step="0.5" value="${wCss}" aria-label="Ancho">
+          <button type="button" id="plus" aria-label="Más grande">+</button>
+        </div>
+        <div class="grow"></div>
+        <div class="stack" style="margin-top:16px">
+          <button type="button" class="btn" id="ok">Listo, coincide</button>
+          <button type="button" class="btn link" id="skip">Continuar sin calibrar</button>
+          <p class="small muted center" id="warn" hidden>Sin calibrar, los resultados serán menos precisos.</p>
+        </div>
+      `);
+      const shape = $main.querySelector('#shape'), range = $main.querySelector('#range');
+      function paint() {
+        shape.style.width = wCss + 'px'; shape.style.height = Math.round(wCss * 1.586) + 'px';
+        const r = (3.18 / CARD_SHORT_MM) * wCss; shape.style.borderTopLeftRadius = shape.style.borderTopRightRadius = r + 'px';
+        range.value = wCss;
+      }
+      const set = (v) => { wCss = Math.min(maxW, Math.max(minW, v)); paint(); };
+      range.addEventListener('input', () => set(+range.value));
+      [['#minus', -0.5], ['#plus', 0.5]].forEach(([sel, d]) => {
+        const b = $main.querySelector(sel); let t, iv;
+        const stop = () => { clearTimeout(t); clearInterval(iv); };
+        b.addEventListener('pointerdown', (e) => { e.preventDefault(); set(wCss + d * 2); t = setTimeout(() => { iv = setInterval(() => set(wCss + d * 2), 40); }, 350); });
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, stop));
+      });
+      paint();
+      on('#ok', () => {
+        S.devPxPerMm = (wCss / CARD_SHORT_MM) * dpr(); S.calibrated = true;
+        store.set('gg_vc_cal', JSON.stringify({ pxmm: S.devPxPerMm, dpr: dpr(), w: screen.width }));
+        track('vc_calibration_done', { saved: false }); next();
+      });
+      on('#skip', () => {
+        const w = $main.querySelector('#warn');
+        if (w.hidden) { w.hidden = false; $main.querySelector('#skip').textContent = 'Entiendo, continuar sin calibrar'; return; }
+        S.calibrated = false; track('vc_calibration_skipped'); next();
+      });
     },
 
     glasses() {
       choice({
-        title: '¿Usas gafas o lentes de contacto?', key: 'glasses',
+        title: 'Usa tus gafas o lentes si usas', text: '¿Usas gafas o lentes de contacto?', key: 'glasses',
         options: [
           { label: 'Sí, y los tengo puestos', value: 'wearing' },
           { label: 'Sí, pero no los tengo puestos', value: 'notWearing', then: () => {
             html(`
               <div class="glyph">${ico('glasses')}</div>
-              <h2 class="center">Póntelos para el test</h2>
+              <h2 class="center">Ponte tus gafas o lentes</h2>
               <p class="center">Así sabremos si tu fórmula actual todavía te sirve.</p>
               <div class="grow"></div>
               <div class="stack">
                 <button type="button" class="btn" id="on">Ya me los puse</button>
-                <button type="button" class="btn ghost" id="off">No los tengo a mano, seguir así</button>
+                <button type="button" class="btn outline" id="off">No los tengo a la mano</button>
               </div>
             `);
             on('#on', () => { S.glasses = 'wearing'; next(); });
             on('#off', next);
           } },
           { label: 'No uso', value: 'none' },
-        ],
-      });
-    },
-
-    age() {
-      choice({
-        title: '¿Cuántos años tienes?', key: 'age',
-        options: [
-          { label: 'Menos de 18', value: 'u18' }, { label: '18 a 39', value: '18-39' },
-          { label: '40 a 59', value: '40-59' }, { label: '60 o más', value: '60+' },
         ],
       });
     },
@@ -635,207 +710,265 @@
       });
     },
 
-    lastExam() {
-      choice({
-        title: '¿Cuándo fue tu último examen visual?', key: 'lastExam',
-        options: [
-          { label: 'Hace menos de 1 año', value: '<1' }, { label: 'Entre 1 y 2 años', value: '1-2' },
-          { label: 'Hace más de 2 años', value: '>2' }, { label: 'Nunca o no me acuerdo', value: 'never' },
-        ],
-      });
-    },
-
-    calibrate() {
-      let wCss = Math.round(CARD_SHORT_MM * cssPxPerMm());
-      const maxW = Math.min(window.innerWidth - 24, 520), minW = 120;
-      wCss = Math.min(maxW, Math.max(minW, wCss));
-      html(`
-        <h2>Ajusta el tamaño de tu pantalla</h2>
-        <p>Pon tu tarjeta <b>de pie</b> contra la pantalla, dentro del recuadro. Usa <b>−</b> y <b>+</b> hasta que el recuadro tenga <b>el mismo ancho</b> que la tarjeta.</p>
-        <div class="calib-wrap"><div class="cardshape" id="shape"></div></div>
-        <div class="stepper">
-          <button type="button" id="minus" aria-label="Más pequeño">−</button>
-          <input type="range" id="range" min="${minW}" max="${maxW}" step="0.5" value="${wCss}" aria-label="Ancho">
-          <button type="button" id="plus" aria-label="Más grande">+</button>
-        </div>
-        <div class="grow"></div>
-        <div class="stack" style="margin-top:16px">
-          <button type="button" class="btn" id="ok">Listo, coincide</button>
-          <button type="button" class="btn link" id="skip">No tengo tarjeta a mano</button>
-        </div>
-      `);
-      const shape = $main.querySelector('#shape'), range = $main.querySelector('#range');
-      const radius = () => (3.18 / CARD_SHORT_MM) * wCss;
-      function paint() {
-        shape.style.width = wCss + 'px'; shape.style.height = Math.round(wCss * 0.75) + 'px';
-        shape.style.borderTopLeftRadius = shape.style.borderTopRightRadius = radius() + 'px';
-        range.value = wCss;
-      }
-      const set = (v) => { wCss = Math.min(maxW, Math.max(minW, v)); paint(); };
-      range.addEventListener('input', () => set(+range.value));
-      [['#minus', -0.5], ['#plus', 0.5]].forEach(([sel, d]) => {
-        const b = $main.querySelector(sel); let t, iv;
-        const stop = () => { clearTimeout(t); clearInterval(iv); };
-        b.addEventListener('pointerdown', (e) => { e.preventDefault(); set(wCss + d * 2); t = setTimeout(() => { iv = setInterval(() => set(wCss + d * 2), 40); }, 350); });
-        ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, stop));
-      });
-      paint();
-      on('#ok', () => { S.devPxPerMm = (wCss / CARD_SHORT_MM) * dpr(); S.calibrated = true; track('calibrated', { pxPerMm: +cssPxPerMm().toFixed(2) }); next(); });
-      on('#skip', () => { S.calibrated = false; track('calibration_skipped'); next(); });
-    },
-
-    farSetup() {
-      const cm = Math.round(farDistanceMm() / 10);
-      const phone = cm <= 65;
+    armSetup() {
+      const cm = Math.round(farDistanceMm() / 10), phone = cm <= 65;
       html(`
         <div class="glyph">${ico(phone ? 'phone' : 'monitor')}</div>
         <h2 class="center">${phone ? 'Estira el brazo' : `Aléjate a ${(cm / 100).toLocaleString('es-CO')} m de la pantalla`}</h2>
         <p class="center">${phone
           ? `Sostén el celular con el <b>brazo totalmente estirado</b> (≈ ${cm} cm) y a la altura de tus ojos.`
-          : `Para que el test sea exacto en esta pantalla, siéntate a unos <b>${cm} cm</b>. Responde con las <b>flechas del teclado</b>.<br><span class="small muted">El test funciona mejor desde el celular.</span>`}</p>
-        <div class="card small">
-          <div class="stack">
-            <div>${ico('sun')} Sube el brillo de la pantalla al máximo.</div>
-            <div>${ico('ruler')} Mantén la misma distancia durante toda la prueba.</div>
-          </div>
-        </div>
+          : `Para que el test sea exacto en esta pantalla, siéntate a unos <b>${cm} cm</b> y responde con las <b>flechas del teclado</b>.<br><span class="small muted">El test funciona mejor desde el celular.</span>`}</p>
+        <div class="card small"><div class="stack"><div>${ico('ruler')} Mantén la misma distancia durante toda la prueba.</div></div></div>
         <div class="grow"></div>
         <button type="button" class="btn" id="ok" style="margin-top:16px">Entendido</button>
       `);
       on('#ok', next);
     },
 
+    closeSetup() {
+      html(`
+        <div class="glyph">${ico('phone')}</div>
+        <h2 class="center">Acerca la pantalla a 30 cm</h2>
+        <p class="center">Más o menos el largo de una regla escolar, o de tu antebrazo hasta el codo. Mantén esa distancia en las siguientes pruebas.</p>
+        <div class="grow"></div>
+        <button type="button" class="btn" id="ok" style="margin-top:16px">Entendido</button>
+      `);
+      on('#ok', next);
+    },
+
+    colorSetup() {
+      html(`
+        <div class="glyph">${ico('eye')}</div>
+        <h2 class="center">Ahora, los colores</h2>
+        <p class="center">Con <b>ambos ojos abiertos</b>, a unos <b>30 cm</b> de la pantalla. Verás tres láminas con un número escondido entre puntos de colores.</p>
+        <div class="grow"></div>
+        <button type="button" class="btn" id="ok" style="margin-top:16px">Listo</button>
+      `);
+      on('#ok', next);
+    },
+
     practice() {
-      const run = (retry) => eTest({
-        practice: true,
+      const run = (retry) => cTest({
+        mode: 'practice',
         intro: `<h2 class="center">Practiquemos primero</h2>
-          <p class="center">Toca la flecha hacia donde apuntan las <b>patas</b> de la E. Te diremos si acertaste.</p>
-          ${retry ? '<p class="center" style="color:var(--bad);font-weight:700">Mira hacia dónde quedan abiertas las 3 patas e inténtalo otra vez.</p>' : ''}`,
+          <p class="center">Toca la flecha hacia donde está la <b>abertura</b> del anillo. Te diremos si acertaste.</p>
+          ${retry ? '<p class="center" style="color:var(--gg-alert);font-weight:700">Mira por dónde se corta el anillo e inténtalo otra vez.</p>' : ''}`,
         onDone: (ok) => (ok ? next() : run(true)),
       });
       run(false);
     },
 
-    coverR() { coverScreen('R'); },
-    acuityR() { eTest({ eye: 'R', onDone: (v) => { S.far.R = v; track('acuity', { eye: 'R', decimal: v }); next(); } }); },
-    astigR() { astigScreen('R'); },
-    coverL() { coverScreen('L'); },
-    acuityL() { eTest({ eye: 'L', onDone: (v) => { S.far.L = v; track('acuity', { eye: 'L', decimal: v }); next(); } }); },
-    astigL() { astigScreen('L'); },
-
-    nearSetup() {
+    cover(st) {
+      const tap = st.eye === 'R' ? 'izquierdo' : 'derecho';
       html(`
-        <div class="note">${ico('check')} Ambos ojos completados.</div>
-        <div class="glyph">${ico('book')}</div>
-        <h2 class="center">Ahora, de cerca</h2>
-        <p class="center">Destapa los ojos y acerca el celular a <b>distancia de lectura</b> (≈ 40 cm), como cuando lees un mensaje.</p>
-        ${S.glasses === 'wearing' ? '<p class="center muted small">Si usas gafas para leer, póntelas.</p>' : ''}
+        ${st.eye === 'L' ? `<div class="note">${ico('check')} Ojo derecho completado. Vas por la mitad.</div>` : ''}
+        <span class="eyebadge" style="align-self:center">${ico('eye')} Probaremos tu ojo ${EYE_NAME[st.eye]}</span>
+        <div class="glyph">${ico('eyeoff')}</div>
+        <h2 class="center">Tápate el ojo ${tap}</h2>
+        <p class="center">Usa la palma de la mano, <b>sin presionar</b>. Mantén el otro ojo abierto${S.glasses === 'wearing' ? ' (tápalo por encima de las gafas)' : ''}.</p>
+        <p class="center muted small">${st.dist === 'arm' ? `Con el brazo estirado (≈ ${Math.round(farDistanceMm() / 10)} cm).` : 'Pantalla a 30 cm.'}</p>
         <div class="grow"></div>
-        <button type="button" class="btn" id="ok">Listo</button>
+        <button type="button" class="btn" id="ok">Listo, ojo ${tap} tapado</button>
       `);
       on('#ok', next);
     },
-    near() { nearTest(); },
-    amslerR() { amslerScreen('R'); },
-    amslerL() { amslerScreen('L'); },
+
+    acuity(st) { cTest({ eye: st.eye, mode: 'acuity', onDone: (v) => { S.acuity[st.eye] = v; track('vc_test_complete', { test: 'acuity', eye: st.eye, result: snellen(v) }); next(); } }); },
+    contrast(st) { cTest({ eye: st.eye, mode: 'contrast', onDone: (v) => { S.contrast[st.eye] = v; track('vc_test_complete', { test: 'contrast', eye: st.eye, result: v === null ? 'none' : v }); next(); } }); },
+    astig(st) { astigScreen(st.eye); },
+    amsler(st) { amslerScreen(st.eye); },
+    color() { colorTest(); },
 
     results() {
       const R = evaluate();
-      track('complete', { verdict: R.level, reasons: R.reasons.join(',') });
-      const labels = ['Visión de lejos', 'Astigmatismo', 'Visión de cerca', 'Visión central'];
+      S.R = R;
+      const labels = tests.map((k) => TESTS[k].name);
       html(`
         <div class="spin" role="status" aria-label="Analizando"></div>
         <h2 class="center">Analizando tus respuestas</h2>
-        <div class="steps">${labels.map((l, i) => `<div style="animation-delay:${0.25 + i * 0.4}s">${ico('check')} ${l}</div>`).join('')}</div>
+        <div class="steps">${labels.map((l, i) => `<div style="animation-delay:${0.25 + i * 0.35}s">${ico('check')} ${l}</div>`).join('')}</div>
         <div class="grow"></div>
       `);
-      setTimeout(() => renderResults(R), 2000);
+      $restart.hidden = true;
+      setTimeout(() => renderResults(R), 600 + labels.length * 350 + 400);
     },
   };
 
+  // ====== Interpretación ======
+  const hits = (arr) => `${arr.filter(Boolean).length} de ${arr.length}`;
+  const rank = { excelente: 0, bien: 1, revisar: 2 };
+  function evaluate() {
+    const items = [], t = new Set(tests);
+    let anyRevisar = false, anyBien = false, urgent = false;
+    const add = (it) => { items.push(it); if (it.s === 'revisar') anyRevisar = true; if (it.s === 'bien') anyBien = true; };
+    const corr = S.glasses === 'wearing' ? ' (con tu corrección actual)' : '';
+
+    if (t.has('acuity')) {
+      ['R', 'L'].forEach((eye) => {
+        const v = S.acuity[eye] || 0;
+        const s = v >= 0.8 ? 'excelente' : v >= 0.63 ? 'bien' : 'revisar';
+        add({ s, k: 'agudeza', t: `Agudeza · ojo ${EYE_NAME[eye]}: ${snellen(v)}`, d: (s === 'excelente' ? `Ves con mucha nitidez${corr}.` : s === 'bien' ? `Ves bien, con un pequeño margen de mejora${corr}.` : `Por debajo de lo esperado${corr}. Podrías necesitar ${S.glasses === 'wearing' ? 'actualizar tu fórmula' : 'gafas'}.`) + ` Aciertos: ${hits(S.log.acuity[eye])}.` });
+      });
+      const fr = S.acuity.R || 0, fl = S.acuity.L || 0;
+      if (Math.max(fr, fl) > 0 && Math.max(fr, fl) / Math.max(Math.min(fr, fl), 0.05) >= 1.6) add({ s: 'revisar', k: 'diferencia entre ojos', t: 'Diferencia entre ojos', d: 'Un ojo ve notablemente mejor que el otro. Conviene revisarlo.' });
+    }
+    if (t.has('contrast')) {
+      ['R', 'L'].forEach((eye) => {
+        const c = S.contrast[eye];
+        const s = c !== null && c <= 0.07 ? 'excelente' : c !== null && c <= 0.13 ? 'bien' : 'revisar';
+        add({ s, k: 'contraste', t: `Contraste · ojo ${EYE_NAME[eye]}`, d: (s === 'excelente' ? 'Distingues formas muy tenues.' : s === 'bien' ? 'Distingues bien los contrastes habituales.' : 'Te cuesta distinguir formas poco marcadas, algo que se nota de noche o con poca luz.') + ` Aciertos: ${hits(S.log.contrast[eye])}.` });
+      });
+    }
+    if (t.has('astig')) {
+      const a = [S.astig.R, S.astig.L], s = a.includes('flag') ? 'revisar' : a.includes('unsure') ? 'bien' : 'excelente';
+      add({ s, k: 'astigmatismo', t: 'Astigmatismo', d: s === 'revisar' ? 'Viste líneas más marcadas que otras: puede ser señal de astigmatismo.' : s === 'bien' ? 'No estuviste seguro: vale la pena confirmarlo en un examen.' : 'Todas las líneas se vieron iguales.' });
+    }
+    if (t.has('amsler')) {
+      const flagged = [S.amsler.R, S.amsler.L].includes('flag');
+      if (flagged) urgent = true;
+      add({ s: flagged ? 'revisar' : 'excelente', k: 'visión central', t: 'Visión central (rejilla de Amsler)', d: flagged ? 'Viste algo raro en la rejilla. Esto debe revisarlo un especialista pronto.' : 'La rejilla se vio derecha y completa.' });
+    }
+    if (t.has('color') && S.color) {
+      const ctrl = S.color.find((p) => p.key === 'control'), rg = S.color.filter((p) => p.key !== 'control');
+      const s = !ctrl.correct ? 'bien' : rg.every((p) => p.correct) ? 'excelente' : 'revisar';
+      add({ s, k: 'color', t: 'Visión de color', d: s === 'excelente' ? 'Distinguiste bien las tres láminas.' : s === 'bien' ? 'La lámina de control no fue concluyente (puede ser por brillo o reflejos). Repite el test con más luz.' : 'Tuviste dificultad en láminas que suelen verse bien. Podrías tener dificultad para distinguir algunos colores; un optómetra puede confirmarlo.' + ` Aciertos: ${hits(S.log.color)}.` });
+    }
+    const sym = S.symptoms || [];
+    if (sym.length) {
+      anyRevisar = true;
+      const map = { far: 'visión borrosa de lejos', near: 'dificultad para leer de cerca', strain: 'cansancio visual o dolor de cabeza', night: 'molestias con la luz o de noche' };
+      items.push({ s: 'revisar', k: 'síntomas', t: 'Síntomas que mencionaste', d: sym.map((k) => map[k]).join(', ') + '.' });
+    }
+    if (S.glasses === 'notWearing') items.push({ s: 'na', k: '', t: 'Hiciste el test sin tus gafas', d: 'Los resultados reflejan tu visión sin corrección.' });
+    const level = urgent ? 'urgente' : anyRevisar ? 'revisar' : anyBien ? 'bien' : 'excelente';
+    return { level, items };
+  }
+
+  // ====== Localizador y conversión ======
+  function km(a, b) {
+    const rad = Math.PI / 180, dLat = (b[0] - a[0]) * rad, dLng = (b[1] - a[1]) * rad;
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * rad) * Math.cos(b[0] * rad) * Math.sin(dLng / 2) ** 2;
+    return 6371 * 2 * Math.asin(Math.sqrt(h));
+  }
+  const waLink = (num, R) => {
+    const flagged = R.items.filter((i) => i.s === 'revisar' || i.s === 'bien').map((i) => i.k).filter(Boolean);
+    const resumen = flagged.length ? 'por revisar: ' + [...new Set(flagged)].join(', ') : 'todo en orden';
+    return `https://wa.me/${num}?text=${encodeURIComponent(`Hola, hice el Vision Check de G&G y me salió ${resumen}. ¿Me ayudan a agendar?`)}`;
+  };
+  function storeList() {
+    const list = STORES.map((s) => Object.assign({ d: S.geo ? km(S.geo, s.ll) : null }, s));
+    if (S.geo) list.sort((a, b) => a.d - b.d);
+    return list;
+  }
+  function storesHtml(R) {
+    return storeList().map((s, i) => `
+      <div class="store">
+        <b>${s.n} <span class="muted small" style="font-family:var(--font-body);text-transform:none;letter-spacing:0">· ${s.c}</span></b>
+        ${S.geo ? `<span class="dist">${i === 0 ? 'Tu tienda más cercana · ' : ''}${s.d < 10 ? s.d.toFixed(1) : Math.round(s.d)} km</span>` : ''}
+        <span class="small">${s.a}<br>${s.h}</span>
+        <div class="row">
+          <a class="arrow" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.ll[0]},${s.ll[1]}" data-ev="maps">Cómo llegar →</a>
+          <a class="arrow" target="_blank" rel="noopener" href="${waLink(s.w, R)}" data-ev="wa" data-store="${esc(s.n)}">WhatsApp →</a>
+        </div>
+      </div>`).join('');
+  }
+
   function renderResults(R) {
     const url = new URL(CONFIG.bookingUrl);
-    const here = new URLSearchParams(location.search);
-    Object.entries(CONFIG.utm).forEach(([k, v]) => url.searchParams.set(k, here.get(k) || v));
-    url.searchParams.set('utm_content', R.level);
+    url.searchParams.set('utm_source', query.get('utm_source') || CONFIG.utm.utm_source);
+    url.searchParams.set('utm_medium', query.get('utm_medium') || CONFIG.utm.utm_medium);
+    url.searchParams.set('utm_campaign', 'resultado-' + R.level);
     const head = {
-      ok: ['Tu visión se ve bien', 'En este test no encontramos señales de alerta. Aun así, conviene revisar tus ojos una vez al año: muchos cambios no se notan.'],
-      warn: ['Te recomendamos un examen visual', 'Encontramos señales de que podrías ver mejor. Un optómetra puede confirmarlo y darte la solución adecuada.'],
-      bad: ['Te recomendamos consultar pronto', 'Algunas respuestas merecen revisión profesional lo antes posible. Agenda tu examen visual.'],
+      excelente: ['Tu vista se ve muy bien', 'No encontramos señales de alerta. Aun así, revisa tus ojos una vez al año: muchos cambios no se notan.'],
+      bien: ['Tu vista va bien', 'Hay detalles que vale la pena vigilar. Un examen anual te da tranquilidad.'],
+      revisar: ['Te recomendamos un examen visual', 'Encontramos señales de que podrías ver mejor. Un optómetra puede confirmarlo y darte la solución adecuada.'],
+      urgente: ['Te recomendamos consultar pronto', 'Algunas respuestas merecen revisión profesional lo antes posible. Agenda tu examen visual.'],
     }[R.level];
-    const cta = { ok: 'Agendar mi examen anual', warn: 'Agendar mi examen visual', bad: 'Agendar mi examen ahora' }[R.level];
-    const wa = CONFIG.whatsapp ? `<a class="btn ghost" target="_top" rel="noopener" href="https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Hola, hice el test visual y quiero agendar un examen.')}" data-cta="whatsapp">Escribir por WhatsApp</a>` : '';
+    const cta = { excelente: 'Agenda tu examen anual', bien: 'Agenda tu examen anual', revisar: 'Agenda tu examen visual', urgente: 'Agenda tu examen ahora' }[R.level];
+    const near = S.geo ? storeList()[0] : null;
+    const waNum = near ? near.w : CONFIG.whatsappCentral;
     html(`
       <div class="verdict ${R.level}"><h1>${head[0]}</h1><p>${head[1]}</p></div>
       <div class="stack">
-        <a class="btn accent" target="_top" href="${esc(url.toString())}" data-cta="booking">${cta}</a>
-        ${wa}
+        <a class="btn" target="_top" href="${esc(url.toString())}" data-ev="agenda">${cta}</a>
+        <a class="btn wa" target="_blank" rel="noopener" id="wa" href="${waLink(waNum, R)}" data-ev="wa" data-store="${esc(near ? near.n : 'central')}">Escribir por WhatsApp${near ? ' a ' + esc(near.n) : ''}</a>
       </div>
-      <p class="small muted center" style="margin-top:10px">Un optómetra revisa tus resultados contigo en la cita.</p>
-      <h2 style="margin-top:20px">Tus resultados</h2>
-      <div>${R.items.map((it) => `<div class="res"><span class="dot ${it.s}"></span><div><b>${it.t}</b><span class="muted small">${it.d}</span></div></div>`).join('')}</div>
-      ${!S.calibrated ? '<p class="small muted">No ajustaste la pantalla con una tarjeta, así que los tamaños son aproximados.</p>' : ''}
-      <p class="small muted">Este test es una orientación y no es un diagnóstico médico. Solo un examen visual completo con un optómetra puede determinar tu fórmula y la salud de tus ojos.</p>
-      <button type="button" class="btn ghost" id="again" style="margin-top:8px">Repetir el test</button>
+      <p class="small center" style="margin:14px 0 0"><a class="arrow" target="_top" href="${CONFIG.site}/tienda/" data-ev="monturas">Ver monturas →</a> &nbsp; <a class="arrow" target="_top" href="${CONFIG.site}/zise-fit/" data-ev="zisefit">Zise &amp; Fit →</a></p>
+      <h2 style="margin-top:24px">Tus resultados</h2>
+      <div>${R.items.map((it) => `<div class="res"><div><b>${it.t}</b><span class="muted small">${it.d}</span></div><span class="badge ${it.s}">${it.s === 'na' ? 'Nota' : it.s}</span></div>`).join('')}</div>
+      ${!S.calibrated ? '<p class="small muted">No calibraste la pantalla con una tarjeta, así que los tamaños son aproximados.</p>' : ''}
+      <h2 style="margin-top:24px">Nuestras tiendas</h2>
+      <button type="button" class="btn outline" id="geo" style="min-height:48px;padding:12px">${ico('pin')} ${S.geo ? 'Ordenadas por cercanía' : 'Ordenar por cercanía'}</button>
+      <div id="stores">${storesHtml(R)}</div>
+      <p class="small muted" style="margin-top:14px">Este test es una orientación y no es un diagnóstico médico. Solo un examen visual completo con un optómetra puede determinar tu fórmula y la salud de tus ojos.</p>
+      <p class="tagline">Nos salimos del marco</p>
+      <button type="button" class="btn outline" id="again" style="margin-top:18px">Repetir el test</button>
     `);
-    on('[data-cta]', (e) => track('cta_click', { cta: e.currentTarget.dataset.cta, verdict: R.level }));
-    on('#again', () => go(0));
-  }
-
-  // ====== Interpretación ======
-  const hits = (arr) => `${arr.filter(Boolean).length} de ${arr.length}`;
-  function evaluate() {
-    const items = [], reasons = [];
-    let level = 'ok';
-    const raise = (l) => { if (l === 'bad' || (l === 'warn' && level === 'ok')) level = l; };
-    const corr = S.glasses === 'wearing' ? ' (con tu corrección actual)' : '';
-
-    ['R', 'L'].forEach((eye) => {
-      const v = S.far[eye] || 0, name = eye === 'R' ? 'derecho' : 'izquierdo';
-      const s = v >= CONFIG.farPassDecimal ? 'ok' : v >= 0.45 ? 'warn' : 'bad';
-      if (s !== 'ok') { raise('warn'); reasons.push('far' + eye); }
-      items.push({ s, t: `Visión de lejos · ojo ${name}: ${snellen(v)}`, d: (s === 'ok' ? `Buena agudeza visual${corr}.` : `Por debajo de lo esperado${corr}. Podrías necesitar ${S.glasses === 'wearing' ? 'actualizar tu fórmula' : 'gafas'}.`) + ` Aciertos: ${hits(S.log[eye])}.` });
+    track('vc_result_view', { nivel: R.level });
+    $main.addEventListener('click', onCta);
+    on('#again', showHome);
+    on('#geo', () => {
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition((p) => { S.geo = [p.coords.latitude, p.coords.longitude]; renderResults(R); },
+        () => { $main.querySelector('#geo').textContent = 'No pudimos acceder a tu ubicación'; }, { timeout: 8000, maximumAge: 600000 });
     });
-    const fr = S.far.R || 0, fl = S.far.L || 0;
-    if (Math.max(fr, fl) > 0 && Math.max(fr, fl) / Math.max(Math.min(fr, fl), 0.05) >= 1.6) {
-      raise('warn'); reasons.push('diff');
-      items.push({ s: 'warn', t: 'Diferencia entre ojos', d: 'Un ojo ve notablemente mejor que el otro. Conviene revisarlo.' });
-    }
-
-    const ast = [S.astig.R, S.astig.L];
-    const astS = ast.includes('flag') ? 'warn' : ast.includes('unsure') ? 'warn' : 'ok';
-    if (astS !== 'ok') { raise('warn'); reasons.push('astig'); }
-    items.push({ s: astS, t: 'Astigmatismo', d: ast.includes('flag') ? 'Viste líneas más marcadas que otras: puede ser una señal de astigmatismo.' : ast.includes('unsure') ? 'No estuviste seguro: vale la pena confirmarlo en un examen.' : 'Todas las líneas se vieron iguales.' });
-
-    const nv = S.near || 0;
-    const nearS = nv >= CONFIG.nearPassDecimal ? 'ok' : 'warn';
-    if (nearS !== 'ok') { raise('warn'); reasons.push('near'); }
-    const older = S.age === '40-59' || S.age === '60+';
-    items.push({ s: nearS, t: 'Visión de cerca', d: (nearS === 'ok' ? 'Lees bien a distancia de lectura.' : `Te cuesta leer letra pequeña${older ? '. Es muy común después de los 40 (presbicia) y tiene solución con lentes adecuados' : ''}.`) + ` Aciertos: ${hits(S.log.near)}.` });
-
-    const am = [S.amsler.R, S.amsler.L];
-    const amS = am.includes('flag') ? 'bad' : 'ok';
-    if (amS === 'bad') { raise('bad'); reasons.push('amsler'); }
-    items.push({ s: amS, t: 'Visión central (rejilla de Amsler)', d: amS === 'bad' ? 'Viste líneas onduladas o zonas faltantes. Esto debe revisarlo un especialista pronto.' : 'La rejilla se vio derecha y completa.' });
-
-    const sym = S.symptoms;
-    if (sym.length) {
-      raise('warn'); reasons.push('symptoms');
-      const map = { far: 'visión borrosa de lejos', near: 'dificultad para leer de cerca', strain: 'cansancio visual o dolor de cabeza', night: 'molestias con la luz o de noche' };
-      items.push({ s: 'warn', t: 'Síntomas que mencionaste', d: sym.map((k) => map[k]).join(', ') + '.' });
-    }
-    if (S.lastExam === '>2' || S.lastExam === 'never') {
-      raise('warn'); reasons.push('lastExam');
-      items.push({ s: 'warn', t: 'Último examen visual', d: S.lastExam === 'never' ? 'Nunca te has hecho un examen visual (o no lo recuerdas).' : 'Hace más de 2 años. Se recomienda revisarse cada año.' });
-    }
-    if (S.glasses === 'notWearing') items.push({ s: 'na', t: 'Hiciste el test sin tus gafas', d: 'Los resultados reflejan tu visión sin corrección.' });
-
-    return { level, items, reasons };
+  }
+  function onCta(e) {
+    const a = e.target.closest('[data-ev]'); if (!a) return;
+    const ev = a.dataset.ev, lvl = S.R && S.R.level;
+    if (ev === 'agenda') track('vc_cta_agenda', { nivel: lvl });
+    else if (ev === 'wa') track('vc_cta_whatsapp', { tienda: a.dataset.store || '', nivel: lvl });
+    else track('vc_cta_' + ev, { nivel: lvl });
   }
 
-  $restart.addEventListener('click', () => { if (confirm('¿Reiniciar el test?')) go(0); });
-  resetState();
-  go(0);
+  // ====== Inicio y selección de test ======
+  function showHome() {
+    steps = []; tests = []; resetState();
+    setDark(true); $bar.style.width = '0'; $restart.hidden = true; $phase.hidden = true; document.onkeydown = null;
+    window.scrollTo(0, 0);
+    html(`
+      <p class="kicker">Marca 100% colombiana</p>
+      <h1>¿Cómo está <mark>tu vista?</mark></h1>
+      <p style="font-size:24px;margin:0 0 6px"><em class="ed" style="color:var(--gg-yellow-editorial)">Descúbrelo en 5 minutos.</em></p>
+      <img class="hero-img" src="${CONFIG.site}/wp-content/uploads/2026/07/home-hero-gyg-768x1186.jpg" alt="" onerror="this.remove()">
+      <div class="proof">${ico('star')}<span><b style="color:#fff">4.9 / 5</b> · más de 2.000 reseñas en Google · 9 tiendas en Colombia</span></div>
+      <div class="pills"><span class="pill">5 pruebas</span><span class="pill">Resultado al final</span><span class="pill">Lentes Zeiss</span></div>
+      <div class="card">
+        <ul class="list">
+          <li>${ico('check')}<span>Qué tan nítido ves de lejos, con cada ojo</span></li>
+          <li>${ico('check')}<span>Cuánto contraste distingues</span></li>
+          <li>${ico('check')}<span>Si hay señales de astigmatismo</span></li>
+          <li>${ico('check')}<span>Cómo está tu visión central</span></li>
+          <li>${ico('check')}<span>Cómo ves los colores</span></li>
+        </ul>
+      </div>
+      <div class="grow"></div>
+      <div class="stack" style="margin-top:20px">
+        <button type="button" class="btn yellow" id="all">Hacer el test</button>
+        <button type="button" class="btn outline" id="one">Elegir un test</button>
+      </div>
+      <p class="small muted center" style="margin:14px 0 0">Ten a la mano una tarjeta (cédula, débito o crédito) para ajustar la pantalla.</p>
+      <p class="tagline">Nos salimos del marco</p>
+    `);
+    on('#all', () => startFlow(TEST_ORDER));
+    on('#one', showPick);
+  }
+
+  function showPick() {
+    setDark(false); $restart.hidden = true; $phase.hidden = true;
+    window.scrollTo(0, 0);
+    html(`
+      <p class="kicker">Elige una prueba</p>
+      <h2>¿Cuál quieres hacer?</h2>
+      <div class="pick">${TEST_ORDER.map((k) => `<div class="card"><h2>${TESTS[k].name}</h2><p class="muted small">${TESTS[k].blurb}</p><button type="button" class="btn" data-k="${k}">Iniciar →</button></div>`).join('')}</div>
+      <button type="button" class="btn link" id="back" style="margin-top:8px">Volver</button>
+    `);
+    on('[data-k]', (e) => startFlow([e.currentTarget.dataset.k]));
+    on('#back', showHome);
+  }
+
+  $restart.addEventListener('click', () => { if (confirm('Si sales ahora, se pierde tu progreso. ¿Quieres salir del test?')) showHome(); });
+  showHome();
 })();
 </script>
 </body>
