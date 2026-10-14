@@ -9,9 +9,9 @@
 <meta property="og:title" content="¿Cómo está tu vista? · Vision Check G&G">
 <meta property="og:description" content="Descúbrelo en 5 minutos. Cinco pruebas cortas y un resultado claro.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://gafasygafas.com.co/wp-content/uploads/2026/09/gyg-preview.jpg">
+<meta property="og:image" content="https://test-visual-gafasygafas.vercel.app/brand/preview.jpg">
 <meta name="theme-color" content="#111111">
-<link rel="icon" href="https://gafasygafas.com.co/wp-content/uploads/2025/03/cropped-logoweb3-270x270.png">
+<link rel="icon" href="brand/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -32,8 +32,8 @@
   svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.125em}
   .app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--gg-bone)}
   .app.dark{background:var(--gg-black)}
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--gg-black);color:#fff}
-  header .logo{height:26px;width:auto;display:block}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--gg-black);color:#fff}
+  header .logo{height:40px;width:auto;display:block}
   header .wordmark{font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;font-size:20px}
   header button{background:none;border:0;color:#fff;font:inherit;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;opacity:.8;cursor:pointer;padding:6px}
   .progress{height:4px;background:var(--gg-gray-200)}
@@ -44,14 +44,16 @@
   main{flex:1;display:flex;flex-direction:column;padding:16px 16px 28px}
   .app.dark main{color:#fff}
   h1,h2{font-family:var(--font-display);font-weight:400;text-transform:uppercase;letter-spacing:.2px;margin:6px 0 10px}
-  h1{font-size:34px;line-height:1.05}
+  h1{font-size:36px;line-height:1.02;margin-top:14px}
   h2{font-size:26px;line-height:1.1}
   p{margin:0 0 12px}
   .muted{color:var(--gg-gray-800)} .app.dark .muted{color:#c9c9c9}
   .small{font-size:14px} .center{text-align:center} .grow{flex:1}
   .stack>*+*{margin-top:10px}
-  .kicker{font-size:12px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;margin:6px 0 0;color:var(--gg-gray-800)}
-  .app.dark .kicker{color:var(--gg-yellow-editorial)}
+  .kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;margin:6px 0 0;color:var(--gg-black)}
+  .kicker::before{content:'';width:14px;height:14px;border-radius:50%;background:var(--gg-black);box-shadow:20px 0 0 var(--gg-yellow);margin-right:20px;flex:none}
+  .app.dark .kicker{color:#fff}
+  .app.dark .kicker::before{background:#fff}
   em.ed{font-family:var(--font-editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
   mark{background:var(--gg-yellow);color:var(--gg-black);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .btn{display:block;width:100%;min-height:56px;padding:18px;border:2px solid var(--gg-black);border-radius:var(--radius);cursor:pointer;font-family:var(--font-display);font-size:16px;letter-spacing:.6px;text-transform:uppercase;text-align:center;text-decoration:none;background:var(--gg-black);color:var(--gg-yellow);line-height:1.15}
@@ -147,7 +149,7 @@
 <div class="zoomwarn" id="zoomwarn">Quita el zoom de la pantalla (pellizca hacia adentro) para que el test sea exacto.</div>
 <div class="app" id="app">
   <header>
-    <span id="brand"><img class="logo" id="logo" src="https://gafasygafas.com.co/wp-content/uploads/2024/09/lgo-gygblanco.png" alt="Gafas & Gafas"></span>
+    <span id="brand"><img class="logo" id="logo" src="brand/logo-blanco.png" alt="Gafas & Gafas"></span>
     <button type="button" id="restart" hidden>Reiniciar</button>
   </header>
   <div class="progress"><i id="bar"></i></div>
@@ -930,7 +932,7 @@
       <p class="kicker">Marca 100% colombiana</p>
       <h1>¿Cómo está <mark>tu vista?</mark></h1>
       <p style="font-size:24px;margin:0 0 6px"><em class="ed" style="color:var(--gg-yellow-editorial)">Descúbrelo en 5 minutos.</em></p>
-      <img class="hero-img" src="${CONFIG.site}/wp-content/uploads/2026/07/home-hero-gyg-768x1186.jpg" alt="" onerror="this.remove()">
+      <img class="hero-img" src="brand/hero.jpg" alt="" onerror="this.remove()">
       <div class="proof">${ico('star')}<span><b style="color:#fff">4.9 / 5</b> · más de 2.000 reseñas en Google · 9 tiendas en Colombia</span></div>
       <div class="pills"><span class="pill">5 pruebas</span><span class="pill">Resultado al final</span><span class="pill">Lentes Zeiss</span></div>
       <div class="card">

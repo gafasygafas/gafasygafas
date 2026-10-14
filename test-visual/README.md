@@ -4,8 +4,8 @@ Tamizaje visual online (≈ 5 minutos, mobile-first) para Gafas & Gafas. Pensado
 Instagram y campañas: la persona hace el test y, según el resultado, se le invita a agendar su examen visual en
 https://gafasygafas.com.co/agendar-cita-examen-visual/ o a escribir por WhatsApp a la tienda más cercana.
 
-Es **un solo archivo** (`index.html`), sin build y sin dependencias propias. Carga las fuentes (Google Fonts) y el
-logo/foto desde el sitio de G&G al abrirse en el navegador de quien lo usa.
+Es **un solo archivo** (`index.html`) más la carpeta `brand/` (logo blanco, favicon, foto y vista previa tomados del sitio
+de G&G), sin build. Las fuentes (Anton, Archivo, Bodoni Moda) se cargan de Google Fonts.
 
 ## Sistema de diseño
 
@@ -58,6 +58,6 @@ Dentro de un iframe, los mismos eventos se envían a la página padre con `postM
 - **Captura de leads** (email/WhatsApp con habeas data, `vc_lead_submit`): requiere un backend; no está implementado.
 - Marca ZEISS: solo aparece «Lentes Zeiss» como texto, sin logo.
 - Las láminas de color son propias y orientativas; validar con optometría antes de campañas grandes.
-- El logo en negro (para fondos claros) no existe en el sitio; por ahora el encabezado negro usa el logo blanco.
+- No hay logo en negro para fondos claros; el encabezado es negro y usa el logo blanco.
 
 > Es una herramienta orientativa, no un diagnóstico médico.
