@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Test visual · Gafas y Gafas</title>
+<meta name="description" content="Revisa tu visión en 3 minutos desde tu celular. Si el resultado lo recomienda, agenda tu examen visual en Gafas y Gafas.">
+<style>
+  /* ====== Marca: cambia estos colores para ajustarlos a Gafas y Gafas ====== */
+  :root {
+    --brand: #0b2545;        /* color principal (botones, encabezado) */
+    --brand-ink: #ffffff;    /* texto sobre el color principal */
+    --accent: #e63946;       /* llamado a la acción (agendar) */
+    --accent-ink: #ffffff;
+    --ok: #1a7f37;
+    --warn: #b7791f;
+    --bad: #c53030;
+    --bg: #ffffff;
+    --surface: #f4f6f9;
+    --ink: #111827;
+    --muted: #5b6474;
+    --line: #dde2ea;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px; line-height: 1.45;
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+  .app { max-width: 560px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; background: var(--brand); color: var(--brand-ink);
+  }
+  header .logo { font-weight: 800; letter-spacing: .2px; }
+  header button { background: none; border: 0; color: inherit; font: inherit; font-size: 14px; opacity: .85; cursor: pointer; padding: 6px; }
+  .progress { height: 6px; background: var(--line); }
+  .progress > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  main { flex: 1; display: flex; flex-direction: column; padding: 20px 16px 24px; }
+  h1 { font-size: 26px; line-height: 1.2; margin: 4px 0 10px; }
+  h2 { font-size: 22px; line-height: 1.25; margin: 4px 0 10px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+  .center { text-align: center; }
+  .grow { flex: 1; }
+  .stack > * + * { margin-top: 10px; }
+  .btn {
+    display: block; width: 100%; min-height: 56px; padding: 14px 18px;
+    border: 0; border-radius: var(--radius); cursor: pointer;
+    font: inherit; font-weight: 700; font-size: 18px; text-align: center; text-decoration: none;
+    background: var(--brand); color: var(--brand-ink);
+  }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.accent { background: var(--accent); color: var(--accent-ink); }
+  .btn.ghost { background: transparent; color: var(--brand); border: 2px solid var(--line); }
+  .btn.link { background: none; color: var(--muted); font-weight: 500; font-size: 15px; min-height: 44px; text-decoration: underline; }
+  .opt {
+    display: flex; align-items: center; gap: 12px; width: 100%; min-height: 60px; padding: 12px 16px;
+    border: 2px solid var(--line); border-radius: var(--radius); background: #fff;
+    font: inherit; font-size: 17px; text-align: left; color: var(--ink); cursor: pointer;
+  }
+  .opt .ico { font-size: 24px; width: 30px; text-align: center; flex: none; }
+  .opt.sel { border-color: var(--brand); background: #eef3fa; box-shadow: inset 0 0 0 1px var(--brand); }
+  .card { background: var(--surface); border-radius: var(--radius); padding: 16px; }
+  .big-emoji { font-size: 64px; line-height: 1; margin: 8px 0 12px; text-align: center; }
+  .list { padding-left: 0; list-style: none; margin: 0 0 12px; }
+  .list li { display: flex; gap: 10px; padding: 6px 0; }
+  .list li span:first-child { flex: none; width: 26px; text-align: center; }
+
+  /* Pantallas de prueba */
+  .test { flex: 1; display: flex; flex-direction: column; }
+  .test .prompt { text-align: center; font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .test .hint { text-align: center; color: var(--muted); font-size: 14px; }
+  .stage { flex: 1; min-height: 140px; padding: 8px 0; display: flex; align-items: center; justify-content: center; }
+  .stage canvas { display: block; image-rendering: pixelated; }
+  .pad { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 62px); gap: 8px; max-width: 320px; width: 100%; margin: 0 auto; }
+  .pad button {
+    border: 0; border-radius: 14px; background: var(--brand); color: var(--brand-ink);
+    font-size: 34px; font-weight: 800; cursor: pointer; touch-action: manipulation;
+  }
+  .pad button:active { transform: scale(.96); }
+  .pad .up { grid-column: 2; grid-row: 1; }
+  .pad .left { grid-column: 1; grid-row: 2; }
+  .pad .right { grid-column: 3; grid-row: 2; }
+  .pad .down { grid-column: 2; grid-row: 3; }
+  .pad .nosee { grid-column: 2; grid-row: 2; font-size: 14px; background: var(--surface); color: var(--ink); line-height: 1.15; }
+  .numopts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .numopts button { min-height: 64px; font-size: 28px; font-weight: 800; letter-spacing: 3px; border-radius: 14px; border: 0; background: var(--brand); color: var(--brand-ink); cursor: pointer; }
+  .numopts .nosee { grid-column: 1 / -1; min-height: 52px; font-size: 16px; letter-spacing: 0; background: var(--surface); color: var(--ink); }
+  .eyebadge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--surface); font-weight: 700; font-size: 14px; margin: 0 auto 8px; }
+
+  /* Calibración */
+  .calib-wrap { display: flex; justify-content: center; margin: 8px 0 16px; }
+  .cardshape {
+    position: relative; border: 3px solid var(--brand); border-bottom: 0;
+    border-top-left-radius: 0; border-top-right-radius: 0;
+    background: linear-gradient(#eef3fa, rgba(238,243,250,0));
+  }
+  .cardshape::after {
+    content: "Pon aquí tu tarjeta"; position: absolute; left: 0; right: 0; top: 40%;
+    text-align: center; color: var(--brand); font-weight: 700; font-size: 14px;
+  }
+  .stepper { display: grid; grid-template-columns: 64px 1fr 64px; gap: 10px; align-items: center; }
+  .stepper button { height: 56px; border: 0; border-radius: 14px; background: var(--brand); color: var(--brand-ink); font-size: 30px; font-weight: 800; cursor: pointer; touch-action: manipulation; }
+  input[type=range] { width: 100%; accent-color: var(--brand); height: 32px; }
+
+  /* Resultados */
+  .verdict { border-radius: var(--radius); padding: 18px; color: #fff; margin-bottom: 16px; }
+  .verdict.ok { background: var(--ok); }
+  .verdict.warn { background: var(--warn); }
+  .verdict.bad { background: var(--bad); }
+  .verdict h1 { margin: 0 0 6px; }
+  .verdict p { margin: 0; }
+  .res { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .res:last-child { border-bottom: 0; }
+  .dot { flex: none; width: 14px; height: 14px; border-radius: 50%; margin-top: 5px; }
+  .dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); } .dot.na { background: var(--line); }
+  .res b { display: block; }
+  .zoomwarn { position: fixed; left: 8px; right: 8px; top: 8px; z-index: 9; background: var(--bad); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-align: center; display: none; }
+</style>
+</head>
+<body>
+<div class="zoomwarn" id="zoomwarn">Quita el zoom de la pantalla (pellizca hacia adentro) para que el test sea exacto.</div>
+<div class="app">
+  <header>
+    <span class="logo">Gafas y Gafas · Test visual</span>
+    <button type="button" id="restart" hidden>Reiniciar</button>
+  </header>
+  <div class="progress"><i id="bar"></i></div>
+  <main id="main"></main>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  // ====== Configuración ======
+  const CONFIG = {
+    bookingUrl: 'https://gafasygafas.com.co/agendar-cita-examen-visual/',
+    utm: { utm_source: 'test-visual', utm_medium: 'web', utm_campaign: 'test-visual' },
+    whatsapp: '',           // ej. '573001234567' para mostrar botón de WhatsApp; vacío = oculto
+    armMm: 600,             // brazo estirado ≈ 60 cm (prueba de lejos en celular)
+    nearMm: 400,            // distancia de lectura ≈ 40 cm
+    farPassDecimal: 0.75,   // por debajo de esto (≈20/25) se recomienda examen
+    nearPassDecimal: 0.5,
+  };
+
+  // ====== Utilidades ======
+  const $main = document.getElementById('main');
+  const $bar = document.getElementById('bar');
+  const $restart = document.getElementById('restart');
+  const ARCMIN = Math.tan(Math.PI / 180 / 60);   // 1 minuto de arco en radianes (≈ tan)
+  const CARD_SHORT_MM = 53.98;                    // tarjeta ID-1: débito, crédito, cédula
+  const dpr = () => window.devicePixelRatio || 1;
+  const isTouch = matchMedia('(pointer: coarse)').matches;
+  const rnd = (n) => Math.floor(Math.random() * n);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function track(event, data) {
+    try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'test_visual_' + event }, data)); } catch (e) {}
+    try { if (window.parent !== window) window.parent.postMessage({ type: 'test_visual', event, data }, '*'); } catch (e) {}
+  }
+
+  // Px de pantalla física por mm. Se guarda en px de dispositivo para que el zoom del navegador no la altere.
+  function guessDevPxPerMm() {
+    const cssPerMm = isTouch && Math.min(screen.width, screen.height) < 600 ? 6.3 : (dpr() >= 1.5 ? 4.4 : 3.78);
+    return cssPerMm * dpr();
+  }
+  const cssPxPerMm = () => S.devPxPerMm / dpr();
+
+  // Distancia de prueba de lejos: brazo estirado en celular; en pantallas de baja densidad pedimos alejarse más
+  // para que la E más pequeña no quede por debajo de ~1,6 px reales.
+  function farDistanceMm() {
+    const needed = 1.6 / (ARCMIN * S.devPxPerMm);
+    return Math.round(Math.min(1500, Math.max(CONFIG.armMm, needed)) / 50) * 50;
+  }
+
+  function snellen(dec) {
+    if (!dec) return 'menos de 20/200';
+    const std = [20, 25, 30, 40, 50, 60, 70, 80, 100, 200, 400];
+    const d = 20 / dec;
+    return '20/' + std.reduce((a, b) => (Math.abs(b - d) < Math.abs(a - d) ? b : a));
+  }
+
+  let wakeLock = null;
+  async function keepAwake() {
+    try { if ('wakeLock' in navigator && !wakeLock) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
+  }
+
+  if (window.visualViewport) {
+    const zw = document.getElementById('zoomwarn');
+    const check = () => { zw.style.display = visualViewport.scale > 1.02 ? 'block' : 'none'; };
+    visualViewport.addEventListener('resize', check); check();
+  }
+
+  // ====== Estado ======
+  let S;
+  function resetState() {
+    S = {
+      glasses: null, age: null, symptoms: [], lastExam: null,
+      devPxPerMm: guessDevPxPerMm(), calibrated: false,
+      far: { R: null, L: null }, astig: { R: null, L: null },
+      near: null, amsler: { R: null, L: null },
+    };
+  }
+
+  // Escalera: sube de nivel con 2 aciertos, baja con 2 fallos (máx. 3 intentos por nivel).
+  function makeStair(levels, start) { return { levels, idx: start, n: 0, ok: 0, best: -1, failAt: levels.length, done: false, actual: {} }; }
+  function stairAnswer(st, correct) {
+    st.n++; if (correct) st.ok++;
+    const wrong = st.n - st.ok;
+    if (st.ok >= 2) { st.best = Math.max(st.best, st.idx); move(+1); }
+    else if (wrong >= 2) { st.failAt = Math.min(st.failAt, st.idx); move(-1); }
+    function move(dir) {
+      st.n = 0; st.ok = 0;
+      if (dir > 0) { if (st.idx + 1 >= st.failAt) st.done = true; else st.idx++; }
+      else { if (st.best >= 0 || st.idx === 0) st.done = true; else st.idx--; }
+    }
+  }
+  const stairScore = (st) => (st.best >= 0 ? st.actual[st.best] : 0);
+
+  // ====== Flujo ======
+  const FLOW = ['welcome', 'glasses', 'age', 'symptoms', 'lastExam', 'calibrate', 'farSetup', 'practice',
+    'coverR', 'acuityR', 'astigR', 'coverL', 'acuityL', 'astigL',
+    'nearSetup', 'near', 'amslerR', 'amslerL', 'results'];
+  let step = 0;
+
+  function go(id) {
+    step = typeof id === 'number' ? id : FLOW.indexOf(id);
+    const name = FLOW[step];
+    $bar.style.width = Math.round((step / (FLOW.length - 1)) * 100) + '%';
+    $restart.hidden = step === 0;
+    document.onkeydown = null;
+    $main.innerHTML = '';
+    window.scrollTo(0, 0);
+    SCREENS[name]();
+  }
+  const next = () => go(step + 1);
+
+  function html(str) { $main.innerHTML = str; return $main; }
+  function on(sel, fn) { $main.querySelectorAll(sel).forEach((el) => el.addEventListener('click', fn)); }
+
+  function choice({ title, text = '', options, key, multi = false, exclusive }) {
+    html(`
+      <h2>${title}</h2>${text ? `<p class="muted">${text}</p>` : ''}
+      <div class="stack">${options.map((o, i) => `<button type="button" class="opt" data-i="${i}"><span class="ico">${o.ico || ''}</span><span>${o.label}</span></button>`).join('')}</div>
+      <div class="grow"></div>
+      ${multi ? '<button type="button" class="btn" id="cont" disabled style="margin-top:16px">Continuar</button>' : ''}
+    `);
+    const btns = [...$main.querySelectorAll('.opt')];
+    const sel = new Set();
+    btns.forEach((b) => b.addEventListener('click', () => {
+      const i = +b.dataset.i, o = options[i];
+      if (!multi) { S[key] = o.value; b.classList.add('sel'); setTimeout(() => (o.then ? o.then() : next()), 180); return; }
+      if (o.value === exclusive) sel.clear(); else sel.delete(options.findIndex((x) => x.value === exclusive));
+      sel.has(i) ? sel.delete(i) : sel.add(i);
+      btns.forEach((x, j) => x.classList.toggle('sel', sel.has(j)));
+      $main.querySelector('#cont').disabled = sel.size === 0;
+    }));
+    if (multi) on('#cont', () => { S[key] = [...sel].map((i) => options[i].value).filter((v) => v !== exclusive); next(); });
+  }
+
+  // Pantalla "tapa tu ojo"
+  function coverScreen(eye) {
+    const tap = eye === 'R' ? 'IZQUIERDO' : 'DERECHO';
+    const test = eye === 'R' ? 'derecho' : 'izquierdo';
+    html(`
+      <span class="eyebadge">Ojo ${test}</span>
+      <div class="big-emoji">🖐️👁️</div>
+      <h2 class="center">Tapa tu ojo ${tap}</h2>
+      <p class="center">Usa la palma de la mano, <b>sin presionar</b> el ojo. Mantén el otro ojo abierto${S.glasses === 'wearing' ? ' (tápalo por encima de las gafas)' : ''}.</p>
+      <p class="center muted small">Celular con el brazo estirado (≈ ${Math.round(farDistanceMm() / 10)} cm).</p>
+      <div class="grow"></div>
+      <button type="button" class="btn" id="ok">Listo, ojo ${tap.toLowerCase()} tapado</button>
+    `);
+    on('#ok', next);
+  }
+
+  // ====== Prueba de agudeza (E de Snellen) ======
+  const DIRS = { right: 0, down: 90, left: 180, up: 270 };
+  const DIR_KEYS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
+
+  function drawE(canvas, strokeDev, dir) {
+    const s = Math.max(1, Math.round(strokeDev)), size = 5 * s;
+    canvas.width = size; canvas.height = size;
+    canvas.style.width = canvas.style.height = size / dpr() + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, size, size);
+    ctx.save();
+    ctx.translate(size / 2, size / 2); ctx.rotate((DIRS[dir] * Math.PI) / 180); ctx.translate(-size / 2, -size / 2);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, s, size);
+    for (let k = 0; k < 3; k++) ctx.fillRect(0, 2 * k * s, size, s);
+    ctx.restore();
+    return s;
+  }
+
+  function eTest({ eye, onDone, practice = false, intro = '' }) {
+    const dist = farDistanceMm();
+    const levels = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0];
+    const st = makeStair(levels, 2);
+    let dir = null, busy = false;
+
+    html(`
+      <div class="test">
+        ${eye ? `<span class="eyebadge" style="align-self:center">Ojo ${eye === 'R' ? 'derecho' : 'izquierdo'}</span>` : ''}
+        ${intro || `<div class="prompt">¿Hacia dónde apuntan las patas de la E?</div>
+        <div class="hint">${isTouch ? 'Si no la ves, toca «No la veo». No adivines.' : 'Usa las flechas del teclado. Si no la ves, toca «No la veo».'}</div>`}
+        <div class="stage"><canvas id="cv"></canvas></div>
+        <div class="pad">
+          <button type="button" class="up" data-d="up" aria-label="Arriba">↑</button>
+          <button type="button" class="left" data-d="left" aria-label="Izquierda">←</button>
+          <button type="button" class="nosee" data-d="none">No la veo</button>
+          <button type="button" class="right" data-d="right" aria-label="Derecha">→</button>
+          <button type="button" class="down" data-d="down" aria-label="Abajo">↓</button>
+        </div>
+      </div>
+    `);
+    const cv = $main.querySelector('#cv');
+
+    function show() {
+      const opts = Object.keys(DIRS).filter((d) => d !== dir);
+      dir = opts[rnd(opts.length)];
+      if (practice) { drawE(cv, 2.4 * S.devPxPerMm, dir); return; }   // E de 12 mm
+      const dec = levels[st.idx];
+      const target = (dist * ARCMIN / dec) * S.devPxPerMm;   // trazo en px reales
+      const s = drawE(cv, target, dir);
+      st.actual[st.idx] = (dist * ARCMIN * S.devPxPerMm) / s; // agudeza que realmente se mostró
+    }
+    function answer(d) {
+      if (busy) return;
+      busy = true;
+      const correct = d === dir;
+      if (practice) { onDone(correct); return; }
+      stairAnswer(st, correct);
+      if (st.done) { onDone(stairScore(st)); return; }
+      cv.style.visibility = 'hidden';
+      setTimeout(() => { show(); cv.style.visibility = 'visible'; busy = false; }, 220);
+    }
+    $main.querySelectorAll('.pad button').forEach((b) => b.addEventListener('click', () => answer(b.dataset.d)));
+    document.onkeydown = (e) => { if (DIR_KEYS[e.key]) { e.preventDefault(); answer(DIR_KEYS[e.key]); } };
+    show();
+  }
+
+  // ====== Astigmatismo (esfera de reloj) ======
+  function astigScreen(eye) {
+    const mm = cssPxPerMm();
+    const size = Math.min(Math.floor(window.innerWidth - 40), Math.round(70 * mm), 360);
+    const r = size / 2, sw = Math.max(1.5, 0.9 * mm);
+    let lines = '';
+    for (let a = 0; a < 180; a += 15) {
+      const t = (a * Math.PI) / 180, c = Math.cos(t), s = Math.sin(t);
+      for (const sign of [1, -1]) {
+        lines += `<line x1="${r + sign * c * r * 0.18}" y1="${r - sign * s * r * 0.18}" x2="${r + sign * c * (r - sw)}" y2="${r - sign * s * (r - sw)}" stroke="#000" stroke-width="${sw}" stroke-linecap="butt"/>`;
+      }
+    }
+    html(`
+      <div class="test">
+        <span class="eyebadge" style="align-self:center">Ojo ${eye === 'R' ? 'derecho' : 'izquierdo'} · sigue tapando el otro</span>
+        <div class="prompt">¿Todas las líneas se ven igual de negras y nítidas?</div>
+        <div class="hint">Mira el centro. Brazo estirado.</div>
+        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${lines}<circle cx="${r}" cy="${r}" r="${Math.max(3, mm)}" fill="#000"/></svg></div>
+        <div class="stack">
+          <button type="button" class="btn" data-v="ok">Sí, todas se ven iguales</button>
+          <button type="button" class="btn" data-v="flag">No, algunas se ven más oscuras o borrosas</button>
+          <button type="button" class="btn link" data-v="unsure">No estoy seguro</button>
+        </div>
+      </div>
+    `);
+    on('[data-v]', (e) => { S.astig[eye] = e.currentTarget.dataset.v; track('astig', { eye, value: S.astig[eye] }); next(); });
+  }
+
+  // ====== Visión de cerca (números) ======
+  function makeNumber() {
+    const digits = []; while (digits.length < 3) { const d = 1 + rnd(9); if (!digits.includes(d)) digits.push(d); }
+    return digits.join('');
+  }
+  function distractors(n) {
+    const set = new Set([n]);
+    const perms = [n[1] + n[0] + n[2], n[0] + n[2] + n[1], n[2] + n[1] + n[0]];
+    perms.forEach((p) => set.size < 3 && set.add(p));
+    while (set.size < 4) { const a = n.split(''); a[rnd(3)] = String(1 + rnd(9)); set.add(a.join('')); }
+    return [...set].sort(() => Math.random() - 0.5);
+  }
+
+  function nearTest() {
+    const levels = [0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0];
+    const st = makeStair(levels, 1);
+    let num = null, busy = false;
+    html(`
+      <div class="test">
+        <div class="prompt">¿Qué número ves?</div>
+        <div class="hint">Celular a distancia de lectura (≈ 40 cm), ambos ojos abiertos.</div>
+        <div class="stage"><canvas id="cv"></canvas></div>
+        <div class="numopts" id="opts"></div>
+      </div>
+    `);
+    const cv = $main.querySelector('#cv'), opts = $main.querySelector('#opts');
+
+    function show() {
+      num = makeNumber();
+      const dec = levels[st.idx];
+      const capDev = ((CONFIG.nearMm * 5 * ARCMIN) / dec) * S.devPxPerMm;  // altura de los números en px reales
+      const fs = capDev / 0.716;                                         // altura de mayúsculas Arial ≈ 0,716 em
+      const ctx = cv.getContext('2d');
+      ctx.font = `${fs}px Arial, Helvetica, sans-serif`;
+      const w = Math.ceil(ctx.measureText(num).width + fs * 0.4), h = Math.ceil(fs * 1.2);
+      cv.width = w; cv.height = h;
+      cv.style.width = w / dpr() + 'px'; cv.style.height = h / dpr() + 'px';
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
+      ctx.font = `${fs}px Arial, Helvetica, sans-serif`;
+      ctx.fillStyle = '#000'; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
+      ctx.letterSpacing = '0px';
+      ctx.fillText(num, w / 2, h / 2 + capDev / 2);
+      st.actual[st.idx] = dec;
+      opts.innerHTML = distractors(num).map((n) => `<button type="button" data-n="${n}">${n}</button>`).join('') +
+        '<button type="button" class="nosee" data-n="none">No lo puedo leer</button>';
+      opts.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => answer(b.dataset.n)));
+    }
+    function answer(n) {
+      if (busy) return;
+      busy = true;
+      stairAnswer(st, n === num);
+      if (st.done) { S.near = stairScore(st); track('near', { decimal: S.near }); next(); return; }
+      cv.style.visibility = 'hidden';
+      setTimeout(() => { show(); cv.style.visibility = 'visible'; busy = false; }, 220);
+    }
+    show();
+  }
+
+  // ====== Rejilla de Amsler ======
+  function amslerScreen(eye) {
+    const tap = eye === 'R' ? 'izquierdo' : 'derecho';
+    const size = Math.min(Math.floor(window.innerWidth - 32), 380), n = 20, c = size / n;
+    let grid = '';
+    for (let i = 0; i <= n; i++) {
+      const p = Math.min(size - 0.5, Math.max(0.5, i * c));
+      grid += `<line x1="${p}" y1="0" x2="${p}" y2="${size}"/><line x1="0" y1="${p}" x2="${size}" y2="${p}"/>`;
+    }
+    html(`
+      <div class="test">
+        <span class="eyebadge" style="align-self:center">Tapa tu ojo ${tap.toUpperCase()}</span>
+        <div class="prompt">Mira fijo el punto del centro.<br>¿Alguna línea se ve ondulada, torcida o falta una zona?</div>
+        <div class="hint">Distancia de lectura (≈ 40 cm).</div>
+        <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><g stroke="#000" stroke-width="1">${grid}</g><circle cx="${size / 2}" cy="${size / 2}" r="5" fill="#000"/></svg></div>
+        <div class="stack">
+          <button type="button" class="btn" data-v="ok">No, todo se ve derecho y completo</button>
+          <button type="button" class="btn" data-v="flag">Sí, veo líneas onduladas o zonas borrosas</button>
+        </div>
+      </div>
+    `);
+    on('[data-v]', (e) => { S.amsler[eye] = e.currentTarget.dataset.v; track('amsler', { eye, value: S.amsler[eye] }); next(); });
+  }
+
+  // ====== Pantallas ======
+  const SCREENS = {
+    welcome() {
+      resetState();
+      html(`
+        <div class="big-emoji">👓</div>
+        <h1 class="center">¿Cómo está tu visión?</h1>
+        <p class="center">Haz este test gratis en <b>3 minutos</b> desde tu celular y descubre si es momento de un examen visual.</p>
+        <div class="card">
+          <b>Antes de empezar, ten a mano:</b>
+          <ul class="list" style="margin-top:8px">
+            <li><span>💳</span><span>Una tarjeta: cédula, débito, crédito o TuLlave</span></li>
+            <li><span>💡</span><span>Un lugar con buena luz</span></li>
+            <li><span>👓</span><span>Tus gafas o lentes, si usas</span></li>
+          </ul>
+        </div>
+        <div class="grow"></div>
+        <button type="button" class="btn accent" id="go" style="margin-top:16px">Empezar test</button>
+        <p class="small muted center" style="margin-top:12px">Este test es orientativo y <b>no reemplaza</b> un examen visual con un optómetra.</p>
+      `);
+      on('#go', () => { track('start'); keepAwake(); next(); });
+    },
+
+    glasses() {
+      choice({
+        title: '¿Usas gafas o lentes de contacto?', key: 'glasses',
+        options: [
+          { ico: '😎', label: 'Sí, y los tengo puestos', value: 'wearing' },
+          { ico: '🙈', label: 'Sí, pero no los tengo puestos', value: 'notWearing', then: () => {
+            html(`
+              <div class="big-emoji">👓</div>
+              <h2 class="center">Póntelos para el test</h2>
+              <p class="center">Así sabremos si tu fórmula actual todavía te sirve.</p>
+              <div class="grow"></div>
+              <div class="stack">
+                <button type="button" class="btn" id="on">Ya me los puse</button>
+                <button type="button" class="btn ghost" id="off">No los tengo a mano, seguir así</button>
+              </div>
+            `);
+            on('#on', () => { S.glasses = 'wearing'; next(); });
+            on('#off', next);
+          } },
+          { ico: '🙂', label: 'No uso', value: 'none' },
+        ],
+      });
+    },
+
+    age() {
+      choice({
+        title: '¿Cuántos años tienes?', key: 'age',
+        options: [
+          { label: 'Menos de 18', value: 'u18' }, { label: '18 a 39', value: '18-39' },
+          { label: '40 a 59', value: '40-59' }, { label: '60 o más', value: '60+' },
+        ],
+      });
+    },
+
+    symptoms() {
+      choice({
+        title: '¿Te pasa alguna de estas cosas?', text: 'Puedes elegir varias.', key: 'symptoms', multi: true, exclusive: 'none',
+        options: [
+          { ico: '📺', label: 'Veo borroso de lejos (TV, letreros, placas)', value: 'far' },
+          { ico: '📱', label: 'Me cuesta leer de cerca o alejo el celular para leer', value: 'near' },
+          { ico: '🤕', label: 'Dolor de cabeza u ojos cansados con pantallas', value: 'strain' },
+          { ico: '🚗', label: 'Me molesta la luz o manejar de noche', value: 'night' },
+          { ico: '✅', label: 'Ninguna', value: 'none' },
+        ],
+      });
+    },
+
+    lastExam() {
+      choice({
+        title: '¿Cuándo fue tu último examen visual?', key: 'lastExam',
+        options: [
+          { label: 'Hace menos de 1 año', value: '<1' }, { label: 'Entre 1 y 2 años', value: '1-2' },
+          { label: 'Hace más de 2 años', value: '>2' }, { label: 'Nunca o no me acuerdo', value: 'never' },
+        ],
+      });
+    },
+
+    calibrate() {
+      let wCss = Math.round(CARD_SHORT_MM * cssPxPerMm());
+      const maxW = Math.min(window.innerWidth - 24, 520), minW = 120;
+      wCss = Math.min(maxW, Math.max(minW, wCss));
+      html(`
+        <h2>Ajusta el tamaño de tu pantalla</h2>
+        <p>Pon tu tarjeta <b>de pie</b> contra la pantalla, dentro del recuadro. Usa <b>−</b> y <b>+</b> hasta que el recuadro tenga <b>el mismo ancho</b> que la tarjeta.</p>
+        <div class="calib-wrap"><div class="cardshape" id="shape"></div></div>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="Más pequeño">−</button>
+          <input type="range" id="range" min="${minW}" max="${maxW}" step="0.5" value="${wCss}" aria-label="Ancho">
+          <button type="button" id="plus" aria-label="Más grande">+</button>
+        </div>
+        <div class="grow"></div>
+        <div class="stack" style="margin-top:16px">
+          <button type="button" class="btn" id="ok">Listo, coincide</button>
+          <button type="button" class="btn link" id="skip">No tengo tarjeta a mano</button>
+        </div>
+      `);
+      const shape = $main.querySelector('#shape'), range = $main.querySelector('#range');
+      const radius = () => (3.18 / CARD_SHORT_MM) * wCss;
+      function paint() {
+        shape.style.width = wCss + 'px'; shape.style.height = Math.round(wCss * 0.75) + 'px';
+        shape.style.borderTopLeftRadius = shape.style.borderTopRightRadius = radius() + 'px';
+        range.value = wCss;
+      }
+      const set = (v) => { wCss = Math.min(maxW, Math.max(minW, v)); paint(); };
+      range.addEventListener('input', () => set(+range.value));
+      // Mantener presionado para ajustar más rápido
+      [['#minus', -0.5], ['#plus', 0.5]].forEach(([sel, d]) => {
+        const b = $main.querySelector(sel); let t, iv;
+        const stop = () => { clearTimeout(t); clearInterval(iv); };
+        b.addEventListener('pointerdown', (e) => { e.preventDefault(); set(wCss + d * 2); t = setTimeout(() => { iv = setInterval(() => set(wCss + d * 2), 40); }, 350); });
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, stop));
+      });
+      paint();
+      on('#ok', () => { S.devPxPerMm = (wCss / CARD_SHORT_MM) * dpr(); S.calibrated = true; track('calibrated', { pxPerMm: +cssPxPerMm().toFixed(2) }); next(); });
+      on('#skip', () => { S.calibrated = false; track('calibration_skipped'); next(); });
+    },
+
+    farSetup() {
+      const cm = Math.round(farDistanceMm() / 10);
+      const phone = cm <= 65;
+      html(`
+        <div class="big-emoji">${phone ? '🙆‍♀️📱' : '🧍💻'}</div>
+        <h2 class="center">${phone ? 'Estira el brazo' : `Aléjate a ${(cm / 100).toLocaleString('es-CO')} m de la pantalla`}</h2>
+        <p class="center">${phone
+          ? `Sostén el celular con el <b>brazo totalmente estirado</b> (≈ ${cm} cm) y a la altura de tus ojos.`
+          : `Para que el test sea exacto en esta pantalla, siéntate a unos <b>${cm} cm</b>. Responde con las <b>flechas del teclado</b>.<br><span class="small muted">Tip: el test funciona mejor desde el celular.</span>`}</p>
+        <div class="card small">
+          <div>☀️ Sube el brillo de la pantalla al máximo.</div>
+          <div>📏 Mantén la misma distancia durante toda la prueba.</div>
+        </div>
+        <div class="grow"></div>
+        <button type="button" class="btn" id="ok" style="margin-top:16px">Entendido</button>
+      `);
+      on('#ok', next);
+    },
+
+    practice() {
+      const run = (retry) => eTest({
+        practice: true,
+        intro: `<h2 class="center">Practiquemos 👇</h2>
+          <p class="center">Toca la flecha hacia donde apuntan las <b>patas</b> de la E.<br><span class="muted small">Ejemplo: <b style="font-size:20px">E</b> apunta hacia la derecha →</span></p>
+          ${retry ? '<p class="center" style="color:var(--bad);font-weight:700">Casi. Mira hacia dónde quedan abiertas las 3 patas e inténtalo otra vez.</p>' : ''}`,
+        onDone: (ok) => (ok ? next() : run(true)),
+      });
+      run(false);
+    },
+
+    coverR() { coverScreen('R'); },
+    acuityR() { eTest({ eye: 'R', onDone: (v) => { S.far.R = v; track('acuity', { eye: 'R', decimal: v }); next(); } }); },
+    astigR() { astigScreen('R'); },
+    coverL() { coverScreen('L'); },
+    acuityL() { eTest({ eye: 'L', onDone: (v) => { S.far.L = v; track('acuity', { eye: 'L', decimal: v }); next(); } }); },
+    astigL() { astigScreen('L'); },
+
+    nearSetup() {
+      html(`
+        <div class="big-emoji">📖</div>
+        <h2 class="center">Ahora, de cerca</h2>
+        <p class="center">Destapa los ojos y acerca el celular a <b>distancia de lectura</b> (≈ 40 cm), como cuando lees un mensaje.</p>
+        ${S.glasses === 'wearing' ? '<p class="center muted small">Si usas gafas para leer, póntelas.</p>' : ''}
+        <div class="grow"></div>
+        <button type="button" class="btn" id="ok">Listo</button>
+      `);
+      on('#ok', next);
+    },
+    near() { nearTest(); },
+    amslerR() { amslerScreen('R'); },
+    amslerL() { amslerScreen('L'); },
+
+    results() {
+      const R = evaluate();
+      track('complete', { verdict: R.level, reasons: R.reasons.join(',') });
+      const url = new URL(CONFIG.bookingUrl);
+      Object.entries(CONFIG.utm).forEach(([k, v]) => url.searchParams.set(k, v));
+      url.searchParams.set('utm_content', R.level);
+      const head = {
+        ok: ['¡Buen resultado! 🎉', 'Tu visión parece estar bien en este test. Aun así, revisa tus ojos una vez al año: muchos cambios no se notan.'],
+        warn: ['Te recomendamos un examen visual', 'Encontramos señales de que podrías ver mejor. Un optómetra puede confirmarlo y darte la solución adecuada.'],
+        bad: ['Consulta pronto a un especialista', 'Algunas respuestas merecen revisión profesional lo antes posible. Agenda tu examen visual.'],
+      }[R.level];
+      const wa = CONFIG.whatsapp ? `<a class="btn ghost" target="_top" rel="noopener" href="https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Hola, hice el test visual en la web y quiero agendar un examen.')}" data-cta="whatsapp">Escribir por WhatsApp</a>` : '';
+      html(`
+        <div class="verdict ${R.level}"><h1>${head[0]}</h1><p>${head[1]}</p></div>
+        <div class="stack">
+          <a class="btn accent" target="_top" href="${esc(url.toString())}" data-cta="booking">${R.level === 'ok' ? 'Agendar mi examen anual' : 'Agendar mi examen visual'}</a>
+          ${wa}
+        </div>
+        <h2 style="margin-top:22px">Tus resultados</h2>
+        <div>${R.items.map((it) => `<div class="res"><span class="dot ${it.s}"></span><div><b>${it.t}</b><span class="muted small">${it.d}</span></div></div>`).join('')}</div>
+        ${!S.calibrated ? '<p class="small muted">No calibraste la pantalla con una tarjeta, así que los tamaños son aproximados.</p>' : ''}
+        <p class="small muted">Este test es una orientación y no es un diagnóstico médico. Solo un examen visual completo con un optómetra puede determinar tu fórmula y la salud de tus ojos.</p>
+        <button type="button" class="btn ghost" id="again" style="margin-top:8px">Repetir el test</button>
+      `);
+      on('[data-cta]', (e) => track('cta_click', { cta: e.currentTarget.dataset.cta, verdict: R.level }));
+      on('#again', () => go(0));
+    },
+  };
+
+  // ====== Interpretación ======
+  function evaluate() {
+    const items = [], reasons = [];
+    let level = 'ok';
+    const raise = (l) => { if (l === 'bad' || (l === 'warn' && level === 'ok')) level = l; };
+    const corr = S.glasses === 'wearing' ? ' (con tu corrección actual)' : '';
+
+    ['R', 'L'].forEach((eye) => {
+      const v = S.far[eye] || 0, name = eye === 'R' ? 'derecho' : 'izquierdo';
+      const s = v >= CONFIG.farPassDecimal ? 'ok' : v >= 0.45 ? 'warn' : 'bad';
+      if (s !== 'ok') { raise('warn'); reasons.push('far' + eye); }
+      items.push({ s, t: `Visión de lejos · ojo ${name}: ${snellen(v)}`, d: s === 'ok' ? `Buena agudeza visual${corr}.` : `Por debajo de lo esperado${corr}. Podrías necesitar ${S.glasses === 'wearing' ? 'actualizar tu fórmula' : 'gafas'}.` });
+    });
+    const fr = S.far.R || 0, fl = S.far.L || 0;
+    if (Math.max(fr, fl) > 0 && Math.max(fr, fl) / Math.max(Math.min(fr, fl), 0.05) >= 1.6) {
+      raise('warn'); reasons.push('diff');
+      items.push({ s: 'warn', t: 'Diferencia entre ojos', d: 'Un ojo ve notablemente mejor que el otro. Conviene revisarlo.' });
+    }
+
+    const ast = [S.astig.R, S.astig.L];
+    const astS = ast.includes('flag') ? 'warn' : ast.includes('unsure') ? 'warn' : 'ok';
+    if (astS !== 'ok') { raise('warn'); reasons.push('astig'); }
+    items.push({ s: astS, t: 'Astigmatismo', d: ast.includes('flag') ? 'Viste líneas más marcadas que otras: puede ser una señal de astigmatismo.' : ast.includes('unsure') ? 'No estuviste seguro: vale la pena confirmarlo en un examen.' : 'Todas las líneas se vieron iguales.' });
+
+    const nv = S.near || 0;
+    const nearS = nv >= CONFIG.nearPassDecimal ? 'ok' : 'warn';
+    if (nearS !== 'ok') { raise('warn'); reasons.push('near'); }
+    const older = S.age === '40-59' || S.age === '60+';
+    items.push({ s: nearS, t: 'Visión de cerca', d: nearS === 'ok' ? 'Lees bien a distancia de lectura.' : `Te cuesta leer letra pequeña${older ? '. Es muy común después de los 40 (presbicia) y tiene solución con lentes adecuados' : ''}.` });
+
+    const am = [S.amsler.R, S.amsler.L];
+    const amS = am.includes('flag') ? 'bad' : 'ok';
+    if (amS === 'bad') { raise('bad'); reasons.push('amsler'); }
+    items.push({ s: amS, t: 'Visión central (rejilla de Amsler)', d: amS === 'bad' ? 'Viste líneas onduladas o zonas faltantes. Esto debe revisarlo un especialista pronto.' : 'La rejilla se vio derecha y completa.' });
+
+    const sym = S.symptoms;
+    if (sym.length) {
+      raise('warn'); reasons.push('symptoms');
+      const map = { far: 'visión borrosa de lejos', near: 'dificultad para leer de cerca', strain: 'cansancio visual o dolor de cabeza', night: 'molestias con la luz o de noche' };
+      items.push({ s: 'warn', t: 'Síntomas que mencionaste', d: sym.map((k) => map[k]).join(', ') + '.' });
+    }
+    if (S.lastExam === '>2' || S.lastExam === 'never') {
+      raise('warn'); reasons.push('lastExam');
+      items.push({ s: 'warn', t: 'Último examen visual', d: S.lastExam === 'never' ? 'Nunca te has hecho un examen visual (o no lo recuerdas).' : 'Hace más de 2 años. Se recomienda revisarse cada año.' });
+    }
+    if (S.glasses === 'notWearing') items.push({ s: 'na', t: 'Hiciste el test sin tus gafas', d: 'Los resultados reflejan tu visión sin corrección.' });
+
+    return { level, items, reasons };
+  }
+
+  $restart.addEventListener('click', () => { if (confirm('¿Reiniciar el test?')) go(0); });
+  resetState();
+  go(0);
+})();
+</script>
+</body>
+</html>
