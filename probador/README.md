@@ -15,7 +15,10 @@ Link: https://probador-gafasygafas.vercel.app · Proyecto Vercel: `probador-gafa
   (≈ 700 KB en total).
 - **Tamaño real:** el diámetro del iris (≈ 11,7 mm) sirve de regla; con el ancho del lente y el puente de cada
   montura (tomados de la ficha de la web) se dibuja la montura a escala. Se limita a un rango humano de distancia
-  entre pupilas (54–72 mm). Botones ± permiten ajustar.
+  entre pupilas (54–72 mm). Botones ± permiten ajustar. **Es una aproximación**: la pantalla lo dice con una etiqueta
+  «Tamaño aproximado» sobre la imagen y un aviso con las medidas de la ficha (lente · puente) que invita a probársela
+  en tienda.
+- **Enlace directo:** `?ref=WD1168` abre el probador con esa montura (para enlazarlo luego desde cada producto).
 - **Posición:** centro de los lentes entre las pupilas (2 mm más abajo), inclinación según la línea de los ojos,
   suavizado entre cuadros para que no tiemble.
 - **Modo foto:** si la cámara no está disponible (por ejemplo, en el navegador interno de Instagram) o la persona
@@ -35,8 +38,10 @@ Link: https://probador-gafasygafas.vercel.app · Proyecto Vercel: `probador-gafa
 | WK4010 | Híbrido | Amarillo (la foto de Menta es de ambiente y no sirve) |
 
 Las imágenes se generaron desde las fotos de producto de la web (vista frontal, fondo claro): se quita el fondo,
-se borran las patillas que se ven a través del lente y se calcula el centro de cada lente. Los colores muy claros
-(transparente, gris claro) no se recortan bien de forma automática.
+se borran las patillas que se ven a través del lente y se calcula el centro de cada lente. Se conservan los
+**colores originales** de la foto (sin aclarar), se borra el reflejo de la mesa bajo el aro y el borde blanco del
+fondo. Los colores muy claros (transparente, gris claro) y las gafas de sol con lente oscuro no se recortan bien de
+forma automática.
 
 ## Medición
 

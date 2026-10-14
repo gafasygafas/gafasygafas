@@ -12,15 +12,15 @@
     "name": "Negro",
     "variation": 7537,
     "img": "monturas/wd1168-negro-c1.webp",
-    "w": 900,
-    "h": 323,
+    "w": 760,
+    "h": 274,
     "lensL": [
-     220.8,
-     155.5
+     186.5,
+     127.0
     ],
     "lensR": [
-     680.1,
-     152.1
+     572.3,
+     124.8
     ],
     "swatch": "#363639"
    },
@@ -28,31 +28,31 @@
     "name": "Miel",
     "variation": 7539,
     "img": "monturas/wd1168-miel-c3.webp",
-    "w": 900,
-    "h": 318,
+    "w": 760,
+    "h": 278,
     "lensL": [
-     220.7,
-     150.3
+     186.5,
+     125.8
     ],
     "lensR": [
-     678.1,
-     153.0
+     571.4,
+     128.8
     ],
-    "swatch": "#be6c0b"
+    "swatch": "#c27310"
    },
    {
     "name": "Carey",
     "variation": 7538,
     "img": "monturas/wd1168-carey-c2.webp",
-    "w": 900,
-    "h": 319,
+    "w": 760,
+    "h": 272,
     "lensL": [
-     224.6,
-     153.4
+     190.1,
+     126.4
     ],
     "lensR": [
-     680.1,
-     149.2
+     573.0,
+     122.6
     ],
     "swatch": "#3f3b38"
    }
@@ -72,49 +72,49 @@
     "name": "Negro azul",
     "variation": 7526,
     "img": "monturas/gyg3003-negro-azul-c2.webp",
-    "w": 900,
-    "h": 297,
+    "w": 760,
+    "h": 258,
     "lensL": [
-     234.6,
-     144.1
+     196.0,
+     116.8
     ],
     "lensR": [
-     660.3,
-     143.1
+     560.3,
+     116.3
     ],
-    "swatch": "#345456"
+    "swatch": "#345557"
    },
    {
     "name": "Vino Carey",
     "variation": 7527,
     "img": "monturas/gyg3003-vino-carey-c3.webp",
-    "w": 900,
-    "h": 298,
+    "w": 760,
+    "h": 255,
     "lensL": [
-     232.7,
-     143.3
+     194.4,
+     116.1
     ],
     "lensR": [
-     663.9,
-     147.3
+     564.2,
+     118.5
     ],
-    "swatch": "#83342d"
+    "swatch": "#84342e"
    },
    {
     "name": "Carey Azul",
     "variation": 7525,
     "img": "monturas/gyg3003-carey-azul.webp",
-    "w": 900,
-    "h": 319,
+    "w": 760,
+    "h": 272,
     "lensL": [
-     228.0,
-     156.7
+     193.4,
+     126.6
     ],
     "lensR": [
-     672.8,
-     154.6
+     566.2,
+     124.9
     ],
-    "swatch": "#695832"
+    "swatch": "#6f5a39"
    }
   ],
   "cat_label": "Acetato"
@@ -132,81 +132,81 @@
     "name": "Negro",
     "variation": 7480,
     "img": "monturas/mf0612-negro.webp",
-    "w": 900,
-    "h": 332,
+    "w": 760,
+    "h": 283,
     "lensL": [
-     222.8,
-     162.9
+     187.8,
+     136.5
     ],
     "lensR": [
-     681.1,
-     155.7
+     574.5,
+     130.6
     ],
-    "swatch": "#353537"
+    "swatch": "#353538"
    },
    {
     "name": "Cafe",
     "variation": 7481,
     "img": "monturas/mf0612-cafe.webp",
-    "w": 900,
-    "h": 335,
+    "w": 760,
+    "h": 285,
     "lensL": [
-     221.6,
-     165.2
+     186.9,
+     137.9
     ],
     "lensR": [
-     680.8,
-     157.3
+     574.6,
+     131.4
     ],
-    "swatch": "#533b32"
+    "swatch": "#533a32"
    },
    {
     "name": "Azul",
     "variation": 7482,
     "img": "monturas/mf0612-azul.webp",
-    "w": 900,
-    "h": 338,
+    "w": 760,
+    "h": 288,
     "lensL": [
-     224.1,
-     165.6
+     188.9,
+     139.2
     ],
     "lensR": [
-     681.5,
-     158.7
+     575.5,
+     133.1
     ],
-    "swatch": "#203e82"
+    "swatch": "#1f3e82"
    },
    {
     "name": "Morado",
     "variation": 7483,
     "img": "monturas/mf0612-morado.webp",
-    "w": 900,
-    "h": 336,
+    "w": 760,
+    "h": 287,
     "lensL": [
-     220.3,
-     165.0
+     185.8,
+     138.0
     ],
     "lensR": [
-     680.2,
-     158.9
+     574.1,
+     132.8
     ],
-    "swatch": "#9f457e"
+    "swatch": "#9f447f"
    },
    {
     "name": "Rojo",
     "variation": 7484,
     "img": "monturas/mf0612-rojo.webp",
-    "w": 900,
-    "h": 332,
+    "w": 760,
+    "h": 284,
     "lensL": [
-     220.2,
-     162.5
+     186.0,
+     136.1
     ],
     "lensR": [
-     680.5,
-     157.3
+     573.7,
+     131.8
     ],
-    "swatch": "#e72d03"
+    "swatch": "#e82d00"
    }
   ],
   "cat_label": "TR90"
@@ -224,17 +224,17 @@
     "name": "",
     "variation": 7601,
     "img": "monturas/f99062-plateado-negro-c10.webp",
-    "w": 900,
-    "h": 301,
+    "w": 760,
+    "h": 258,
     "lensL": [
-     223.1,
-     146.0
+     189.2,
+     123.4
     ],
     "lensR": [
-     675.3,
-     143.5
+     566.7,
+     121.6
     ],
-    "swatch": "#e2c2a6"
+    "swatch": "#e7c9ad"
    }
   ],
   "cat_label": "Metálico"
@@ -252,15 +252,15 @@
     "name": "Amarillo",
     "variation": 7522,
     "img": "monturas/wk4010-amarillo.webp",
-    "w": 900,
-    "h": 325,
+    "w": 760,
+    "h": 278,
     "lensL": [
-     219.3,
-     153.8
+     186.6,
+     129.2
     ],
     "lensR": [
-     675.1,
-     155.5
+     568.1,
+     132.4
     ],
     "swatch": "#e3b51f"
    }

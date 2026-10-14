@@ -86,6 +86,10 @@
   .swatches .cname{font-size:14px;font-weight:700;margin-left:4px}
   .sizer{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:#bdbdbd}
   .sizer button{width:40px;height:40px;border-radius:50%;border:2px solid #555;background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer}
+  .sizenote{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border-left:4px solid var(--gg-yellow);border-radius:var(--radius);padding:10px 12px;margin:0 0 14px;font-size:13px;line-height:1.4;color:#d6d6d6}
+  .sizenote svg{flex:none;width:18px;height:18px;margin-top:1px;color:var(--gg-yellow)}
+  .sizenote b{color:#fff}
+  .approx{position:absolute;top:10px;left:10px;background:rgba(17,17,17,.78);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 9px;border-radius:999px}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .note{font-size:13px;color:#9a9a9a;text-align:center;margin:12px 0 0}
   .err{background:var(--panel);border:2px solid var(--gg-alert);border-radius:var(--radius);padding:14px;margin:10px 0}
@@ -199,7 +203,7 @@
     ctx.translate(p.x, p.y + FRAME_DROP_MM * p.pxmm);
     ctx.rotate(p.ang);
     ctx.scale(s, s);
-    ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 3;
+    ctx.shadowColor = 'rgba(0,0,0,.16)'; ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
     ctx.drawImage(im, -cx, -cy);
     ctx.restore();
   }
@@ -237,12 +241,14 @@
         <canvas id="cv" width="720" height="960"></canvas>
         <div class="oval" id="oval" hidden></div>
         <div class="hint" id="hint" hidden></div>
+        <span class="approx">Tamaño aproximado</span>
         <div class="loading" id="loading"><div><div class="spin"></div><b>Preparando el probador…</b><p class="small muted" style="margin:6px 0 0">La primera vez tarda unos segundos.</p></div></div>
       </div>
       <div class="frames" id="frames">${CAT.map((f, i) => `<button type="button" data-f="${i}"><img src="${f.colors[0].img}" alt=""><span>${esc(f.code)}</span></button>`).join('')}</div>
       <div class="info"><div><span class="cat" id="fcat"></span><b id="fname"></b></div><span class="price" id="fprice"></span></div>
       <div class="swatches" id="sw"></div>
       <div class="sizer"><button type="button" id="smaller" aria-label="Más pequeña">−</button>Ajustar tamaño<button type="button" id="bigger" aria-label="Más grande">+</button></div>
+      <p class="sizenote" id="sizenote"></p>
       <div class="stack">
         <a class="btn yellow" id="buy" target="_top" rel="noopener">${ico('bag')} Ver en la tienda</a>
         <div class="two">
@@ -268,6 +274,7 @@
     $main.querySelector('#fcat').textContent = f.cat_label;
     $main.querySelector('#fname').textContent = f.code;
     $main.querySelector('#fprice').textContent = money(f.price);
+    $main.querySelector('#sizenote').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.01"/></svg><span><b>El tamaño es aproximado.</b> Lo calculamos con las medidas de la ficha de la tienda (lente ${f.lens} mm · puente ${f.bridge} mm) y una medida promedio del ojo, así que puede variar un poco. Para saber cómo te queda de verdad, pruébatela en tienda.</span>`;
     const sw = $main.querySelector('#sw');
     sw.innerHTML = f.colors.length > 1
       ? f.colors.map((x, i) => `<button type="button" data-c="${i}" class="${i === ci ? 'sel' : ''}" style="background:${x.swatch}" aria-label="${esc(x.name)}"></button>`).join('') + `<span class="cname">${esc(c.name)}</span>`
@@ -399,6 +406,10 @@
   try {
     CAT = await (await fetch('monturas/catalogo.json')).json();
     CAT.forEach((f) => loadImg(f.colors[0].img));
+    // ?ref=WD1168 abre el probador con esa montura (para enlazar desde la ficha del producto)
+    const ref = (query.get('ref') || '').toUpperCase();
+    const refIdx = CAT.findIndex((f) => f.code.toUpperCase() === ref);
+    if (refIdx >= 0) sel = { f: refIdx, c: 0 };
     if (query.has('debug')) window.__pr = { facePose, get photoPose() { return photoPose; }, get sel() { return sel; } };
     showHome();
   } catch (e) {
