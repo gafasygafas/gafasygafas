@@ -648,7 +648,7 @@
       `);
       const shape = $main.querySelector('#shape'), range = $main.querySelector('#range');
       function paint() {
-        shape.style.width = wCss + 'px'; shape.style.height = Math.round(wCss * 1.586) + 'px';
+        shape.style.width = wCss + 'px'; shape.style.height = Math.round(wCss * 0.8) + 'px';
         const r = (3.18 / CARD_SHORT_MM) * wCss; shape.style.borderTopLeftRadius = shape.style.borderTopRightRadius = r + 'px';
         range.value = wCss;
       }
