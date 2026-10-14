@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Probador virtual · Gafas & Gafas</title>
+<meta name="description" content="Pruébate las monturas de Gafas & Gafas con la cámara de tu celular antes de comprar.">
+<meta property="og:title" content="¿Cómo se te ven? · Probador virtual G&G">
+<meta property="og:description" content="Pruébate nuestras monturas con la cámara de tu celular. Nada se graba ni se envía.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://probador-gafasygafas.vercel.app/">
+<meta property="og:image" content="https://probador-gafasygafas.vercel.app/brand/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="brand/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gg-black:#111111; --gg-ink:#0A0A0A; --gg-yellow:#FFD756; --gg-yellow-editorial:#F2D23B;
+    --gg-bone:#F4F4F2; --gg-gray-200:#D9D9D9; --gg-gray-500:#8A8A8A; --gg-gray-800:#3F3F3F;
+    --gg-success:#2E9E5B; --gg-alert:#D64545; --gg-whatsapp:#2DB742;
+    --panel:#1b1b1b; --line:#2a2a2a;
+    --font-display:'Anton',Impact,'Arial Narrow',sans-serif;
+    --font-body:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    --font-editorial:'Bodoni Moda','Libre Bodoni',Didot,Georgia,serif;
+    --radius:10px; --radius-sm:4px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;min-height:100%;background:var(--gg-black);color:#fff}
+  body{font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.125em}
+  .app{max-width:560px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+  header .logo{height:40px;width:auto;display:block}
+  header button{background:none;border:0;color:#fff;font:inherit;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;opacity:.85;cursor:pointer;padding:6px}
+  main{flex:1;display:flex;flex-direction:column;padding:16px 16px 24px}
+  h1{font-family:var(--font-display);font-weight:400;text-transform:uppercase;font-size:38px;line-height:1.16;margin:12px 0 6px}
+  mark{background:var(--gg-yellow);color:var(--gg-black);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;margin:6px 0 0}
+  .kicker::before{content:'';width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:20px 0 0 var(--gg-yellow);margin-right:20px;flex:none}
+  .ed{font-family:var(--font-editorial);font-style:italic;color:var(--gg-yellow-editorial);font-size:24px;margin:0 0 14px}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:16px;border:2px solid var(--gg-black);border-radius:var(--radius);cursor:pointer;font-family:var(--font-display);font-size:16px;letter-spacing:.6px;text-transform:uppercase;text-decoration:none;background:var(--gg-black);color:var(--gg-yellow);line-height:1.15}
+  .btn.yellow{background:var(--gg-yellow);border-color:var(--gg-yellow);color:var(--gg-black)}
+  .btn.outline{background:transparent;color:#fff;border-color:#fff}
+  .btn.small{min-height:46px;padding:10px;font-size:14px}
+  .stack>*+*{margin-top:10px}
+  .muted{color:#bdbdbd}.small{font-size:14px}.center{text-align:center}
+  .showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 16px}
+  .showcase div{background:#fff;border-radius:var(--radius);display:grid;place-items:center;padding:8px 6px;aspect-ratio:2.2/1}
+  .showcase div:nth-child(n+4){display:none}
+  .showcase img{width:100%;height:auto;max-height:100%;object-fit:contain}
+  .tips{list-style:none;padding:0;margin:18px 0 0}
+  .tips li{display:flex;gap:12px;align-items:center;padding:7px 0;font-weight:700}
+  .tips svg{width:30px;height:30px;padding:6px;border-radius:50%;background:var(--gg-yellow);color:var(--gg-black);stroke-width:2.2}
+  .tagline{font-family:var(--font-editorial);font-style:italic;text-align:center;font-size:18px;color:var(--gg-yellow-editorial);margin:20px 0 0}
+
+  /* Probador */
+  .stagewrap{position:relative;display:flex;justify-content:center;background:#000;border-radius:var(--radius);overflow:hidden;min-height:240px}
+  #cv{display:block;width:100%;height:auto;max-height:58vh;object-fit:contain}
+  .hint{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(17,17,17,.85);color:#fff;border-radius:var(--radius);padding:10px 12px;text-align:center;font-weight:700;font-size:15px}
+  .hint[hidden]{display:none}
+  .oval{position:absolute;top:50%;left:50%;width:58%;aspect-ratio:3/4;transform:translate(-50%,-54%);border:3px dashed rgba(255,215,86,.85);border-radius:50%;pointer-events:none}
+  .oval[hidden]{display:none}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#000;padding:20px}
+  .loading[hidden]{display:none}
+  .spin{width:48px;height:48px;border-radius:50%;border:5px solid #333;border-top-color:var(--gg-yellow);margin:0 auto 14px;animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .frames{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .frames button{flex:0 0 31%;scroll-snap-align:start;background:#fff;border:3px solid transparent;border-radius:var(--radius);padding:8px 6px 6px;cursor:pointer;color:var(--gg-black);font:inherit}
+  .frames button.sel{border-color:var(--gg-yellow);box-shadow:0 0 0 2px var(--gg-black) inset}
+  .frames img{width:100%;height:42px;object-fit:contain;display:block}
+  .frames span{display:block;font-size:11px;font-weight:700;letter-spacing:1px;margin-top:4px}
+  .info{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:12px 0 4px}
+  .info b{font-family:var(--font-display);font-weight:400;font-size:26px;letter-spacing:.4px;display:block;line-height:1.05}
+  .info .cat{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#bdbdbd}
+  .info .price{font-family:var(--font-display);font-size:24px;color:var(--gg-yellow);white-space:nowrap}
+  .swatches{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 12px;min-height:34px}
+  .swatches button{width:34px;height:34px;border-radius:50%;border:3px solid var(--panel);box-shadow:0 0 0 2px #555;cursor:pointer;padding:0}
+  .swatches button.sel{box-shadow:0 0 0 3px var(--gg-yellow)}
+  .swatches .cname{font-size:14px;font-weight:700;margin-left:4px}
+  .sizer{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:#bdbdbd}
+  .sizer button{width:40px;height:40px;border-radius:50%;border:2px solid #555;background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .note{font-size:13px;color:#9a9a9a;text-align:center;margin:12px 0 0}
+  .err{background:var(--panel);border:2px solid var(--gg-alert);border-radius:var(--radius);padding:14px;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <img class="logo" src="brand/logo-blanco.png" alt="Gafas & Gafas">
+    <button type="button" id="back" hidden>Volver</button>
+  </header>
+  <main id="main"></main>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+
+<script type="module">
+  // ====== Configuración ======
+  const MP_VERSION = '0.10.35';
+  const MP_BASE = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VERSION}`;   // se carga desde CDN, no desde Vercel
+  const MP_MODEL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
+  const IRIS_MM = 11.7;            // diámetro promedio del iris: sirve de regla para el tamaño real
+  const FRAME_DROP_MM = 2;         // el centro del lente queda un poco por debajo de la pupila
+  const BOOKING_URL = 'https://gafasygafas.com.co/agendar-cita-examen-visual/';
+  const UTM = { utm_source: 'probador', utm_medium: 'app', utm_campaign: 'probador-virtual' };
+
+  const $main = document.getElementById('main');
+  const $back = document.getElementById('back');
+  const $file = document.getElementById('file');
+  const query = new URLSearchParams(location.search);
+  const PATHS = {
+    camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+    image: '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-9 8.5"/>',
+    glasses: '<circle cx="6.5" cy="14" r="3.8"/><circle cx="17.5" cy="14" r="3.8"/><path d="M10.3 14h3.4M2.7 14L4.6 7M21.3 14L19.4 7"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+    lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    bag: '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  };
+  const ico = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${PATHS[n]}</svg>`;
+  const money = (v) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(v);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function track(event, data) {
+    const payload = Object.assign({ event }, data);
+    try { (window.dataLayer = window.dataLayer || []).push(payload); } catch (e) {}
+    try { if (typeof window.gtag === 'function') window.gtag('event', event, data || {}); } catch (e) {}
+    try { if (window.parent !== window) window.parent.postMessage({ type: 'probador', event, data }, '*'); } catch (e) {}
+  }
+  const withUtm = (url, content) => { const u = new URL(url); Object.entries(UTM).forEach(([k, v]) => u.searchParams.set(k, query.get(k) || v)); if (content) u.searchParams.set('utm_content', content); return u.toString(); };
+
+  // ====== Estado ======
+  let CAT = [];
+  const imgs = {};
+  let sel = { f: 0, c: 0 };
+  let landmarker = null, lmMode = null;
+  let stream = null, raf = 0, video = null;
+  let source = null;          // 'camera' | 'photo'
+  let photo = null;           // ImageBitmap de la foto subida
+  let photoPose = null;
+  let smooth = null;
+  let sizeAdj = 1;
+
+  const cur = () => CAT[sel.f];
+  const curColor = () => cur().colors[sel.c];
+
+  function loadImg(src) {
+    if (imgs[src]) return imgs[src];
+    const im = new Image(); im.decoding = 'async'; im.src = src; imgs[src] = im; return im;
+  }
+
+  // ====== Detector de rostro (MediaPipe Face Landmarker) ======
+  async function getLandmarker(mode) {
+    if (!landmarker) {
+      const { FaceLandmarker, FilesetResolver } = await import(`${MP_BASE}/vision_bundle.mjs`);
+      const files = await FilesetResolver.forVisionTasks(`${MP_BASE}/wasm`);
+      const opts = (delegate) => ({ baseOptions: { modelAssetPath: MP_MODEL, delegate }, runningMode: mode, numFaces: 1 });
+      try { landmarker = await FaceLandmarker.createFromOptions(files, opts('GPU')); }
+      catch (e) { landmarker = await FaceLandmarker.createFromOptions(files, opts('CPU')); }
+      lmMode = mode;
+    } else if (lmMode !== mode) {
+      await landmarker.setOptions({ runningMode: mode }); lmMode = mode;
+    }
+    return landmarker;
+  }
+
+  // Posición de los ojos, inclinación y escala (px por mm) a partir de los puntos de la cara
+  function facePose(lms, W, H) {
+    const P = (i) => ({ x: lms[i].x * W, y: lms[i].y * H });
+    const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+    if (lms.length < 478) return null;
+    const a = P(468), b = P(473);
+    const [L, R] = a.x < b.x ? [a, b] : [b, a];
+    const eyeDist = d(a, b);
+    const iris = (d(P(469), P(471)) + d(P(474), P(476))) / 2;
+    // El iris da la escala real; se limita a un rango de distancia entre pupilas humano (54–72 mm)
+    const pxmm = Math.min(Math.max(iris / IRIS_MM, eyeDist / 72), eyeDist / 54);
+    return { x: (L.x + R.x) / 2, y: (L.y + R.y) / 2, ang: Math.atan2(R.y - L.y, R.x - L.x), pxmm };
+  }
+  function blend(prev, p, k = 0.5) {
+    if (!prev) return p;
+    return { x: prev.x + (p.x - prev.x) * k, y: prev.y + (p.y - prev.y) * k, ang: prev.ang + (p.ang - prev.ang) * k, pxmm: prev.pxmm + (p.pxmm - prev.pxmm) * k };
+  }
+
+  function drawGlasses(ctx, p) {
+    const f = cur(), c = curColor(), im = loadImg(c.img);
+    if (!im.complete || !im.naturalWidth) return;
+    const lensGapImg = c.lensR[0] - c.lensL[0];
+    const k = im.naturalWidth / c.w;                       // por si la imagen se sirve a otro tamaño
+    const s = ((f.lens + f.bridge) * p.pxmm * sizeAdj) / (lensGapImg * k);
+    const cx = ((c.lensL[0] + c.lensR[0]) / 2) * k, cy = ((c.lensL[1] + c.lensR[1]) / 2) * k;
+    ctx.save();
+    ctx.translate(p.x, p.y + FRAME_DROP_MM * p.pxmm);
+    ctx.rotate(p.ang);
+    ctx.scale(s, s);
+    ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 3;
+    ctx.drawImage(im, -cx, -cy);
+    ctx.restore();
+  }
+
+  // ====== Pantallas ======
+  function html(s) { $main.innerHTML = s; }
+  function on(sel, fn) { $main.querySelectorAll(sel).forEach((el) => el.addEventListener('click', fn)); }
+
+  function showHome() {
+    stopCamera(); source = null; $back.hidden = true; window.scrollTo(0, 0);
+    html(`
+      <p class="kicker">Probador virtual</p>
+      <h1>¿Cómo se te <mark>ven?</mark></h1>
+      <p class="ed">Pruébatelas antes de comprar.</p>
+      <div class="showcase">${CAT.map((f) => `<div><img src="${f.colors[0].img}" alt="${esc(f.code)}"></div>`).join('')}</div>
+      <div class="stack">
+        <button type="button" class="btn yellow" id="cam">${ico('camera')} Abrir mi cámara</button>
+        <button type="button" class="btn outline" id="pic">${ico('image')} Usar una foto</button>
+      </div>
+      <ul class="tips">
+        <li>${ico('glasses')}<span>Quítate las gafas que tengas puestas</span></li>
+        <li>${ico('sun')}<span>Buena luz y la cara de frente</span></li>
+        <li>${ico('lock')}<span>Nada se graba ni se envía</span></li>
+      </ul>
+      <p class="tagline">Nos salimos del marco</p>
+    `);
+    on('#cam', startCamera);
+    on('#pic', () => $file.click());
+  }
+
+  function tryonShell(note) {
+    $back.hidden = false; window.scrollTo(0, 0);
+    html(`
+      <div class="stagewrap" id="stage">
+        <canvas id="cv" width="720" height="960"></canvas>
+        <div class="oval" id="oval" hidden></div>
+        <div class="hint" id="hint" hidden></div>
+        <div class="loading" id="loading"><div><div class="spin"></div><b>Preparando el probador…</b><p class="small muted" style="margin:6px 0 0">La primera vez tarda unos segundos.</p></div></div>
+      </div>
+      <div class="frames" id="frames">${CAT.map((f, i) => `<button type="button" data-f="${i}"><img src="${f.colors[0].img}" alt=""><span>${esc(f.code)}</span></button>`).join('')}</div>
+      <div class="info"><div><span class="cat" id="fcat"></span><b id="fname"></b></div><span class="price" id="fprice"></span></div>
+      <div class="swatches" id="sw"></div>
+      <div class="sizer"><button type="button" id="smaller" aria-label="Más pequeña">−</button>Ajustar tamaño<button type="button" id="bigger" aria-label="Más grande">+</button></div>
+      <div class="stack">
+        <a class="btn yellow" id="buy" target="_top" rel="noopener">${ico('bag')} Ver en la tienda</a>
+        <div class="two">
+          <button type="button" class="btn outline small" id="shot">${ico('camera')} Tomar foto</button>
+          <a class="btn outline small" id="agenda" target="_top" rel="noopener">Probármelas en tienda</a>
+        </div>
+      </div>
+      <p class="note">${note || 'La imagen se procesa en tu celular. No se graba ni se envía.'}</p>
+    `);
+    on('#frames button', (e) => pickFrame(+e.currentTarget.dataset.f, 0));
+    on('#smaller', () => { sizeAdj = Math.max(0.8, sizeAdj - 0.04); redrawPhoto(); });
+    on('#bigger', () => { sizeAdj = Math.min(1.2, sizeAdj + 0.04); redrawPhoto(); });
+    on('#shot', takePhoto);
+    on('#buy', () => track('pr_cta_buy', { modelo: cur().code, color: curColor().name }));
+    on('#agenda', () => track('pr_cta_agenda', { modelo: cur().code }));
+    pickFrame(sel.f, sel.c);
+  }
+
+  function pickFrame(fi, ci) {
+    sel = { f: fi, c: ci };
+    const f = cur(), c = curColor();
+    $main.querySelectorAll('#frames button').forEach((b, i) => b.classList.toggle('sel', i === fi));
+    $main.querySelector('#fcat').textContent = f.cat_label;
+    $main.querySelector('#fname').textContent = f.code;
+    $main.querySelector('#fprice').textContent = money(f.price);
+    const sw = $main.querySelector('#sw');
+    sw.innerHTML = f.colors.length > 1
+      ? f.colors.map((x, i) => `<button type="button" data-c="${i}" class="${i === ci ? 'sel' : ''}" style="background:${x.swatch}" aria-label="${esc(x.name)}"></button>`).join('') + `<span class="cname">${esc(c.name)}</span>`
+      : `<span class="cname">${c.name ? esc(c.name) : 'Un color en la foto · más colores en la tienda'}</span>`;
+    sw.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pickFrame(fi, +b.dataset.c)));
+    $main.querySelector('#buy').href = withUtm(f.url, f.code);
+    $main.querySelector('#agenda').href = withUtm(BOOKING_URL, 'probador-' + f.code);
+    loadImg(c.img).decode?.().then(redrawPhoto).catch(() => {});
+    redrawPhoto();
+    track('pr_frame', { modelo: f.code, color: c.name });
+  }
+
+  function setHint(text, oval) {
+    const h = document.getElementById('hint'), o = document.getElementById('oval');
+    if (!h) return;
+    h.hidden = !text; if (text) h.textContent = text;
+    if (o) o.hidden = !oval;
+  }
+  function setLoading(on) { const l = document.getElementById('loading'); if (l) l.hidden = !on; }
+
+  // ====== Cámara ======
+  async function startCamera() {
+    source = 'camera'; photo = null; smooth = null;
+    tryonShell();
+    track('pr_start', { modo: 'camara' });
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) throw Object.assign(new Error('nocam'), { name: 'NotSupportedError' });
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 960 } }, audio: false });
+      video = document.createElement('video');
+      video.playsInline = true; video.muted = true; video.srcObject = stream;
+      await video.play();
+      await getLandmarker('VIDEO');
+      setLoading(false);
+      loop();
+    } catch (e) {
+      stopCamera(); setLoading(false);
+      const denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+      document.getElementById('stage').outerHTML = `<div class="err"><b>${denied ? 'No tenemos permiso para usar tu cámara.' : 'No pudimos abrir la cámara en este navegador.'}</b>
+        <p class="small muted" style="margin:6px 0 10px">${denied ? 'Puedes darlo en la configuración del navegador, o usar una foto.' : 'Si abriste el link desde Instagram, ábrelo en Chrome o Safari. También puedes usar una foto.'}</p>
+        <button type="button" class="btn outline small" id="pic2">${ico('image')} Usar una foto</button></div>`;
+      on('#pic2', () => $file.click());
+      track('pr_camera_error', { error: e && e.name });
+    }
+  }
+  function stopCamera() {
+    cancelAnimationFrame(raf); raf = 0;
+    if (stream) stream.getTracks().forEach((t) => t.stop());
+    stream = null; video = null;
+  }
+  function loop() {
+    const cv = document.getElementById('cv');
+    if (!cv || !video || source !== 'camera') return;
+    if (video.readyState >= 2 && video.videoWidth) {
+      if (cv.width !== video.videoWidth) { cv.width = video.videoWidth; cv.height = video.videoHeight; }
+      const ctx = cv.getContext('2d');
+      const res = landmarker.detectForVideo(video, performance.now());
+      ctx.save(); ctx.translate(cv.width, 0); ctx.scale(-1, 1);   // vista espejo, como una selfie
+      ctx.drawImage(video, 0, 0, cv.width, cv.height);
+      const lms = res && res.faceLandmarks && res.faceLandmarks[0];
+      const p = lms && facePose(lms, cv.width, cv.height);
+      if (p) { smooth = blend(smooth, p, 0.55); drawGlasses(ctx, smooth); setHint(''); }
+      else { smooth = null; setHint('Pon tu cara de frente dentro del óvalo', true); }
+      ctx.restore();
+    }
+    raf = requestAnimationFrame(loop);
+  }
+
+  // ====== Foto ======
+  $file.addEventListener('change', async () => {
+    const f = $file.files && $file.files[0]; $file.value = '';
+    if (!f) return;
+    stopCamera(); source = 'photo'; smooth = null;
+    tryonShell('Tu foto se procesa en tu celular. No se guarda ni se envía.');
+    track('pr_start', { modo: 'foto' });
+    try {
+      const bmp = await createImageBitmap(f, { imageOrientation: 'from-image' });
+      const scale = Math.min(1, 1280 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement('canvas'); c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
+      c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+      photo = c;
+      const lm = await getLandmarker('IMAGE');
+      const res = lm.detect(photo);
+      const lms = res && res.faceLandmarks && res.faceLandmarks[0];
+      photoPose = lms ? facePose(lms, photo.width, photo.height) : null;
+      setLoading(false);
+      redrawPhoto();
+      if (!photoPose) setHint('No encontramos una cara en esa foto. Prueba con una de frente, con buena luz y sin gafas.');
+    } catch (e) {
+      setLoading(false); setHint('No pudimos abrir esa foto. Prueba con otra.');
+    }
+  });
+  function redrawPhoto() {
+    if (source !== 'photo' || !photo) return;
+    const cv = document.getElementById('cv'); if (!cv) return;
+    cv.width = photo.width; cv.height = photo.height;
+    const ctx = cv.getContext('2d');
+    ctx.drawImage(photo, 0, 0);
+    if (photoPose) drawGlasses(ctx, photoPose);
+  }
+
+  // ====== Tomar foto (con marca) ======
+  async function takePhoto() {
+    const cv = document.getElementById('cv'); if (!cv) return;
+    const out = document.createElement('canvas'); out.width = cv.width; out.height = cv.height;
+    const ctx = out.getContext('2d'); ctx.drawImage(cv, 0, 0);
+    const bar = Math.round(out.height * 0.08);
+    ctx.fillStyle = 'rgba(17,17,17,.82)'; ctx.fillRect(0, out.height - bar, out.width, bar);
+    const logo = loadImg('brand/logo-blanco.png');
+    try { await logo.decode(); } catch (e) {}
+    const lh = bar * 0.62, lw = lh * (logo.naturalWidth / logo.naturalHeight || 2.2);
+    if (logo.naturalWidth) ctx.drawImage(logo, bar * 0.3, out.height - bar + (bar - lh) / 2, lw, lh);
+    ctx.fillStyle = '#FFD756'; ctx.font = `${Math.round(bar * 0.34)}px Anton, Impact, sans-serif`; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(`${cur().code} · gafasygafas.com.co`, out.width - bar * 0.3, out.height - bar / 2);
+    out.toBlob(async (blob) => {
+      if (!blob) return;
+      const file = new File([blob], `probador-gg-${cur().code}.jpg`, { type: 'image/jpeg' });
+      track('pr_photo', { modelo: cur().code });
+      try {
+        if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'Mi prueba en Gafas & Gafas' }); return; }
+      } catch (e) { if (e && e.name === 'AbortError') return; }
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
+    }, 'image/jpeg', 0.9);
+  }
+
+  $back.addEventListener('click', showHome);
+  document.addEventListener('visibilitychange', () => { if (document.hidden && source === 'camera') { stopCamera(); showHome(); } });
+
+  // ====== Inicio ======
+  try {
+    CAT = await (await fetch('monturas/catalogo.json')).json();
+    CAT.forEach((f) => loadImg(f.colors[0].img));
+    if (query.has('debug')) window.__pr = { facePose, get photoPose() { return photoPose; }, get sel() { return sel; } };
+    showHome();
+  } catch (e) {
+    html('<div class="err">No pudimos cargar las monturas. Recarga la página.</div>');
+  }
+</script>
+</body>
+</html>
