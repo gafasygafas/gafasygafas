@@ -79,7 +79,9 @@
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   .pill{display:inline-block;padding:5px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;background:var(--gg-black);color:var(--gg-yellow)}
   .app.dark .pill{background:var(--gg-yellow);color:var(--gg-black)}
-  .hero-img{width:100%;height:210px;object-fit:cover;object-position:50% 22%;border-radius:var(--radius);display:block;margin:6px 0 4px}
+  .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--gg-yellow);color:var(--gg-black);border-radius:var(--radius);padding:18px 10px;margin:10px 0 4px;text-align:center}
+  .steps3 b{display:block;font-family:var(--font-display);font-weight:400;font-size:40px;line-height:1}
+  .steps3 span{display:block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;line-height:1.3}
   .proof{display:flex;align-items:center;gap:8px;font-size:14px;color:#c9c9c9;margin:10px 0 0}
   .proof svg{color:var(--gg-yellow-editorial);fill:var(--gg-yellow-editorial);stroke:none;width:16px;height:16px}
   .tagline{font-family:var(--font-editorial);font-style:italic;text-align:center;font-size:18px;color:var(--gg-yellow-editorial);margin:18px 0 0}
@@ -932,8 +934,8 @@
       <p class="kicker">Marca 100% colombiana</p>
       <h1>¿Cómo está <mark>tu vista?</mark></h1>
       <p style="font-size:24px;margin:0 0 6px"><em class="ed" style="color:var(--gg-yellow-editorial)">Descúbrelo en 5 minutos.</em></p>
-      <img class="hero-img" src="brand/hero.jpg" alt="" onerror="this.remove()">
-      <div class="proof">${ico('star')}<span><b style="color:#fff">4.9 / 5</b> · más de 2.000 reseñas en Google · 9 tiendas en Colombia</span></div>
+      <div class="steps3"><div><b>1</b><span>Haz las pruebas</span></div><div><b>2</b><span>Mira tu resultado</span></div><div><b>3</b><span>Agenda tu examen</span></div></div>
+      <div class="proof">${ico('star')}<span><b style="color:#fff">4.92 en Google</b> · 1.875 reseñas verificadas · 9 tiendas en Colombia</span></div>
       <div class="pills"><span class="pill">5 pruebas</span><span class="pill">Resultado al final</span><span class="pill">Lentes Zeiss</span></div>
       <div class="card">
         <ul class="list">
