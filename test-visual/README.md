@@ -1,6 +1,6 @@
 # Test visual · Gafas y Gafas
 
-Test de visión en línea (3 minutos, pensado para celular). Si el resultado lo recomienda, termina invitando a
+Test de visión en línea (3 minutos, pensado para celular y para el link de las historias de Instagram). Si el resultado lo recomienda, termina invitando a
 agendar en https://gafasygafas.com.co/agendar-cita-examen-visual/.
 
 Es **un solo archivo** (`index.html`) sin dependencias externas.
@@ -16,16 +16,23 @@ Es **un solo archivo** (`index.html`) sin dependencias externas.
 | Visión de cerca | Números a 40 cm con 4 opciones | No lee ≈ 0,5 decimal a 40 cm |
 | Rejilla de Amsler, cada ojo | Cuadrícula con punto central | Ve líneas onduladas o zonas faltantes (resultado rojo: "consulta pronto") |
 
+Transparencia: después de cada respuesta de las pruebas de lejos y de cerca aparece un check verde (acertó) o una
+cruz roja (falló, indicando cuál era la respuesta correcta), y una fila de puntos con el historial de esa prueba.
+En el resultado final se muestran los aciertos (por ejemplo «Aciertos: 5 de 6»).
+
 Medidas "a prueba de tontos": una pregunta por pantalla, botones grandes, una E de práctica antes de empezar,
-botón «No la veo» (evita adivinar), aviso si la pantalla tiene zoom, pantalla siempre encendida durante el test,
-y en computador pide alejarse lo necesario según la resolución de la pantalla y permite usar las flechas del teclado.
+botón «No la veo» (evita adivinar), indicador «Paso X de 7», pantalla de análisis antes del resultado,
+aviso si la pantalla tiene zoom, pantalla encendida durante el test, y en computador pide alejarse lo necesario
+según la resolución y permite usar las flechas del teclado.
 
 ## Personalizar
 
 Al inicio de `index.html`:
 
-- **Colores**: variables `--brand`, `--accent`, etc. en `:root`.
-- **Enlaces y umbrales**: objeto `CONFIG` en el `<script>` (URL de agendamiento, UTM, número de WhatsApp opcional).
+- **Identidad de marca** (colores, tipografía y logo): `CONFIG.brand` en el `<script>`.
+  `colors` acepta cualquier variable, por ejemplo `{ '--brand': '#...', '--accent': '#...', '--bg': '#...', '--ink': '#...' }`;
+  `fontUrl` + `fontFamily` cargan una fuente de Google Fonts; `logoUrl` reemplaza el nombre en texto del encabezado.
+- **Enlaces y umbrales**: resto del objeto `CONFIG` (URL de agendamiento, UTM, número de WhatsApp opcional, tiempos).
 
 ## Publicar en WordPress
 
