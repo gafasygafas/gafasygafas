@@ -1,24 +1,33 @@
 # Probador virtual G&G
 
-App aparte (independiente del Vision Check) para que la persona se pruebe monturas de Gafas & Gafas con la
-cámara del celular o con una foto. Prototipo con 5 monturas; la idea es luego montarlo en la web
-(por ejemplo, botón «Pruébatela» en cada producto).
+App aparte (independiente del Vision Check) para que la persona se pruebe las monturas de Gafas & Gafas con la
+cámara del celular o con una foto, vea las fotos reales del producto, el precio con cada tipo de lente y pase a
+comprar. La idea es luego montarlo en la web (por ejemplo, botón «Pruébatelas» en cada producto).
 
 Link: https://probador-gafasygafas.vercel.app · Proyecto Vercel: `probador-gafasygafas` (carpeta raíz `probador/`).
+
+## Pantallas
+
+1. **Inicio** (mismo estilo de gafasygafas.com.co: fondo hueso, encabezado negro, Anton, tarjetas con borde negro):
+   titular, botones «Abrir cámara» / «Subir foto», y la vitrina de monturas con filtros (Acetato, TR90, Metálicas…).
+   Cada tarjeta usa la foto de producto de la web. Al tocarla se elige cámara o foto.
+2. **Probador**: imagen con la montura puesta (etiqueta «Tamaño aproximado»), filtros y tira de monturas, ficha
+   (código, material, precio, colores, ajuste ±, aviso de tamaño con lente · puente · brazo), **«Así es en la
+   tienda»** (fotos de la web, se amplían al tocar), **«Elige tus lentes»** (las mismas opciones y precios del
+   configurador de la web) y el botón **«Elegir lentes y comprar»**, que abre la ficha del producto con el color ya
+   elegido (`?attribute_color=…`). Además «Guardar foto» (con marca G&G) y «Agendar examen».
 
 ## Cómo funciona
 
 - **Detección de la cara:** MediaPipe Face Landmarker (Google), versión `0.10.35`, corre dentro del navegador.
   La imagen de la cámara o la foto **no sale del celular**.
-- **Carga desde CDN:** el detector (≈ 13 MB) se carga desde jsDelivr y el modelo desde Google, no desde Vercel,
-  para no gastar el límite de transferencia del proyecto. Vercel solo sirve la página y las fotos de las monturas
-  (≈ 700 KB en total).
+- **Carga desde CDN:** el detector (≈ 13 MB) se carga desde jsDelivr y el modelo desde Google; las fotos de
+  producto se cargan desde gafasygafas.com.co. Vercel solo sirve la página y los recortes de las monturas
+  (≈ 40 KB cada uno, se cargan solo cuando se usan).
 - **Tamaño real:** el diámetro del iris (≈ 11,7 mm) sirve de regla; con el ancho del lente y el puente de cada
   montura (tomados de la ficha de la web) se dibuja la montura a escala. Se limita a un rango humano de distancia
-  entre pupilas (54–72 mm). Botones ± permiten ajustar. **Es una aproximación**: la pantalla lo dice con una etiqueta
-  «Tamaño aproximado» sobre la imagen y un aviso con las medidas de la ficha (lente · puente) que invita a probársela
-  en tienda.
-- **Enlace directo:** `?ref=WD1168` abre el probador con esa montura (para enlazarlo luego desde cada producto).
+  entre pupilas (54–72 mm). Botones ± permiten ajustar. **Es una aproximación** y la pantalla lo dice.
+- **Enlace directo:** `?ref=WD1168` abre la vitrina con esa montura elegida (para enlazarlo desde cada producto).
 - **Posición:** centro de los lentes entre las pupilas (2 mm más abajo), inclinación según la línea de los ojos,
   suavizado entre cuadros para que no tiemble.
 - **Modo foto:** si la cámara no está disponible (por ejemplo, en el navegador interno de Instagram) o la persona
@@ -26,28 +35,37 @@ Link: https://probador-gafasygafas.vercel.app · Proyecto Vercel: `probador-gafa
 
 ## Monturas (carpeta `monturas/`)
 
-`catalogo.json` tiene por montura: código, categoría, precio, link al producto, ancho de lente, puente y sus colores
-(imagen recortada `.webp`, centro de cada lente en la imagen y color de muestra).
+`catalogo.json` tiene por montura: código (SKU), categoría, precio, link, lente · puente · brazo (de la ficha),
+fotos de la web y sus colores (recorte `.webp` de 760 px, miniatura `-t.webp`, centro de cada lente, color de
+muestra, nombre de la variación para preseleccionarla en la web y foto de esa variación).
 
-| Código | Material | Colores en el prototipo |
-|---|---|---|
-| WD1168 | Acetato | Negro, Miel, Carey |
-| GYG3003 | Acetato | Negro azul, Vino carey, Carey azul |
-| MF0612 | TR90 | Negro, Café, Azul, Morado, Rojo |
-| F99062 | Metálico | 1 (la web tiene una sola foto para sus 5 colores) |
-| WK4010 | Híbrido | Amarillo (la foto de Menta es de ambiente y no sirve) |
+**Recorte (v3):** se parte de la foto de producto de la web en alta resolución.
+- La silueta exterior sale de un modelo de segmentación (ISNet), que da bordes limpios y respeta la forma real.
+- Los lentes se detectan por color y se toman como formas convexas y simétricas (izquierdo = espejo del derecho),
+  así desaparecen las patillas y plaquetas que se ven a través del cristal.
+- El borde se «desmezcla» del fondo para que no quede halo blanco, y se conservan los colores originales.
 
-Las imágenes se generaron desde las fotos de producto de la web (vista frontal, fondo claro): se quita el fondo,
-se borran las patillas que se ven a través del lente y se calcula el centro de cada lente. Se conservan los
-**colores originales** de la foto (sin aclarar), se borra el reflejo de la mesa bajo el aro y el borde blanco del
-fondo. Los colores muy claros (transparente, gris claro) y las gafas de sol con lente oscuro no se recortan bien de
-forma automática.
+Cada recorte se revisó a mano a tamaño completo. Quedan por fuera:
+- las monturas totalmente transparentes (se verían como un hilo);
+- las gafas de sol y clip-on con lente oscuro;
+- las fotos que no son de frente;
+- los modelos con la patilla atravesando los dos lentes;
+- las referencias sin medidas (o con medidas erradas) en la ficha web.
+
+Precios de lentes: están en `LENSES` dentro de `index.html`; si cambian en la web, hay que actualizarlos ahí.
 
 ## Medición
 
-Eventos en `dataLayer`/`gtag`: `pr_start {modo}`, `pr_frame {modelo, color}`, `pr_photo`, `pr_cta_buy`,
-`pr_cta_agenda`, `pr_camera_error`. Los botones de la tienda y de agendar llevan
-`utm_source=probador&utm_medium=app&utm_campaign=probador-virtual&utm_content=<modelo>`.
+Eventos en `dataLayer`/`gtag`:
+- `pr_start {modo}`
+- `pr_card {modelo}`
+- `pr_frame {modelo, color}`
+- `pr_photo`
+- `pr_cta_buy`
+- `pr_cta_agenda`
+- `pr_camera_error`
+
+Los enlaces a la tienda y a agendar llevan `utm_source=probador&utm_medium=app&utm_campaign=probador-virtual&utm_content=<modelo>`.
 
 ## Límites conocidos
 
