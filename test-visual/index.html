@@ -79,6 +79,17 @@
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   .pill{display:inline-block;padding:5px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;background:var(--gg-black);color:var(--gg-yellow)}
   .app.dark .pill{background:var(--gg-yellow);color:var(--gg-black)}
+  .chart{background:#fff;color:#000;border-radius:var(--radius);padding:14px 8px 10px;margin:14px 0 6px;border:3px solid var(--gg-yellow)}
+  .chart .cap{font-size:11px;letter-spacing:1.4px;font-weight:700;text-transform:uppercase;text-align:center;color:var(--gg-gray-800);margin:0 0 8px}
+  .chart .row{position:relative;display:flex;align-items:center;justify-content:center;width:100%;border:0;background:none;font-family:var(--font-display);text-transform:uppercase;color:#000;padding:5px 0;border-radius:var(--radius-sm);cursor:pointer;line-height:1.05;opacity:0;animation:rise .45s forwards}
+  .chart .row .n{position:absolute;left:6px;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0;color:var(--gg-gray-500)}
+  .chart .row.sel{background:var(--gg-yellow)}
+  .chart .row.sel .n{color:#000}
+  .tease{text-align:center;color:#e6e6e6;font-size:15px;min-height:3.4em;margin:8px 0 14px}
+  .tease b{color:var(--gg-yellow)}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,215,86,.7)}100%{box-shadow:0 0 0 14px rgba(255,215,86,0)}}
+  .btn.pulse{animation:ring 1.4s ease-out 3}
+  @media (prefers-reduced-motion:reduce){.chart .row{animation-duration:.01s}.btn.pulse{animation:none}}
   .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--gg-yellow);color:var(--gg-black);border-radius:var(--radius);padding:18px 10px;margin:10px 0 4px;text-align:center}
   .steps3 b{display:block;font-family:var(--font-display);font-weight:400;font-size:40px;line-height:1}
   .steps3 span{display:block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;line-height:1.3}
@@ -197,6 +208,11 @@
     color: { name: 'Visión de color', blurb: 'Si distingues bien los colores en láminas con números.' },
   };
   const TEST_ORDER = ['acuity', 'contrast', 'astig', 'amsler', 'color'];
+  // Tabla de letras del reto de inicio: tamaño en px CSS y separación entre letras
+  const CHART = [
+    { t: 'E', px: 60, ls: 0 }, { t: 'F P', px: 42, ls: 0.3 }, { t: 'T O Z', px: 30, ls: 0.3 },
+    { t: 'L P E D', px: 21, ls: 0.35 }, { t: 'P E C F D', px: 15, ls: 0.4 }, { t: 'E D F C Z P', px: 11, ls: 0.45 },
+  ];
 
   // ====== Iconos (trazo, sin emojis) ======
   const PATHS = {
@@ -934,7 +950,16 @@
       <p class="kicker">Marca 100% colombiana</p>
       <h1>¿Cómo está <mark>tu vista?</mark></h1>
       <p style="font-size:24px;margin:0 0 6px"><em class="ed" style="color:var(--gg-yellow-editorial)">Descúbrelo en 5 minutos.</em></p>
-      <div class="steps3"><div><b>1</b><span>Haz las pruebas</span></div><div><b>2</b><span>Mira tu resultado</span></div><div><b>3</b><span>Agenda tu examen</span></div></div>
+      <div class="chart" id="chart">
+        <p class="cap">Reto de 5 segundos: ¿hasta qué fila llegas?</p>
+        ${CHART.map((r, i) => `<button type="button" class="row" data-i="${i}" style="font-size:${r.px}px;letter-spacing:${r.ls}em;animation-delay:${0.15 + i * 0.12}s" aria-label="Fila ${i + 1}"><span class="n">${i + 1}</span>${r.t}</button>`).join('')}
+      </div>
+      <p class="tease" id="tease">Sostén el celular a la distancia de tu brazo y toca la <b>última fila</b> que leas sin esfuerzo.</p>
+      <div class="stack">
+        <button type="button" class="btn yellow" id="all">Hacer el test completo</button>
+        <button type="button" class="btn outline" id="one">Elegir un test</button>
+      </div>
+      <div class="steps3" style="margin-top:20px"><div><b>1</b><span>Haz las pruebas</span></div><div><b>2</b><span>Mira tu resultado</span></div><div><b>3</b><span>Agenda tu examen</span></div></div>
       <div class="proof">${ico('star')}<span><b style="color:#fff">4.92 en Google</b> · 1.875 reseñas verificadas · 9 tiendas en Colombia</span></div>
       <div class="pills"><span class="pill">5 pruebas</span><span class="pill">Resultado al final</span><span class="pill">Lentes Zeiss</span></div>
       <div class="card">
@@ -947,13 +972,21 @@
         </ul>
       </div>
       <div class="grow"></div>
-      <div class="stack" style="margin-top:20px">
-        <button type="button" class="btn yellow" id="all">Hacer el test</button>
-        <button type="button" class="btn outline" id="one">Elegir un test</button>
-      </div>
-      <p class="small muted center" style="margin:14px 0 0">Ten a la mano una tarjeta (cédula, débito o crédito) para ajustar la pantalla.</p>
+      <p class="small muted center" style="margin:18px 0 0">Ten a la mano una tarjeta (cédula, débito o crédito) para ajustar la pantalla.</p>
       <p class="tagline">Nos salimos del marco</p>
     `);
+    on('.chart .row', (e) => {
+      const i = +e.currentTarget.dataset.i, n = i + 1;
+      $main.querySelectorAll('.chart .row').forEach((r) => r.classList.toggle('sel', r === e.currentTarget));
+      const msg = n <= 3
+        ? `Llegaste hasta la fila <b>${n}</b>. Es una señal para medirlo con precisión: el test completo te dice cómo ves con <b>cada ojo</b>.`
+        : n <= 5
+          ? `Llegaste hasta la fila <b>${n}</b>. Vas bien, pero este reto no separa tus dos ojos ni mide <b>contraste, astigmatismo o color</b>.`
+          : `Leíste las <b>6 filas</b>. Buen comienzo: el test completo revisa lo que este reto no ve, ojo por ojo.`;
+      $main.querySelector('#tease').innerHTML = msg + '<br><span class="small" style="opacity:.75">Referencia rápida: el tamaño exacto depende de tu pantalla.</span>';
+      const all = $main.querySelector('#all'); all.textContent = 'Seguir con el test completo'; all.classList.remove('pulse'); void all.offsetWidth; all.classList.add('pulse');
+      track('vc_teaser', { fila: n });
+    });
     on('#all', () => startFlow(TEST_ORDER));
     on('#one', showPick);
   }
