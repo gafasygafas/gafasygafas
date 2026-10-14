@@ -79,12 +79,16 @@
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   .pill{display:inline-block;padding:5px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;background:var(--gg-black);color:var(--gg-yellow)}
   .app.dark .pill{background:var(--gg-yellow);color:var(--gg-black)}
-  .chart{background:#fff;color:#000;border-radius:var(--radius);padding:14px 8px 10px;margin:14px 0 6px;border:3px solid var(--gg-yellow)}
-  .chart .cap{font-size:11px;letter-spacing:1.4px;font-weight:700;text-transform:uppercase;text-align:center;color:var(--gg-gray-800);margin:0 0 8px}
-  .chart .row{position:relative;display:flex;align-items:center;justify-content:center;width:100%;border:0;background:none;font-family:var(--font-display);text-transform:uppercase;color:#000;padding:5px 0;border-radius:var(--radius-sm);cursor:pointer;line-height:1.05;opacity:0;animation:rise .45s forwards}
-  .chart .row .n{position:absolute;left:6px;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0;color:var(--gg-gray-500)}
+  .chart{background:#fff;color:#000;border-radius:var(--radius);padding:12px 10px 8px;margin:10px 0 6px}
+  .chart .head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #111;padding:0 2px 8px;margin-bottom:6px;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+  .chart .head b{font-family:var(--font-display);font-weight:400;font-size:17px;letter-spacing:.5px}
+  .chart .row{display:grid;grid-template-columns:20px 1fr 44px;align-items:center;width:100%;border:0;background:none;padding:2px 2px;min-height:24px;cursor:pointer;border-radius:var(--radius-sm);color:#000;opacity:0;animation:rise .4s forwards}
+  .chart .row .n,.chart .row .f{font-family:var(--font-body);font-size:10px;font-weight:700;color:var(--gg-gray-500);letter-spacing:0}
+  .chart .row .n{text-align:left}.chart .row .f{text-align:right}
+  .chart .row .t{font-family:var(--font-body);font-weight:700;text-align:center;white-space:nowrap;line-height:1.05}
   .chart .row.sel{background:var(--gg-yellow)}
-  .chart .row.sel .n{color:#000}
+  .chart .row.sel .n,.chart .row.sel .f{color:#000}
+  .chart .foot{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gg-gray-800);border-top:1px solid var(--gg-gray-200);margin-top:6px;padding-top:8px}
   .tease{text-align:center;color:#e6e6e6;font-size:15px;min-height:3.4em;margin:8px 0 14px}
   .tease b{color:var(--gg-yellow)}
   @keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,215,86,.7)}100%{box-shadow:0 0 0 14px rgba(255,215,86,0)}}
@@ -123,6 +127,18 @@
   .numopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .numopts button{min-height:60px;font-size:28px;font-weight:700;letter-spacing:3px;border-radius:var(--radius);border:0;background:var(--gg-black);color:var(--gg-yellow);cursor:pointer;font-family:var(--font-body)}
   .numopts .nosee{grid-column:1/-1;min-height:50px;font-size:15px;letter-spacing:0;background:#fff;color:var(--gg-ink);border:2px solid var(--gg-gray-200)}
+  svg.eyes{display:block;margin:10px auto 6px;max-width:100%;height:auto}
+  .eyebar{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--gg-black);color:#fff;border-radius:var(--radius);padding:6px 12px;margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+  .eyebar svg.eyes{width:58px;margin:0}
+  .eyebar b{color:var(--gg-yellow)}
+  .facts{display:flex;flex-direction:column;gap:12px;margin:14px 0 6px}
+  .facts div{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700}
+  .facts svg{width:34px;height:34px;flex:none;background:var(--gg-black);color:var(--gg-yellow);border-radius:50%;padding:7px}
+  .thumb{display:grid;place-items:center;background:#fff;border:1px solid var(--gg-gray-200);border-radius:var(--radius);height:140px;margin:6px 0 12px}
+  .bigcheck{display:grid;place-items:center;width:96px;height:96px;border-radius:50%;background:var(--gg-success);color:#fff;margin:28px auto 14px}
+  .bigcheck svg{width:52px;height:52px;stroke-width:3}
+  .center-k{justify-content:center}
+  .lead{font-size:18px;line-height:1.4}
   .eyebadge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--radius-sm);background:var(--gg-black);color:var(--gg-yellow);font-weight:700;font-size:12px;letter-spacing:1.1px;text-transform:uppercase;margin:0 auto 8px}
 
   .calib-wrap{display:flex;justify-content:center;margin:8px 0 16px}
@@ -208,11 +224,21 @@
     color: { name: 'Visión de color', blurb: 'Si distingues bien los colores en láminas con números.' },
   };
   const TEST_ORDER = ['acuity', 'contrast', 'astig', 'amsler', 'color'];
-  // Tabla de letras del reto de inicio: tamaño en px CSS y separación entre letras
+  // Tabla de letras del reto de inicio (tipo Snellen): letras, fracción y altura relativa a la fila 20/20
   const CHART = [
-    { t: 'E', px: 60, ls: 0 }, { t: 'F P', px: 42, ls: 0.3 }, { t: 'T O Z', px: 30, ls: 0.3 },
-    { t: 'L P E D', px: 21, ls: 0.35 }, { t: 'P E C F D', px: 15, ls: 0.4 }, { t: 'E D F C Z P', px: 11, ls: 0.45 },
+    ['E', 200], ['F P', 100], ['T O Z', 70], ['L P E D', 50], ['P E C F D', 40], ['E D F C Z P', 30],
+    ['F E L O P Z D', 25], ['D E F P O T E C', 20], ['L E F O D P C T', 15], ['F D P L T C E O', 13], ['P E Z O L C F T D', 10],
   ];
+  const CHART_20_PX = 6.4;   // altura de letra de la fila 20/20 en px CSS (la fila 1 queda en 64 px)
+
+  // Qué se hace en cada prueba, a qué distancia y con cuántos ojos
+  const TEST_INFO = {
+    acuity: { what: 'Toca la flecha hacia donde está la <b>abertura</b> del anillo. Se irá haciendo más pequeño.', dist: 'arm', eyes: 'one' },
+    contrast: { what: 'El mismo anillo, pero <b>cada vez más tenue</b>. Toca hacia dónde está la abertura.', dist: 'arm', eyes: 'one' },
+    astig: { what: 'Mira una figura de líneas y dinos si <b>todas se ven igual de negras</b>.', dist: 'close', eyes: 'one' },
+    amsler: { what: 'Mira el punto del centro de una cuadrícula y dinos si <b>ves algo raro</b>.', dist: 'close', eyes: 'one' },
+    color: { what: 'Busca el <b>número escondido</b> entre puntos de colores. Son 3 láminas.', dist: 'close', eyes: 'both' },
+  };
 
   // ====== Iconos (trazo, sin emojis) ======
   const PATHS = {
@@ -322,22 +348,14 @@
     if (['acuity', 'contrast', 'astig', 'amsler'].some((k) => t.has(k))) s.push({ id: 'card' });
     s.push({ id: 'glasses' });
     if (sel.length > 1) s.push({ id: 'symptoms' });
-    const arm = ['acuity', 'contrast'].filter((k) => t.has(k)), close = ['astig', 'amsler'].filter((k) => t.has(k));
-    if (arm.length) {
-      s.push({ id: 'armSetup', test: arm[0] }, { id: 'practice', test: arm[0] });
-      ['R', 'L'].forEach((eye) => {
-        s.push({ id: 'cover', eye, dist: 'arm', test: arm[0] });
-        arm.forEach((k) => s.push({ id: k, eye, test: k }));
-      });
-    }
-    if (close.length) {
-      s.push({ id: 'closeSetup', test: close[0] });
-      ['R', 'L'].forEach((eye) => {
-        s.push({ id: 'cover', eye, dist: 'close', test: close[0] });
-        close.forEach((k) => s.push({ id: k, eye, test: k }));
-      });
-    }
-    if (t.has('color')) s.push({ id: 'colorSetup', test: 'color' }, { id: 'color', test: 'color' });
+    let practiced = false;
+    sel.forEach((k) => {
+      s.push({ id: 'intro', test: k });
+      if ((k === 'acuity' || k === 'contrast') && !practiced) { s.push({ id: 'practice', test: k }); practiced = true; }
+      if (TEST_INFO[k].eyes === 'one') ['R', 'L'].forEach((eye) => s.push({ id: 'cover', eye, test: k }, { id: k, eye, test: k }));
+      else s.push({ id: k, test: k });
+      s.push({ id: 'done', test: k });
+    });
     s.push({ id: 'results' });
     return s;
   }
@@ -360,7 +378,7 @@
     if (st.test) {
       const n = tests.indexOf(st.test) + 1;
       $phase.hidden = false;
-      $phaseName.textContent = TESTS[st.test].name + (st.eye ? ' · ojo ' + EYE_NAME[st.eye] : '');
+      $phaseName.textContent = TESTS[st.test].name;
       $phaseCount.textContent = tests.length > 1 ? `Prueba ${n} de ${tests.length}` : '';
     } else $phase.hidden = true;
     document.onkeydown = null;
@@ -400,6 +418,28 @@
     if (multi) on('#cont', () => { S[key] = [...sel].map((i) => options[i].value).filter((v) => v !== exclusive); next(); });
   }
 
+  // Pictograma de los ojos vistos desde la persona (izquierdo a la izquierda); covered = ojo tapado ('L' | 'R')
+  function eyesSvg(covered, w = 260, mini = false) {
+    const eye = (cx) => `<path d="M${cx - 40} 56 Q${cx} 20 ${cx + 40} 56 Q${cx} 92 ${cx - 40} 56 Z" fill="#fff" stroke="#111" stroke-width="4"/><circle cx="${cx}" cy="56" r="15" fill="#111"/><circle cx="${cx + 5}" cy="51" r="4" fill="#fff"/>`;
+    const hand = (cx) => `<g transform="translate(${cx - 33} 10)" fill="#FFD756" stroke="#111" stroke-width="3.5" stroke-linejoin="round"><rect x="6" y="8" width="13" height="46" rx="6.5"/><rect x="20" y="0" width="13" height="52" rx="6.5"/><rect x="34" y="2" width="13" height="50" rx="6.5"/><rect x="48" y="12" width="13" height="42" rx="6.5"/><rect x="3" y="36" width="61" height="54" rx="22"/></g>`;
+    const lab = (cx, name, cov) => `<text x="${cx}" y="124" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="14" fill="#111">${name}</text><text x="${cx}" y="143" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="13" letter-spacing="1" fill="${cov ? '#D64545' : '#2E9E5B'}">${cov ? 'TAPADO' : 'MIRA'}</text>`;
+    return `<svg class="eyes" width="${w}" viewBox="0 0 260 ${mini ? 104 : 150}" aria-hidden="true">${eye(70)}${eye(190)}${covered === 'L' ? hand(70) : ''}${covered === 'R' ? hand(190) : ''}${mini ? '' : lab(70, 'Ojo izquierdo', covered === 'L') + lab(190, 'Ojo derecho', covered === 'R')}</svg>`;
+  }
+  const otherEye = (eye) => (eye === 'R' ? 'L' : 'R');
+  function eyeBar(eye) {
+    return `<div class="eyebar">${eyesSvg(otherEye(eye), 58, true)}<span>Mira con el ojo <b>${EYE_NAME[eye]}</b>${S.glasses === 'wearing' ? ' · con gafas' : ''}</span></div>`;
+  }
+  function thumb(k) {
+    const C = (x, y, r, w, col) => `<path d="M${(x + r * Math.cos(0.28)).toFixed(1)} ${(y + r * Math.sin(0.28)).toFixed(1)} A${r} ${r} 0 1 1 ${(x + r * Math.cos(0.28)).toFixed(1)} ${(y - r * Math.sin(0.28)).toFixed(1)}" fill="none" stroke="${col}" stroke-width="${w}"/>`;
+    if (k === 'acuity') return `<svg width="220" height="110" viewBox="0 0 220 110">${C(40, 55, 30, 14, '#111')}${C(115, 55, 18, 8, '#111')}${C(170, 55, 10, 4.5, '#111')}${C(200, 55, 5, 2.4, '#111')}</svg>`;
+    if (k === 'contrast') return `<svg width="220" height="110" viewBox="0 0 220 110">${C(40, 55, 26, 12, '#111')}${C(110, 55, 26, 12, '#888')}${C(180, 55, 26, 12, '#d6d6d6')}</svg>`;
+    if (k === 'astig') { let l = ''; for (let a = 0; a < 180; a += 15) { const t = a * Math.PI / 180, c = Math.cos(t), sn = Math.sin(t); l += `<line x1="${55 - c * 48}" y1="${55 + sn * 48}" x2="${55 + c * 48}" y2="${55 - sn * 48}" stroke="#111" stroke-width="3"/>`; } return `<svg width="110" height="110" viewBox="0 0 110 110">${l}<circle cx="55" cy="55" r="10" fill="#fff"/><circle cx="55" cy="55" r="3" fill="#111"/></svg>`; }
+    if (k === 'amsler') { let g = ''; for (let i = 0; i <= 10; i++) g += `<line x1="${5 + i * 10}" y1="5" x2="${5 + i * 10}" y2="105"/><line x1="5" y1="${5 + i * 10}" x2="105" y2="${5 + i * 10}"/>`; return `<svg width="110" height="110" viewBox="0 0 110 110"><g stroke="#111" stroke-width="1">${g}</g><circle cx="55" cy="55" r="4" fill="#111"/></svg>`; }
+    let d = ''; const cols = ['#7C8A99', '#9AA6B2', '#6B7886', '#E8892B', '#F0A04B']; let seed = 7; const r = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    for (let i = 0; i < 90; i++) { const a = r() * 6.283, q = Math.sqrt(r()) * 46, x = 55 + Math.cos(a) * q, y = 55 + Math.sin(a) * q; const inN = Math.abs(x - 55) < 14 && Math.abs(y - 55) < 30; d += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(3 + r() * 3).toFixed(1)}" fill="${inN ? cols[3 + (i % 2)] : cols[i % 3]}"/>`; }
+    return `<svg width="110" height="110" viewBox="0 0 110 110">${d}</svg>`;
+  }
+
   // ====== Landolt C ======
   const DIRS = { right: 0, down: 90, left: 180, up: 270 };
   const DIR_KEYS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
@@ -424,9 +464,9 @@
     let dir = null, busy = false;
     html(`
       <div class="test">
-        ${eye ? `<span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>` : ''}
-        ${intro || `<div class="prompt">¿Hacia dónde está la abertura del anillo?</div>
-        <div class="hint">${mode === 'contrast' ? 'Algunos se ven muy tenues. Si no lo ves, toca «No lo veo». No adivines.' : isTouch ? 'Si no lo ves, toca «No lo veo». No adivines.' : 'Usa las flechas del teclado. Si no lo ves, toca «No lo veo».'}</div>`}
+        ${eye ? eyeBar(eye) : ''}
+        ${intro || `<div class="prompt">¿Dónde está la abertura?</div>
+        <div class="hint">${isTouch ? '' : 'Usa las flechas del teclado. '}Si no lo ves, toca «No lo veo».</div>`}
         <div class="stage"><canvas id="cv"></canvas></div>
         <div class="fb" aria-live="polite"></div>
         <div class="trail"></div>
@@ -479,9 +519,9 @@
     }
     html(`
       <div class="test">
-        <span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>
-        <div class="prompt">¿Todas las líneas se ven igual de negras y nítidas?</div>
-        <div class="hint">Mira el punto del centro. Pantalla a 30 cm.</div>
+        ${eyeBar(eye)}
+        <div class="prompt">¿Todas las líneas se ven igual de negras?</div>
+        <div class="hint">Mira el punto del centro.</div>
         <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#fff">${lines}<circle cx="${r}" cy="${r}" r="${Math.max(3, mm)}" fill="#000"/></svg></div>
         <div class="fb" aria-live="polite"></div>
         <div class="stack">
@@ -508,9 +548,8 @@
     for (let i = 0; i <= n; i++) { const p = Math.min(size - 0.5, Math.max(0.5, i * c)); grid += `<line x1="${p}" y1="0" x2="${p}" y2="${size}"/><line x1="0" y1="${p}" x2="${size}" y2="${p}"/>`; }
     html(`
       <div class="test">
-        <span class="eyebadge" style="align-self:center">${ico('eye')} Ojo ${EYE_NAME[eye]}</span>
-        <div class="prompt">Mira fijo el punto del centro.<br>¿Alguna línea se ve ondulada, torcida, más oscura, o falta una zona?</div>
-        <div class="hint">Pantalla a 30 cm.</div>
+        ${eyeBar(eye)}
+        <div class="prompt">Mira fijo el punto del centro.<br>¿Ves líneas torcidas, borrosas o que faltan?</div>
         <div class="stage"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:#fff"><g stroke="#000" stroke-width="1">${grid}</g><circle cx="${size / 2}" cy="${size / 2}" r="5" fill="#000"/></svg></div>
         <div class="fb" aria-live="polite"></div>
         <div class="stack">
@@ -574,7 +613,7 @@
     html(`
       <div class="test">
         <div class="prompt">¿Qué número ves en la lámina?</div>
-        <div class="hint">Con ambos ojos abiertos, a 30 cm. Si no ves ninguno, toca «No veo ningún número».</div>
+        <div class="hint">Con los dos ojos abiertos.</div>
         <div class="stage"><canvas id="cv"></canvas></div>
         <div class="fb" aria-live="polite"></div>
         <div class="trail"></div>
@@ -612,12 +651,13 @@
     disclaimer() {
       html(`
         <p class="kicker">Antes de empezar</p>
-        <h2>Esto es un tamizaje, no un diagnóstico</h2>
-        <div class="card stack">
-          <p style="margin:0">Estas pruebas te dan una <b>orientación</b> sobre tu vista. No reemplazan un examen visual con un optómetra.</p>
-          <p style="margin:0">Si tienes dolor en los ojos, pérdida repentina de visión, destellos o manchas nuevas, no esperes: acude a urgencias.</p>
-          <p style="margin:0">No te pedimos datos personales para hacer el test.</p>
-        </div>
+        <h1>Es una orientación, no un diagnóstico</h1>
+        <ul class="list lead" style="margin:10px 0 14px">
+          <li>${ico('check')}<span>Son 5 pruebas cortas, unos 5 minutos.</span></li>
+          <li>${ico('check')}<span>Necesitas una tarjeta y buena luz.</span></li>
+          <li>${ico('check')}<span>No te pedimos datos personales.</span></li>
+        </ul>
+        <p class="small muted">No reemplaza un examen con un optómetra. Si tienes dolor en los ojos, pérdida repentina de visión, destellos o manchas nuevas, acude a urgencias.</p>
         <div class="grow"></div>
         <button type="button" class="btn" id="ok" style="margin-top:18px">Estoy de acuerdo</button>
       `);
@@ -694,27 +734,18 @@
     },
 
     glasses() {
-      choice({
-        title: 'Usa tus gafas o lentes si usas', text: '¿Usas gafas o lentes de contacto?', key: 'glasses',
-        options: [
-          { label: 'Sí, y los tengo puestos', value: 'wearing' },
-          { label: 'Sí, pero no los tengo puestos', value: 'notWearing', then: () => {
-            html(`
-              <div class="glyph">${ico('glasses')}</div>
-              <h2 class="center">Ponte tus gafas o lentes</h2>
-              <p class="center">Así sabremos si tu fórmula actual todavía te sirve.</p>
-              <div class="grow"></div>
-              <div class="stack">
-                <button type="button" class="btn" id="on">Ya me los puse</button>
-                <button type="button" class="btn outline" id="off">No los tengo a la mano</button>
-              </div>
-            `);
-            on('#on', () => { S.glasses = 'wearing'; next(); });
-            on('#off', next);
-          } },
-          { label: 'No uso', value: 'none' },
-        ],
-      });
+      html(`
+        <div class="glyph">${ico('glasses')}</div>
+        <h1 class="center">¿Usas gafas o lentes de contacto?</h1>
+        <p class="center lead"><b>Si usas, póntelos ahora</b> y déjatelos puestos en todo el test.</p>
+        <div class="grow"></div>
+        <div class="stack" style="margin-top:16px">
+          <button type="button" class="btn" data-g="wearing">Sí, ya los tengo puestos</button>
+          <button type="button" class="btn outline" data-g="none">No uso gafas ni lentes</button>
+          <button type="button" class="btn link" data-g="notWearing">Uso, pero no los tengo a la mano</button>
+        </div>
+      `);
+      on('[data-g]', (e) => { S.glasses = e.currentTarget.dataset.g; next(); });
     },
 
     symptoms() {
@@ -730,39 +761,38 @@
       });
     },
 
-    armSetup() {
+    intro(st) {
+      const k = st.test, n = tests.indexOf(k) + 1, info = TEST_INFO[k], far = info.dist === 'arm';
       const cm = Math.round(farDistanceMm() / 10), phone = cm <= 65;
+      const distTxt = far ? (phone ? `Brazo estirado (≈ ${cm} cm)` : `A ${(cm / 100).toLocaleString('es-CO')} m de la pantalla`) : 'Pantalla a 30 cm (el largo de una regla)';
       html(`
-        <div class="glyph">${ico(phone ? 'phone' : 'monitor')}</div>
-        <h2 class="center">${phone ? 'Estira el brazo' : `Aléjate a ${(cm / 100).toLocaleString('es-CO')} m de la pantalla`}</h2>
-        <p class="center">${phone
-          ? `Sostén el celular con el <b>brazo totalmente estirado</b> (≈ ${cm} cm) y a la altura de tus ojos.`
-          : `Para que el test sea exacto en esta pantalla, siéntate a unos <b>${cm} cm</b> y responde con las <b>flechas del teclado</b>.<br><span class="small muted">El test funciona mejor desde el celular.</span>`}</p>
-        <div class="card small"><div class="stack"><div>${ico('ruler')} Mantén la misma distancia durante toda la prueba.</div></div></div>
+        <p class="kicker">${tests.length > 1 ? `Prueba ${n} de ${tests.length}` : 'Prueba'}</p>
+        <h1>${TESTS[k].name}</h1>
+        <div class="thumb">${thumb(k)}</div>
+        <p class="lead">${info.what}</p>
+        <div class="facts">
+          <div>${ico(far ? 'phone' : 'ruler')}<span>${distTxt}</span></div>
+          <div>${ico('eye')}<span>${info.eyes === 'one' ? 'Un ojo a la vez: primero el derecho' : 'Con los dos ojos abiertos'}</span></div>
+          ${S.glasses === 'wearing' ? `<div>${ico('glasses')}<span>Con tus gafas o lentes puestos</span></div>` : ''}
+          ${far && !phone ? `<div>${ico('monitor')}<span>Responde con las flechas del teclado</span></div>` : ''}
+        </div>
         <div class="grow"></div>
-        <button type="button" class="btn" id="ok" style="margin-top:16px">Entendido</button>
+        <button type="button" class="btn" id="ok" style="margin-top:16px">Empezar prueba ${n}</button>
       `);
       on('#ok', next);
     },
 
-    closeSetup() {
+    done(st) {
+      const k = st.test, n = tests.indexOf(k) + 1, nk = tests[n];
+      const hitsTxt = k === 'acuity' || k === 'contrast' ? `Aciertos: ojo derecho ${hits(S.log[k].R)} · ojo izquierdo ${hits(S.log[k].L)}` : k === 'color' ? `Aciertos: ${hits(S.log.color)}` : '';
       html(`
-        <div class="glyph">${ico('phone')}</div>
-        <h2 class="center">Acerca la pantalla a 30 cm</h2>
-        <p class="center">Más o menos el largo de una regla escolar, o de tu antebrazo hasta el codo. Mantén esa distancia en las siguientes pruebas.</p>
+        <div class="bigcheck">${ico('check')}</div>
+        <p class="kicker center-k">${tests.length > 1 ? `Prueba ${n} de ${tests.length} completada` : 'Prueba completada'}</p>
+        <h1 class="center">${TESTS[k].name}</h1>
+        ${hitsTxt ? `<p class="center muted">${hitsTxt}</p>` : ''}
+        ${nk ? `<div class="card center" style="margin-top:14px"><p class="kicker center-k" style="margin:0">Sigue la prueba ${n + 1}</p><h2 style="margin:6px 0 0">${TESTS[nk].name}</h2></div>` : '<p class="center lead">Terminaste todas las pruebas.</p>'}
         <div class="grow"></div>
-        <button type="button" class="btn" id="ok" style="margin-top:16px">Entendido</button>
-      `);
-      on('#ok', next);
-    },
-
-    colorSetup() {
-      html(`
-        <div class="glyph">${ico('eye')}</div>
-        <h2 class="center">Ahora, los colores</h2>
-        <p class="center">Con <b>ambos ojos abiertos</b>, a unos <b>30 cm</b> de la pantalla. Verás tres láminas con un número escondido entre puntos de colores.</p>
-        <div class="grow"></div>
-        <button type="button" class="btn" id="ok" style="margin-top:16px">Listo</button>
+        <button type="button" class="btn" id="ok" style="margin-top:18px">${nk ? 'Ir a la siguiente prueba' : 'Ver mi resultado'}</button>
       `);
       on('#ok', next);
     },
@@ -770,8 +800,8 @@
     practice() {
       const run = (retry) => cTest({
         mode: 'practice',
-        intro: `<h2 class="center">Practiquemos primero</h2>
-          <p class="center">Toca la flecha hacia donde está la <b>abertura</b> del anillo. Te diremos si acertaste.</p>
+        intro: `<h2 class="center">Primero, una práctica</h2>
+          <p class="center lead">Toca la flecha hacia donde está la <b>abertura</b> del anillo.</p>
           ${retry ? '<p class="center" style="color:var(--gg-alert);font-weight:700">Mira por dónde se corta el anillo e inténtalo otra vez.</p>' : ''}`,
         onDone: (ok) => (ok ? next() : run(true)),
       });
@@ -779,16 +809,14 @@
     },
 
     cover(st) {
-      const tap = st.eye === 'R' ? 'izquierdo' : 'derecho';
+      const covered = otherEye(st.eye), tap = EYE_NAME[covered];
       html(`
-        ${st.eye === 'L' ? `<div class="note">${ico('check')} Ojo derecho completado. Vas por la mitad.</div>` : ''}
-        <span class="eyebadge" style="align-self:center">${ico('eye')} Probaremos tu ojo ${EYE_NAME[st.eye]}</span>
-        <div class="glyph">${ico('eyeoff')}</div>
-        <h2 class="center">Tápate el ojo ${tap}</h2>
-        <p class="center">Usa la palma de la mano, <b>sin presionar</b>. Mantén el otro ojo abierto${S.glasses === 'wearing' ? ' (tápalo por encima de las gafas)' : ''}.</p>
-        <p class="center muted small">${st.dist === 'arm' ? `Con el brazo estirado (≈ ${Math.round(farDistanceMm() / 10)} cm).` : 'Pantalla a 30 cm.'}</p>
+        ${st.eye === 'L' ? `<div class="note">${ico('check')} Ojo derecho listo. Ahora el otro.</div>` : ''}
+        <h1 class="center">Tápate el ojo <mark>${tap}</mark></h1>
+        ${eyesSvg(covered, 280)}
+        <p class="center lead">Con la palma, sin presionar.${S.glasses === 'wearing' ? ' No te quites las gafas.' : ''}</p>
         <div class="grow"></div>
-        <button type="button" class="btn" id="ok">Listo, ojo ${tap} tapado</button>
+        <button type="button" class="btn" id="ok" style="margin-top:16px">Listo, ojo ${tap} tapado</button>
       `);
       on('#ok', next);
     },
@@ -950,9 +978,11 @@
       <p class="kicker">Marca 100% colombiana</p>
       <h1>¿Cómo está <mark>tu vista?</mark></h1>
       <p style="font-size:24px;margin:0 0 6px"><em class="ed" style="color:var(--gg-yellow-editorial)">Descúbrelo en 5 minutos.</em></p>
+      <p style="margin:14px 0 0"><span class="pill">Reto de 5 segundos</span></p>
       <div class="chart" id="chart">
-        <p class="cap">Reto de 5 segundos: ¿hasta qué fila llegas?</p>
-        ${CHART.map((r, i) => `<button type="button" class="row" data-i="${i}" style="font-size:${r.px}px;letter-spacing:${r.ls}em;animation-delay:${0.15 + i * 0.12}s" aria-label="Fila ${i + 1}"><span class="n">${i + 1}</span>${r.t}</button>`).join('')}
+        <div class="head"><span>Tabla de agudeza visual</span><b>G&amp;G</b></div>
+        ${CHART.map(([t, f], i) => { const h = CHART_20_PX * f / 20, ls = 0.42; return `<button type="button" class="row" data-i="${i}" style="animation-delay:${0.1 + i * 0.07}s" aria-label="Fila ${i + 1}, 20/${f}"><span class="n">${i + 1}</span><span class="t" style="font-size:${(h / 0.72).toFixed(1)}px;letter-spacing:${ls}em;padding-left:${ls}em">${t.replace(/ /g, '')}</span><span class="f">20/${f}</span></button>`; }).join('')}
+        <div class="foot">${ico('up')} Toca la última fila que leas</div>
       </div>
       <p class="tease" id="tease">Sostén el celular a la distancia de tu brazo y toca la <b>última fila</b> que leas sin esfuerzo.</p>
       <div class="stack">
@@ -978,11 +1008,11 @@
     on('.chart .row', (e) => {
       const i = +e.currentTarget.dataset.i, n = i + 1;
       $main.querySelectorAll('.chart .row').forEach((r) => r.classList.toggle('sel', r === e.currentTarget));
-      const msg = n <= 3
+      const msg = n <= 5
         ? `Llegaste hasta la fila <b>${n}</b>. Es una señal para medirlo con precisión: el test completo te dice cómo ves con <b>cada ojo</b>.`
-        : n <= 5
+        : n <= 8
           ? `Llegaste hasta la fila <b>${n}</b>. Vas bien, pero este reto no separa tus dos ojos ni mide <b>contraste, astigmatismo o color</b>.`
-          : `Leíste las <b>6 filas</b>. Buen comienzo: el test completo revisa lo que este reto no ve, ojo por ojo.`;
+          : `Llegaste hasta la fila <b>${n}</b>. Muy buen comienzo: el test completo revisa lo que este reto no ve, ojo por ojo.`;
       $main.querySelector('#tease').innerHTML = msg + '<br><span class="small" style="opacity:.75">Referencia rápida: el tamaño exacto depende de tu pantalla.</span>';
       const all = $main.querySelector('#all'); all.textContent = 'Seguir con el test completo'; all.classList.remove('pulse'); void all.offsetWidth; all.classList.add('pulse');
       track('vc_teaser', { fila: n });
